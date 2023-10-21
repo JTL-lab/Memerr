@@ -1,0 +1,398 @@
+openapi: 3.0.0
+info:
+  title: Memerr API
+  description: API for managing memes, profiles, ratings, and notifications.
+  version: 1.0.0
+servers:
+  - url: 'https://api.memerr.com/v1'
+paths:
+  /memes:
+    post:
+      tags:
+        - Meme
+      summary: Create a new meme
+      operationId: createMeme
+      requestBody:
+        description: Meme object to add
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Meme'
+        required: true
+      responses:
+        '201':
+          description: Meme created
+        '400':
+          description: Invalid input
+        '409':
+          description: Meme already exists
+        '500':
+          description: Internal server error
+    get:
+      tags:
+        - Meme
+      summary: Get a meme by ID
+      operationId: getMeme
+      parameters:
+        - name: meme_id
+          in: query
+          description: Meme id of the meme to get
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meme'
+        '404':
+          description: Meme not found
+    put:
+      tags:
+        - Meme
+      summary: Update an existing meme
+      operationId: updateMeme
+      parameters:
+        - name: meme_id
+          in: query
+          description: Meme id of the meme to update
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Meme object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Meme'
+        required: true
+      responses:
+        '200':
+          description: Meme updated
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Meme not found
+        '405':
+          description: Validation exception
+        '500':
+          description: Internal server error
+    delete:
+      tags:
+        - Meme
+      summary: Deletes a meme
+      operationId: deleteMeme
+      parameters:
+        - name: meme_id
+          in: query
+          description: Meme id of the meme to delete
+          required: true
+          schema:
+            type: string
+      responses:
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Meme not found
+  /profiles:
+    post:
+      tags:
+        - Profile
+      summary: Create user profile
+      operationId: createProfile
+      requestBody:
+        description: Profile object that will be created
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Profile'
+        required: true
+      responses:
+        '201':
+          description: Profile created
+        '400':
+          description: Invalid input
+        '409':
+          description: Profile already exists
+        '500':
+          description: Internal server error
+    get:
+      tags:
+        - Profile
+      summary: Get user profile by ID
+      operationId: getProfile
+      parameters:
+        - name: profile_id
+          in: query
+          description: ID of the profile to get
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Profile'
+        '404':
+          description: Profile not found
+    put:
+      tags:
+        - Profile
+      summary: Updated profile
+      operationId: updateProfile
+      parameters:
+        - name: profile_id
+          in: query
+          description: ID of the profile to update
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Updated profile object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Profile'
+        required: true
+      responses:
+        '200':
+          description: Profile updated
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Profile not found
+        '405':
+          description: Validation exception
+        '500':
+          description: Internal server error
+    delete:
+      tags:
+        - Profile
+      summary: Delete profile
+      operationId: deleteProfile
+      parameters:
+        - name: profile_id
+          in: query
+          description: ID of the profile to delete
+          required: true
+          schema:
+            type: string
+      responses:
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Profile not found
+        '500':
+          description: Internal server error
+  /meme-ratings:
+    post:
+      tags:
+        - Meme Rating
+      summary: Create meme rating
+      operationId: createMemeRating
+      requestBody:
+        description: Meme Rating object that will be created
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Meme_Rating'
+        required: true
+      responses:
+        '201':
+          description: Rating created
+        '400':
+          description: Invalid input
+        '500':
+          description: Internal server error
+    get:
+      tags:
+        - Meme Rating
+      summary: Get all ratings for a meme
+      operationId: getMemeRatings
+      parameters:
+        - name: meme_id
+          in: query
+          description: ID of the meme ratings for
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Meme_Rating'
+        '404':
+          description: Meme not found
+    put:
+      tags:
+        - Meme Rating
+      summary: Update meme rating
+      operationId: updateMemeRating
+      parameters:
+        - name: meme_rating_id
+          in: query
+          description: Meme rating id of the meme to update
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Updated rating object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Meme_Rating'
+        required: true
+      responses:
+        '200':
+          description: Meme rating updated
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Meme rating not found
+        '405':
+          description: Validation exception
+        '500':
+          description: Internal server error
+    delete:
+      tags:
+        - Meme Rating
+      summary: Deletes a meme rating
+      operationId: deleteMemeRating
+      parameters:
+        - name: meme_rating_id
+          in: query
+          description: Meme rating id of the meme to delete
+          required: true
+          schema:
+            type: string
+      responses:
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Meme rating not found
+        '500':
+          description: Internal server error
+
+  /notifications:
+    post:
+      tags:
+        - Notifications
+      summary: Configure notifications for a profile
+      operationId: configureNotifications
+      requestBody:
+        description: Notification configuration details
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Notifications'
+        required: true
+      responses:
+        '201':
+          description: Notifications configured
+        '400':
+          description: Invalid input
+        '409':
+          description: Configuration already exists for the profile
+
+components:
+  schemas:
+    Meme:
+      type: object
+      properties:
+        meme_id:
+          type: string
+          description: Unique identifier for the meme
+        title:
+          type: string
+        description:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        photo:
+          type: string
+          format: uri
+        nsfw:
+          type: boolean
+
+    Profile:
+      type: object
+      properties:
+        profile_id:
+          type: string
+          description: Unique identifier for the user profile
+        email:
+          type: string
+          format: email
+        username:
+          type: string
+        password:
+          type: string
+        phone:
+          type: integer
+        date_of_birth:
+          type: string
+          format: date-time
+
+    Meme_Rating:
+      type: object
+      properties:
+        Memes:
+          type: array
+          items:
+            type: object
+            properties:
+              meme_id:
+                type: string
+              Meme:
+                type: object
+                properties:
+                  meme_rating_id:
+                    type: string
+                  ratings_by_category:
+                    type: object
+                    properties:
+                      humor:
+                        type: integer
+                        minimum: 1
+                        maximum: 5
+                      originality:
+                        type: integer
+                        minimum: 1
+                        maximum: 5
+                      relatability:
+                        type: integer
+                        minimum: 1
+                        maximum: 5
+                      nsfw:
+                        type: integer
+                        minimum: 1
+                        maximum: 5
+
+    Notifications:
+      type: object
+      properties:
+        profile_id:
+          type: string
+        send_to_email:
+          type: string
+          format: email
+        is_email_enabled:
+          type: boolean
+        send_to_phone:
+          type: string
+        is_phone_enabled:
+          type: boolean
+        subject:
+          type: string
+        message:
+          type: string
