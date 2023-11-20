@@ -11,11 +11,11 @@
     height: 45px;
     left: 318px;
     top: 166px;
-    display: flex; /* To align items in a row */
-    align-items: center; /* Vertical alignment */
+    display: flex;
+    align-items: center;
     position: relative;
     border-radius: 25px;
-    background: #FFFFFF; /* Change as needed */
+    background: #FFFFFF;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -23,8 +23,7 @@
     width: 26px;
     height: 26px;
     position: absolute;
-    left: 10px; /* Adjust as needed */
-    /* ... other styles ... */
+    left: 10px;
 }
 
 #search-bar {
@@ -42,19 +41,19 @@
 }
 
 #search-button {
-    width: 40px; /* Set as needed */
-    height: 40px; /* Set as needed */
-    border: none; /* Remove border */
-    background: url('assets/search-icon.png') no-repeat center center; /* Set your icon */
-    background-size: 50%; /* Adjust as needed */
-    cursor: pointer; /* Changes cursor to pointer on hover */
-    position: absolute; /* Position absolutely within search-bar */
-    right: 0; /* Align to the right */
-    top: 50%; /* Align to the center vertically */
-    transform: translateY(-50%); /* Center it perfectly */
-    background-color: #FFFFFF; /* Match search bar background or as needed */
-    border-top-right-radius: 25px; /* Match search bar border-radius */
-    border-bottom-right-radius: 25px; /* Match search bar border-radius */
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: url('assets/search-icon.png') no-repeat center center;
+    background-size: 50%;
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #FFFFFF;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
 }
 
 #search-bar:focus + #search-button,
@@ -131,54 +130,54 @@
 
 .side-legend {
     position: absolute;
-    top: 300px; /* Adjust based on your layout */
-    left: 75px; /* Aligning with the 'M' logo as per your HTML */
-    width: 194px; /* Width as per your rectangle */
-    display: block; /* Always display */
-    z-index: 100; /* To ensure it's above other elements */
+    top: 300px;
+    left: 75px;
+    width: 194px;
+    display: block;
+    z-index: 100;
 }
 
 .side-legend {
-    color: black; /* Text color */
-    padding: 10px 20px; /* Padding inside buttons */
-    width: 86px; /* Full width of the container */
-    height: 52px; /* Height as per your rectangle */
-    text-align: left; /* Align text to left */
-    font-family: Inter; /* Font family */
-    font-size: 20px; /* Font size */
-    display: flex; /* To align icon and text */
-    align-items: center; /* Vertical alignment */
-    justify-content: start; /* Align content to start */
-    margin-bottom: 5px; /* Space between buttons */
+    color: black;
+    padding: 10px 20px;
+    width: 86px;
+    height: 52px;
+    text-align: left;
+    font-family: Inter;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    margin-bottom: 5px;
 }
 
 .side-legend img {
-    margin-right: 10px; /* Space between icon and text */
-    width: 20px; /* Icon width */
-    height: 20px; /* Icon height */
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
 }
 
 .side-legend:last-child {
-    margin-bottom: 0; /* No margin for the last button */
+    margin-bottom: 0;
 }
 
 .side-legend-button-1,
 .side-legend-button-2,
 .side-legend-button-3 {
-    width: 194px; /* Width as per your rectangle */
-    height: 52px; /* Height as per your rectangle */
-    background: rgba(217, 217, 217, 0.50); /* Background color of buttons */
-    border: 1px black solid; /* Border style */
-    color: black; /* Text color */
-    padding: 10px 20px; /* Padding inside buttons */
-    text-align: left; /* Align text to left */
-    font-family: Inter; /* Font family */
-    font-size: 20px; /* Font size */
-    display: flex; /* To align icon and text */
-    align-items: center; /* Vertical alignment */
-    justify-content: start; /* Align content to start */
-    margin-bottom: 5px; /* Space between buttons */
-    position: fixed; /* Fixed position */
+    width: 194px;
+    height: 52px;
+    background: rgba(217, 217, 217, 0.50);
+    border: 1px black solid;
+    color: black;
+    padding: 10px 20px;
+    text-align: left;
+    font-family: Inter;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    margin-bottom: 5px;
+    position: fixed;
     left: 75px; /* Aligning with the 'M' logo */
 }
 
@@ -187,11 +186,11 @@
     top: 300px;
 }
 .side-legend-button-2 {
-    top: 352px; /* Adjusted top position */
+    top: 352px;
 }
 .side-legend-button-3 {
-    top: 404px; /* Adjusted top position */
-    margin-bottom: 0; /* No margin for the last button */
+    top: 404px;
+    margin-bottom: 0;
 }
 
 .gallery {
@@ -199,7 +198,7 @@
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 50px;
     justify-content: center;
-    align-items: start; /* Align to the start to prevent stretching */
+    align-items: start;
     padding: 0 40px;
     top: 290px;
     left: 280px;
@@ -208,11 +207,11 @@
 }
 
 .photo {
-    width: calc(100% - 50px); /* Takes full width minus the gap */
-    height: 300px; /* Fixed height */
+    width: calc(100% - 50px);
+    height: 300px;
     margin-bottom: 40px;
-    overflow: hidden; /* Hide excess of images */
-    position: relative; /* Needed for absolute positioning of children */
+    overflow: hidden;
+    position: relative;
 }
 
 .gallery > *:not(:last-child) {
@@ -226,8 +225,8 @@
 .photo img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Cover the area, cropping as needed */
-    position: absolute; /* Position it over the .photo container */
+    object-fit: cover;
+    position: absolute;
     top: 0;
     left: 0;
 }
@@ -259,23 +258,23 @@
 
 .profile-container {
     position: absolute;
-    top: 100px; /* Adjust this value to move the container down */
-    right: 20px; /* Adjust this value to move the container left or right */
+    top: 100px;
+    right: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    z-index: 10; /* Ensure it's above other elements */
+    z-index: 10;
 }
 
 .ProfilePic {
     width: 106px;
     height: 109px;
-    display: block; /* Ensure it's a block-level element */
+    display: block;
 }
 
 #post-button {
-    width: 81px; /* Match your design */
-    height: 26px; /* Match your design */
+    width: 81px;
+    height: 26px;
     background: #4C6CE0;
     border-radius: 25px;
     color: white;
@@ -283,20 +282,20 @@
     font-family: Inter;
     font-weight: 600;
     border: none;
-    margin-top: 10px; /* Adjust the space between the profile picture and the button */
+    margin-top: 10px;
     cursor: pointer;
-    text-align: center; /* Center the text inside the button */
+    text-align: center;
 }
 
 .meme-item {
     display: flex;
     flex-direction: column;
-    height: 600px; /* Fixed height for each meme item */
+    height: 600px;
     background: #fff;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden; /* Hide overflow content */
-    margin-bottom: 50px; /* Space between items */
+    overflow: hidden;
+    margin-bottom: 50px;
     padding: 10px;
 }
 
@@ -332,8 +331,8 @@
 
 .gallery-item-description strong,
 .gallery-item-tags strong {
-    display: inline-block; /* Or use 'inline' if it suits better */
-    margin-right: 5px; /* Adjust as needed */
+    display: inline-block;
+    margin-right: 5px;
     font-weight: bold;
     margin-bottom: 10px;
 }
@@ -341,25 +340,25 @@
 .gallery-item-description,
 .gallery-item-tags,
 .gallery-item-ratings {
-    min-height: 50px; /* Adjust as needed */
+    min-height: 50px;
     display: flex;
     align-items: center;
 }
 
 .gallery-item-ratings {
     flex-grow: 1;
-    justify-content: space-between; /* This spreads out the rating boxes */
+    justify-content: space-between;
 }
 
 .gallery-item-description span,
 .gallery-item-tags .tag {
-    display: inline; /* Keeps everything on the same line */
+    display: inline;
 }
 
 .gallery-item {
     display: flex;
     flex-direction: column;
-    min-height: 400px; /* Adjust as needed */
+    min-height: 400px;
     background: #fff;
     border-radius: 10px;
     overflow: hidden;
@@ -368,8 +367,8 @@
 
 .gallery-item img {
     width: 100%;
-    height: 200px; /* Set a fixed height for your images */
-    object-fit: cover; /* This will cover the area, cropping the image as needed */
+    height: 200px;
+    object-fit: cover;
 }
 
 
@@ -378,8 +377,8 @@
     border-radius: 15px;
     padding: 5px 10px;
     color: white;
-    margin-right: 5px; /* Space between tags */
-    display: inline-block; /* Treat each tag as a block but flow inline */
+    margin-right: 5px;
+    display: inline-block;
 }
 
 
@@ -418,7 +417,7 @@
     border-radius: 20px;
     padding: 5px 10px;
     font-size: 14px;
-    width: 50px; /* Adjust as needed */
+    width: 50px;
 }
 
 .rating {
@@ -428,7 +427,7 @@
     padding: 5px 10px;
     font-size: 14px;
     text-align: center;
-    width: 50px; /* Adjust as needed */
+    width: 50px;
 }
 
 .rate-meme-button {
@@ -438,5 +437,5 @@
     border-radius: 20px;
     color: white;
     cursor: pointer;
-    margin-top: 10px; /* Pushes the button down to the bottom of the container */
+    margin-top: 10px;
 }
