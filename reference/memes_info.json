@@ -1,0 +1,86 @@
+{
+  "memes_info": {
+    "memes": [
+      {
+        "meme_id": "xxx",
+        "title": "meme1",
+        "tags": [
+          "gym",
+          "depression",
+          "mood"
+        ],
+        "description": "",
+        "photo": "s3:~/assets/images/memes/meme1.jpeg",
+        "nsfw": true
+      },
+      {
+        "meme_id": "xxx",
+        "title": "meme2",
+        "tags": [
+          "code",
+          "god",
+          "developer"
+        ],
+        "description": "",
+        "photo": "~/assets/images/memes/meme2.jpeg",
+        "nsfw": false
+      },
+      {
+        "meme_id": "xxx",
+        "title": "meme3",
+        "tags": [
+          "attention",
+          "mcdonalds"
+        ],
+        "description": "",
+        "photo": "~/assets/images/memes/meme3.jpeg",
+        "nsfw": true
+      },
+      {
+        "meme_id": "xxx",
+        "title": "meme4",
+        "tags": [
+          "censor",
+          "youtube",
+          "curse",
+          "yt",
+          "censorship"
+        ],
+        "description": "",
+        "photo": "~/assets/images/memes/meme4.jpeg",
+        "nsfw": true
+      },
+      {
+        "meme_id": "xxx",
+        "title": "meme5",
+        "tags": [
+          "crypto"
+        ],
+        "description": "",
+        "photo": "~/assets/images/memes/meme5.jpeg",
+        "nsfw": true
+      },
+      {
+        "meme_id": "xxx",
+        "title": "meme6",
+        "tags": [
+          "nsfw",
+          "cbd"
+        ],
+        "description": "",
+        "photo": "~/assets/images/memes/meme6.jpeg",
+        "nsfw": true
+      },
+      {
+        "meme_id": "xxx",
+        "title": "meme7",
+        "tags": [
+          "politics"
+        ],
+        "description": "",
+        "photo": "~/assets/images/memes/meme7.jpeg",
+        "nsfw": true
+      }
+    ]
+  }
+}

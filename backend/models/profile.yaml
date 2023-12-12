@@ -1,0 +1,19 @@
+    Profile:
+      type: object
+      properties:
+        profile_id:
+          type: string
+          description: Unique identifier for the user profile
+        email:
+          type: string
+          format: email
+        username:
+          type: string
+        password:
+          type: string
+        phone:
+          type: integer
+        date_of_birth:
+          type: string
+          format: date-time
+

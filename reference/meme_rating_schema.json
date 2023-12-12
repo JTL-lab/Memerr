@@ -1,0 +1,19 @@
+{
+  "memes": [
+    {
+      "meme_id": "xxx",
+      "meme_ratings": {
+        "meme_rating_id": "xxx",
+        "ratings_by_categories": {
+          "humor": 1,
+          "originality": 2,
+          "nsfw": 5,
+          "relatable": 4
+        },
+        "meme_rater": "user-id-of-xxx",
+        "created_date": "2012-11-14",
+        "updated_date": "2012-11-14"
+      }
+    }
+  ]
+}

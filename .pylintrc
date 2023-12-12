@@ -1,0 +1,9 @@
+[MESSAGES CONTROL]
+disable= 
+    missing-function-docstring,
+    missing-module-docstring,
+    pointless-string-statement,
+    unused-argument,
+    no-else-return,
+    line-too-long,
+    broad-exception-raised
