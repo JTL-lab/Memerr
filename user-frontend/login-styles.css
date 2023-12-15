@@ -1,0 +1,74 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.userLogin {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background: white;
+}
+
+.input {
+    width: 593px;
+    height: 67px;
+    position: absolute;
+    background: rgba(217, 217, 217, 0.50);
+    border-radius: 15px;
+    border: 1px black solid;
+    font-size: 28px;
+}
+
+::placeholder {
+    position: relative;
+    left: 10px;
+    font-size: 28px;
+    font-family: Inter;
+    font-weight: 400;
+    word-wrap: break-word;
+}
+
+.button {
+    position: absolute;
+    width: 162px;
+    height: 62px;
+    color: white;
+    font-size: 32px;
+    font-family: Inter;
+    font-weight: 600;
+    word-wrap: break-word;
+    background: rgba(76, 108, 224, 0.80);
+    border-radius: 30px;
+    cursor: pointer;
+}
+
+.logo {
+    width: 593px;
+    height: 180px;
+    left: 440px;
+    top: 173px;
+    position: absolute;
+    color: #4C6CE0;
+    font-size: 153px;
+    font-family: Inter;
+    font-weight: 700;
+    word-wrap: break-word;
+}
+
+.sub-text {
+    width: 415px;
+    height: 45px;
+    left: 452px;
+    top: 849px;
+    position: absolute;
+    color: black;
+    font-size: 36px;
+    font-family: Inter;
+    font-style: italic;
+    font-weight: 400;
+    word-wrap: break-word;
+}
+

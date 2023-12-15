@@ -1,0 +1,105 @@
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+}
+
+.usersignup {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    background: white;
+}
+
+.box {
+    position: absolute;
+    border: 1px solid black;
+    border-radius: 15px;
+    background: rgba(217, 217, 217, 0.50);
+}
+
+#box1, #box2, #box3, #box4, #box5 {
+    width: 593px;
+    height: 67px;
+}
+
+#box1 { left: 423px; top: 443px; }
+#box2 { left: 423px; top: 362px; }
+#box3 { left: 423px; top: 200px; }
+#box4 { width: 203px; height: 34px; left: 1118px; top: 459px; }
+#box5 { left: 423px; top: 281px; }
+
+.text {
+    position: absolute;
+    color: rgba(0, 0, 0, 0.50);
+    font-size: 28px;
+    font-weight: 400;
+    word-wrap: break-word;
+}
+
+#text1 { left: 440px; top: 297px; }
+#text2 { left: 440px; top: 378px; }
+#text3 { left: 440px; top: 459px; }
+#text4 { left: 440px; top: 216px; }
+
+#uploadText { left: 1128px; top: 460px; font-size: 26px; }
+
+#header {
+    width: 359px;
+    height: 40px;
+    left: 423px;
+    top: 146px;
+    position: absolute;
+    color: black;
+    font-size: 32px;
+    font-weight: 600;
+    word-wrap: break-word;
+}
+
+#logo {
+    width: 100px;
+    height: 100px;
+    left: 75px;
+    top: 75px;
+    position: absolute;
+    background: #4C6CE0;
+}
+
+#initial {
+    width: 71px;
+    height: 86px;
+    left: 90px;
+    top: 80px;
+    position: absolute;
+    color: white;
+    font-size: 75px;
+    font-weight: 700;
+    word-wrap: break-word;
+}
+
+#image {
+    width: 239px;
+    height: 218px;
+    left: 1100px;
+    top: 225px;
+    position: absolute;
+}
+
+#button {
+    width: 416px;
+    height: 62px;
+    left: 512px;
+    top: 576px;
+    position: absolute;
+    background: rgba(76, 108, 224, 0.80);
+    border-radius: 30px;
+}
+
+#createAccount {
+    left: 602px;
+    top: 588px;
+    position: absolute;
+    color: white;
+    font-size: 32px;
+    font-weight: 600;
+    word-wrap: break-word;
+}
