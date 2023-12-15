@@ -27,6 +27,8 @@ MANIFEST
 .venv
 venv/
 venv/.DS_Store
+.myenv
+myenv/
 
 # Custom
 scrap*.md

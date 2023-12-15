@@ -23,7 +23,7 @@ To deactivate the venv: deactivate
 ---
 #### Set Environment Variables
 ```
-export FLASK_APP=app.py
+export FLASK_APP=app
 export FLASk_ENV=development
 ```
 

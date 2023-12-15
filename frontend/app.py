@@ -1,20 +1,22 @@
-#!/usr/bin/python3
-from flask import Flask, request, jsonify
-import boto3
-import jwt
 from functools import wraps
-from authn import get_jwks, validate_token, authn_handler, sign_in
-import os
-import requests
+from flask import Flask, jsonify, make_response, request, render_template
+from .py.authn import get_jwks, validate_token, sign_in
+import boto3
+from .models.profile import UserCreds
+import jwt
 
 
+
+#region Global Variables
 app = Flask(__name__)
 # AWS Cognito Configuration
 COGNITO_REGION = 'us-east-1'
 COGNITO_USER_POOL_ID = 'us-east-1_2xLbaGSV5'
 COGNITO_APP_CLIENT_ID = '66oaupmsid03n7ugdbseid111s'
 COGNITO_CLIENT = boto3.client('cognito-idp', region_name=COGNITO_REGION)
-# Add your function definitions here (e.g., sign_in, validate_token)
+#endregion
+
+
 
 # Token Validation Decorator
 def token_required(f):
@@ -39,6 +41,7 @@ def token_required(f):
 
     return decorated
 
+
 # User Registration
 @app.route('/register', methods=['POST'])
 def register():
@@ -56,11 +59,17 @@ def login():
     if not username or not password:
         return jsonify({'message': 'Username and password are required'}), 400
 
-    id_token = sign_in(username, password)
+    user_creds = UserCreds(username, password)
+    print(f'user_creds: {user_creds}')
+    id_token = sign_in(user_creds)
     if id_token:
+        # Create a response object and set the JWT token in a cookie
+        response = make_response(jsonify({"message": "Login successful"}))
+        response.set_cookie('token', id_token, httponly=True, secure=True)
         return jsonify({'message': 'Login successful', 'idToken': id_token})
     else:
         return jsonify({'message': 'Login failed'}), 401
+
 
 # Protected Route: Share a Meme
 @app.route('/share-meme', methods=['POST'])
@@ -87,10 +96,31 @@ def rate_meme():
     return jsonify({'message': '/rate-meme success!'})
 
 
+# Protected Route: Logout
+@app.route('/logout')
+@token_required
+def logout():
+    # Implement /logout
+    response = make_response(jsonify({"message": "Logout successful"}))
+    response.set_cookie('token', '', expires=0)
+    return response
+
+
 @app.errorhandler(404)
 def error(err):
     return 'oops, nothing here', 404
 
+
+@app.route("/")
+def home():
+    return "Hello, Flask!"
+
+
+@app.route("/user/create", endpoint="user_signup", methods=["GET"])
+def user_page():
+    if request.endpoint == "user_signup":
+        return render_template("user_signup.html")
+
+
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000, threaded=True)
-    # app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, threaded=True, debug=True)

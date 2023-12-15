@@ -1,11 +1,9 @@
 import json
-import requests
-import jwt
-from jwt.algorithms import RSAAlgorithm
-from jwt.exceptions import ExpiredSignatureError, InvalidTokenError
 import logging
+import requests
 from botocore.exceptions import ClientError
 import boto3
+import jwt
 
 COGNITO_REGION = 'us-east-1'
 COGNITO_APP_CLIENT_ID = '66oaupmsid03n7ugdbseid111s'
@@ -68,15 +66,24 @@ def authn_handler(user_creds):
         print("Username or password missing")
         return None
 
-    token = sign_in(username, password)
+    token = sign_in(user_creds)
     print(token)
 
     payload = validate_token(token)
     print(payload)
 
 
-def sign_up(username, password, email):
+def sign_up(user_creds):
     try:
+        print(f'@sign_up: {user_creds}')
+        username = user_creds.get('username')
+        password = user_creds.get('password')
+        email = user_creds.get('email')
+
+        if not username or not password or not email:
+            print("Error: sign_up Failed; Missing fields!")
+            return None
+
         response = client.sign_up(
             ClientId=COGNITO_APP_CLIENT_ID,
             Username=username,
@@ -93,8 +100,16 @@ def sign_up(username, password, email):
         # print(e)
         pass
 
-def sign_in(username, password):
+def sign_in(user_creds):
     try:
+        print(f'@sign_in: {user_creds}')
+        username = user_creds.get('username')
+        password = user_creds.get('password')
+
+        if not username or not password:
+            print("Error: sign_in Failed; Username or password missing!")
+            return None
+
         response = client.initiate_auth(
             ClientId=COGNITO_APP_CLIENT_ID,
             AuthFlow='USER_PASSWORD_AUTH',
