@@ -1,6 +1,6 @@
 from functools import wraps
 from flask import Flask, jsonify, make_response, request, render_template
-from .py.authn import get_jwks, validate_token, sign_in
+from .py.authn import get_jwks, validate_token, sign_in, generate_nonce
 import boto3
 from .models.profile import UserCreds
 import jwt
@@ -112,8 +112,11 @@ def error(err):
 
 
 @app.route("/")
-def home():
-    return "Hello, Flask!"
+def index():
+    nonce = generate_nonce()
+    response = make_response(render_template("index.html", nonce=nonce))
+    response.headers['Content-Security-Policy'] = f"script-src 'nonce-{nonce}'"
+    return response
 
 
 @app.route("/user/create", endpoint="user_signup", methods=["GET"])

@@ -1,76 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Memerr</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
+    <link rel="stylesheet" href="static/styles.css" />
+  </head>
 
-<body>
-
+  <body>
     <h1 style="margin-top: 1em">Create User</h1>
 
     <div class="card" style="padding: 10px; margin-bottom: 30px">
-        <h3>Sign Up</h3>
-        <p style="color: grey">
-            Enter your details!
-        </p>
-        <form style="margin-top: 1em" id="create-user-form" class="needs-validation" onsubmit="return false" novalidate>
-            <div class="form-group">
-                <label for="user-email">Email Address</label>
-                <input type="text" class="form-control" id="user-email" placeholder="Enter your Email Address here"
-                    maxlength="50" required />
-            </div>
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" class="form-control" id="username" placeholder="Enter your Username here"
-                    maxlength="50" required />
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="text" class="form-control" id="password" placeholder="Enter your Password here"
-                    maxlength="50" required />
-            </div>
-            <div class="form-group">
-                <label for="user-dob">Date of Birth</label>
-                <input type="date" class="form-control" id="user-dob" placeholder="Enter your Date of birth here"
-                    required />
-            </div>
-            <div class="form-group">
-                <label for="user-phone">Phone Number</label>
-                <input type="tel" class="form-control" id="user-phone" placeholder="Enter your Phone number here"
-                    pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required />
-            </div>
-            <button type="button" class="btn btn-primary" onclick="submitForm()">
-                Submit
-            </button>
-        </form>
+      <h3>Sign Up</h3>
+      <p style="color: grey">Enter your details!</p>
+      <form style="margin-top: 1em" id="create-user-form" class="needs-validation" onsubmit="return false" novalidate>
+        <div class="form-group">
+          <label for="user-email">Email Address</label>
+          <input type="text" class="form-control" id="user-email" placeholder="Enter your Email Address here" maxlength="50" required />
+        </div>
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" class="form-control" id="username" placeholder="Enter your Username here" maxlength="50" required />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="text" class="form-control" id="password" placeholder="Enter your Password here" maxlength="50" required />
+        </div>
+        <div class="form-group">
+          <label for="user-dob">Date of Birth</label>
+          <input type="date" class="form-control" id="user-dob" placeholder="Enter your Date of birth here" required />
+        </div>
+        <div class="form-group">
+          <label for="user-phone">Phone Number</label>
+          <input type="tel" class="form-control" id="user-phone" placeholder="Enter your Phone number here" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required />
+        </div>
+        <button type="button" class="btn btn-primary" onclick="submitForm()">Submit</button>
+      </form>
     </div>
+  </body>
 
-</body>
-
-<script type="text/javascript" src="{{ url_for('static', filename = 'user_signup.js') }}">
-</script>
-<script type="text/javascript" src="{{ url_for('static', filename = 'user_signup.js') }}">
-</script>
-<script src="https://code.jquery.com/jquery-2.2.3.min.js"
-    integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous" />
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
-    integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
-    crossorigin="anonymous"></script>
-<script type="text/javascript"
-    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js"></script>
-<link rel="stylesheet" type="text/css"
-    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.1/css/bootstrap-datepicker3.min.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script
-    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>
-<link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css" />
-
+  <script type="text/javascript" src="{{ url_for('static', filename = 'user_signup.js') }}"></script>
+  <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous" />
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.1/css/bootstrap-datepicker3.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css" />
 </html>

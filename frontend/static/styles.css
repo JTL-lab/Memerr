@@ -44,7 +44,7 @@
     width: 40px;
     height: 40px;
     border: none;
-    background: url('assets/search-icon.png') no-repeat center center;
+    background: url('../static/assets/search-icon.png') no-repeat center center;
     background-size: 50%;
     cursor: pointer;
     position: absolute;

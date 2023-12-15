@@ -1,5 +1,6 @@
 import json
 import logging
+import os
 import requests
 from botocore.exceptions import ClientError
 import boto3
@@ -124,3 +125,6 @@ def sign_in(user_creds):
         # General error
         print(f"Sign-in error: {str(e)}")
         raise ValueError(f'An error occurred during sign-in: {str(e)}') from e
+
+def generate_nonce():
+    return os.urandom(16).hex()

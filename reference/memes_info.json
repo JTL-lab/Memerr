@@ -10,7 +10,7 @@
           "mood"
         ],
         "description": "",
-        "photo": "s3:~/assets/images/memes/meme1.jpeg",
+        "photo": "s3:~/static/assets/images/memes/meme1.jpeg",
         "nsfw": true
       },
       {
@@ -22,7 +22,7 @@
           "developer"
         ],
         "description": "",
-        "photo": "~/assets/images/memes/meme2.jpeg",
+        "photo": "~/static/assets/images/memes/meme2.jpeg",
         "nsfw": false
       },
       {
@@ -33,7 +33,7 @@
           "mcdonalds"
         ],
         "description": "",
-        "photo": "~/assets/images/memes/meme3.jpeg",
+        "photo": "~/static/assets/images/memes/meme3.jpeg",
         "nsfw": true
       },
       {
@@ -47,7 +47,7 @@
           "censorship"
         ],
         "description": "",
-        "photo": "~/assets/images/memes/meme4.jpeg",
+        "photo": "~/static/assets/images/memes/meme4.jpeg",
         "nsfw": true
       },
       {
@@ -57,7 +57,7 @@
           "crypto"
         ],
         "description": "",
-        "photo": "~/assets/images/memes/meme5.jpeg",
+        "photo": "~/static/assets/images/memes/meme5.jpeg",
         "nsfw": true
       },
       {
@@ -68,7 +68,7 @@
           "cbd"
         ],
         "description": "",
-        "photo": "~/assets/images/memes/meme6.jpeg",
+        "photo": "~/static/assets/images/memes/meme6.jpeg",
         "nsfw": true
       },
       {
@@ -78,7 +78,7 @@
           "politics"
         ],
         "description": "",
-        "photo": "~/assets/images/memes/meme7.jpeg",
+        "photo": "~/static/assets/images/memes/meme7.jpeg",
         "nsfw": true
       }
     ]
