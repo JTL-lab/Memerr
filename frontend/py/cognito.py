@@ -114,5 +114,6 @@ class CognitoIdentityProviderWrapper:
 """
 References:
 - https://github.com/awsdocs/aws-doc-sdk-examples/blob/main/python/example_code/cognito/cognito_idp_actions.py#L114
+- https://github.com/awsdocs/aws-doc-sdk-examples/tree/main/python
 
 """

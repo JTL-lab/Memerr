@@ -38,6 +38,7 @@ class Profile:
     def _is_valid_email(email):
         return re.match(r"[^@]+@[^@]+\.[^@]+", email) is not None
 
+
     @staticmethod
     def calculate_age(date_of_birth):
         # date_of_birth Format: "YYYY-MM-DD"
