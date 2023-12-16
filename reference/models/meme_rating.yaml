@@ -1,0 +1,25 @@
+  Meme_Ratings:
+    type: array
+    properties:
+      meme_id:
+        type: string
+      Meme_Rating:
+        type: object
+        properties:
+          meme_rating_id:
+            type: string
+          ratings_by_category:
+            type: object
+            properties:
+              humor:
+                type: integer
+                minimum: 1
+                maximum: 5
+              originality:
+                type: integer
+                minimum: 1
+                maximum: 5
+              relatability:
+                type: integer
+                minimum: 1
+                maximum: 5

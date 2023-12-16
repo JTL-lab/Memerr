@@ -31,5 +31,4 @@ venv/.DS_Store
 myenv/
 
 # Custom
-scrap*.md
 scrap/
