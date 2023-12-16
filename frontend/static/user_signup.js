@@ -3,10 +3,18 @@ $(document).ready(function () {
   $('#user-dob').datepicker({
     format: 'yyyy-mm-dd',
   });
+  $('#user-dob').on('input', function () {
+    dateOfBirth = $(this).val();
+  });
   $('#user-dob').on('change', function () {
     dateOfBirth = $(this).val();
   });
 });
+
+function uploadPicture() {
+  // Implement the logic to handle picture upload here
+  alert('Implement picture upload logic');
+}
 
 async function submitForm() {
   var forms = document.querySelectorAll('.needs-validation');
