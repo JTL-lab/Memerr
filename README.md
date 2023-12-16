@@ -31,3 +31,10 @@ export FLASk_ENV=development
 ```
 python3 -m flask run
 ```
+---
+#### ngrok Setup with Brew and Use
+AWS App Client only allows for https and localhost in Callback URLs, so you may need to use ngrok to tunnel http traffic to https via ngrok.
+```
+brew install --cask ngrok
+ngrok http https://127.0.0.1:5000
+```

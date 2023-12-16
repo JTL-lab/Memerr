@@ -7,4 +7,5 @@ disable=
     unused-argument,
     no-else-return,
     line-too-long,
-    broad-exception-raised
+    broad-exception-raised,
+    broad-exception-caught

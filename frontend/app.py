@@ -3,6 +3,7 @@ import urllib
 import requests
 import boto3
 from flask import Flask, jsonify, make_response, request, render_template, redirect
+from flask_cors import CORS
 import jwt
 from .models.profile import UserCreds
 from .py.authn import get_jwks, validate_token, sign_in, generate_nonce
@@ -11,17 +12,18 @@ from .py.authn import get_jwks, validate_token, sign_in, generate_nonce
 
 #region Global Variables
 app = Flask(__name__)
+CORS(app)
 # AWS Cognito Configuration
 COGNITO_REGION = 'us-east-1'
 COGNITO_USER_POOL_ID = 'us-east-1_2xLbaGSV5'
 COGNITO_DOMAIN = 'memerr.auth.us-east-1.amazoncognito.com'
+COGNITO_CLIENT = boto3.client('cognito-idp', region_name=COGNITO_REGION)
 COGNITO_LOGIN_URL_HARDCODED = 'https://memerr.auth.us-east-1.amazoncognito.com/login?response_type=code&client_id=66oaupmsid03n7ugdbseid111s&redirect_uri=https://memerr-homepage.s3-website-us-east-1.amazonaws.com'
-REDIRECT_URI = 'http://memerr-homepage.s3-website-us-east-1.amazonaws.com/callback'
 SCOPES = 'openid profile email'
 TOKEN_ENDPOINT = f"https://{COGNITO_DOMAIN}/oauth2/token"
 COGNITO_APP_CLIENT_ID = '4h26gjmvon4b6befhs9vsv83p2'
 COGNITO_APP_CLIENT_SECRET = 'oa6kd698oo3d97sj8q4rtmtskl4809l7kl9atbdjcjb2eududmb'
-COGNITO_CLIENT = boto3.client('cognito-idp', region_name=COGNITO_REGION)
+REDIRECT_URI = 'https://2459-207-38-235-231.ngrok-free.app/callback'
 #endregion
 
 
@@ -42,8 +44,8 @@ def token_required(f):
             user = validate_token(access_token)
             if user is None:
                 return jsonify({'message': 'Unauthorized'}), 401
-        except:
-            return jsonify({'message': 'Token is invalid!'}), 401
+        except Exception as e:
+            return jsonify({'message': f'Token is invalid! Error {e}'}), 401
 
         return f(*args, **kwargs)
     return decorated
@@ -97,29 +99,33 @@ def login():
 @app.route('/callback')
 def callback():
     # Exchange the authV code for tokens (ID, access, refresh) using the Cognito Token endpoint
-    code = request.args.get('code')
+    try:
+        print('@callback Start')
+        code = request.args.get('code')
+        print(f'@callback code: {code}')
 
-    headers = {
-        'Content-Type': 'application/x-www-form-urlencoded'
-    }
-    data = {
-        'grant_type': 'authorization_code',
-        'client_id': COGNITO_APP_CLIENT_ID,
-        'code': code,
-        'redirect_uri': REDIRECT_URI
-    }
-    if COGNITO_APP_CLIENT_SECRET:
-        data['client_secret'] = COGNITO_APP_CLIENT_SECRET
+        headers = {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+        data = {
+            'grant_type': 'authorization_code',
+            'client_id': COGNITO_APP_CLIENT_ID,
+            'client_secret': COGNITO_APP_CLIENT_SECRET,
+            'code': code,
+            'redirect_uri': REDIRECT_URI
+        }
+        print(f'@callback data: {data}')
+        response = requests.post(TOKEN_ENDPOINT, headers=headers, data=data, timeout=5000)
+        print(f'@callback response: {response}')
 
-    response = requests.post(TOKEN_ENDPOINT, headers=headers, data=data, timeout=5000)
-
-    if response.status_code == 200:
-        tokens = response.json()
-        print(f'@callback authV code: {tokens}')
-        return tokens
-    else:
-        return 'Error exchanging code for tokens', response.status_code
-
+        if response.status_code == 200:
+            tokens = response.json()
+            print(f'@callback authV code: {tokens}')
+            return tokens
+        else:
+            return 'Error exchanging code for tokens', response.status_code
+    except Exception as e:
+        return jsonify({'message': f'Callback Failed! Error {e}, code {code}, data {data}, response {response}'}), 401
 
 # Protected Route: Share a Meme
 @app.route('/share-meme', methods=['POST'])
@@ -176,4 +182,4 @@ def user_signup_page():
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000, threaded=True, debug=True)
+    app.run(host='0.0.0.0', port=5000, threaded=True, debug=True, ssl_context='adhoc')
