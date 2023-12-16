@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="signup-styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="user_signup.js"></script>
+
+</head>
+<body>
+    <div class="usersignup">
+        <div id="box1" class="box"></div>
+        <div id="box2" class="box"></div>
+        <div id="box3" class="box"></div>
+        <div id="box4" class="box"></div>
+        <div id="box5" class="box"></div>
+        <div id="box6" class="box"></div>
+
+        <input name="user-email" id = "user-email" type="text" class="text text-input" placeholder="Email" autocomplete="off" autofocus>
+        <input name="username" id = "username" type="text"  class="text text-input" placeholder="Username" autocomplete="off" autofocus>
+        <input name="password" id = "password" type="text"  class="text text-input" placeholder="Password" autocomplete="off" autofocus>
+        <input name="user-phone" id = "user-phone" type="text"  class="text text-input" placeholder="Phone number (optional)" autocomplete="off" autofocus>
+        <input name="user-dob" id = "user-dob" type="date"  class="datepicker" placeholder="Date of Birth" autocomplete="off" autofocus>
+                    
+        <div id="uploadText" class="text" onclick="uploadPicture()">Upload Picture</div>
+
+        <div id="header">Enter your details!</div>
+
+        <div id="logo"></div>
+        <div id="initial">M</div>
+
+        <img id="image" src="assets/default_profilepic.jpg" alt="Placeholder Image">
+
+        <div id="button"></div>
+        <div id="createAccount" onclick="submitForm()">Create Account</div>
+    </div>
+</body>
+</html>
