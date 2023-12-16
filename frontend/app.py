@@ -1,9 +1,11 @@
 from functools import wraps
-from flask import Flask, jsonify, make_response, request, render_template
-from .py.authn import get_jwks, validate_token, sign_in, generate_nonce
+import urllib
+import requests
 import boto3
-from .models.profile import UserCreds
+from flask import Flask, jsonify, make_response, request, render_template, redirect
 import jwt
+from .models.profile import UserCreds
+from .py.authn import get_jwks, validate_token, sign_in, generate_nonce
 
 
 
@@ -12,7 +14,13 @@ app = Flask(__name__)
 # AWS Cognito Configuration
 COGNITO_REGION = 'us-east-1'
 COGNITO_USER_POOL_ID = 'us-east-1_2xLbaGSV5'
-COGNITO_APP_CLIENT_ID = '66oaupmsid03n7ugdbseid111s'
+COGNITO_DOMAIN = 'memerr.auth.us-east-1.amazoncognito.com'
+COGNITO_LOGIN_URL_HARDCODED = 'https://memerr.auth.us-east-1.amazoncognito.com/login?response_type=code&client_id=66oaupmsid03n7ugdbseid111s&redirect_uri=https://memerr-homepage.s3-website-us-east-1.amazonaws.com'
+REDIRECT_URI = 'http://memerr-homepage.s3-website-us-east-1.amazonaws.com/callback'
+SCOPES = 'openid profile email'
+TOKEN_ENDPOINT = f"https://{COGNITO_DOMAIN}/oauth2/token"
+COGNITO_APP_CLIENT_ID = '4h26gjmvon4b6befhs9vsv83p2'
+COGNITO_APP_CLIENT_SECRET = 'oa6kd698oo3d97sj8q4rtmtskl4809l7kl9atbdjcjb2eududmb'
 COGNITO_CLIENT = boto3.client('cognito-idp', region_name=COGNITO_REGION)
 #endregion
 
@@ -22,23 +30,22 @@ COGNITO_CLIENT = boto3.client('cognito-idp', region_name=COGNITO_REGION)
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
-        token = None
+        access_token = None
         if 'Authorization' in request.headers:
-            token = request.headers['Authorization'].split(" ")[1]
-        if not token:
+            access_token = request.headers.get('Authorization')
+        if not access_token:
             return jsonify({'message': 'Token is missing!'}), 401
 
         try:
             jwks = get_jwks()
             print(jwks)
-            user = validate_token(token)
+            user = validate_token(access_token)
             if user is None:
                 return jsonify({'message': 'Unauthorized'}), 401
         except:
             return jsonify({'message': 'Token is invalid!'}), 401
 
         return f(*args, **kwargs)
-
     return decorated
 
 
@@ -49,8 +56,8 @@ def register():
     return jsonify({'message': 'User created successfully'}), 201
 
 # User Login
-@app.route('/login', methods=['POST'])
-def login():
+@app.route('/login-with-creds', methods=['POST'])
+def login_with_creds():
     # Implement /login
     content = request.json
     username = content.get('username')
@@ -69,6 +76,49 @@ def login():
         return jsonify({'message': 'Login successful', 'idToken': id_token})
     else:
         return jsonify({'message': 'Login failed'}), 401
+
+# User Login
+@app.route('/login', methods=['GET'])
+def login():
+    login_query_params = {
+        "response_type": "code",
+        "client_id": COGNITO_APP_CLIENT_ID,
+        "redirect_uri": REDIRECT_URI,
+        # "scope": SCOPES,
+    }
+    cognito_login_url = f"https://{COGNITO_DOMAIN}/login?{urllib.parse.urlencode(login_query_params)}"
+    print(f'@login cognito_login_url {cognito_login_url}')
+    return redirect(cognito_login_url)
+    # nonce = generate_nonce()
+    # response = make_response(render_template(COGNITO_LOGIN_URL, nonce=nonce))
+    # response.headers['Content-Security-Policy'] = f"script-src 'nonce-{nonce}'"
+    # return response
+
+@app.route('/callback')
+def callback():
+    # Exchange the authV code for tokens (ID, access, refresh) using the Cognito Token endpoint
+    code = request.args.get('code')
+
+    headers = {
+        'Content-Type': 'application/x-www-form-urlencoded'
+    }
+    data = {
+        'grant_type': 'authorization_code',
+        'client_id': COGNITO_APP_CLIENT_ID,
+        'code': code,
+        'redirect_uri': REDIRECT_URI
+    }
+    if COGNITO_APP_CLIENT_SECRET:
+        data['client_secret'] = COGNITO_APP_CLIENT_SECRET
+
+    response = requests.post(TOKEN_ENDPOINT, headers=headers, data=data, timeout=5000)
+
+    if response.status_code == 200:
+        tokens = response.json()
+        print(f'@callback authV code: {tokens}')
+        return tokens
+    else:
+        return 'Error exchanging code for tokens', response.status_code
 
 
 # Protected Route: Share a Meme
@@ -120,7 +170,7 @@ def index():
 
 
 @app.route("/user/create", endpoint="user_signup", methods=["GET"])
-def user_page():
+def user_signup_page():
     if request.endpoint == "user_signup":
         return render_template("user_signup.html")
 

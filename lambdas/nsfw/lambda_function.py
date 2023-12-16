@@ -1,4 +1,4 @@
-from nsfw.profile import Profile
+from lambdas.nsfw.profile import Profile
 
 
 def lambda_handler(event, context):

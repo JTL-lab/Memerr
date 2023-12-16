@@ -1,4 +1,3 @@
-import json
 import logging
 import os
 import requests
@@ -39,7 +38,7 @@ def validate_token(token):
             raise ValueError('Key not found in JWKS')
 
         # Construct the public key
-        public_key = RSAAlgorithm.from_jwk(key)
+        public_key = jwt.RSAAlgorithm.from_jwk(key)
 
         # Decode and validate the JWT
         payload = jwt.decode(
@@ -50,9 +49,9 @@ def validate_token(token):
             issuer=COGNITO_ISSUER
         )
         return payload
-    except ExpiredSignatureError as e:
+    except jwt.ExpiredSignatureError as e:
         raise ValueError('Token is expired') from e
-    except InvalidTokenError as e:
+    except jwt.InvalidTokenError as e:
         raise ValueError('Invalid token') from e
     except Exception as e:
         # General error (i.e. network issues)
@@ -101,6 +100,7 @@ def sign_up(user_creds):
         # print(e)
         pass
 
+
 def sign_in(user_creds):
     try:
         print(f'@sign_in: {user_creds}')
@@ -125,6 +125,29 @@ def sign_in(user_creds):
         # General error
         print(f"Sign-in error: {str(e)}")
         raise ValueError(f'An error occurred during sign-in: {str(e)}') from e
+
+
+def get_aws_credentials(google_token, identity_pool_id, region='us-east-1'):
+    aws_cognito_identity_client = boto3.client('cognito-identity', region_name=region)
+
+    response = aws_cognito_identity_client.get_id(
+        IdentityPoolId=identity_pool_id,
+        Logins={
+            'accounts.google.com': google_token
+        }
+    )
+
+    identity_id = response['IdentityId']
+
+    response = client.get_credentials_for_identity(
+        IdentityId=identity_id,
+        Logins={
+            'accounts.google.com': google_token
+        }
+    )
+
+    return response['Credentials']
+
 
 def generate_nonce():
     return os.urandom(16).hex()
