@@ -17,16 +17,23 @@ body {
     background: rgba(217, 217, 217, 0.50);
 }
 
-#box1, #box2, #box3, #box4, #box5 {
+#box1, #box2, #box3, #box4, #box5, #box6 {
     width: 593px;
     height: 67px;
 }
 
-#box1 { left: 423px; top: 443px; }
-#box2 { left: 423px; top: 362px; }
-#box3 { left: 423px; top: 200px; }
+#box1 { left: 423px; top: 200px; }
+#box2 { left: 423px; top: 281px; }
+#box3 { left: 423px; top: 362px; }
 #box4 { width: 203px; height: 34px; left: 1118px; top: 459px; }
-#box5 { left: 423px; top: 281px; }
+#box5 { left: 423px; top: 443px; }
+#box6 { left: 423px; top: 523px; }
+
+#user-email { left: 429px; top: 216px; }
+#username { left: 429px; top: 297px; }
+#password { left: 429px; top: 378px; }
+#user-phone { left: 429px; top: 459px; }
+#user-dob { left: 429px; top: 539px; }
 
 .text {
     position: absolute;
@@ -34,6 +41,20 @@ body {
     font-size: 28px;
     font-weight: 400;
     word-wrap: break-word;
+}
+
+.text-input {
+    background-color:rgba(0, 0, 0, 0.0);
+    border: none;
+    outline: none;
+}
+
+.datepicker {
+    background-color: rgba(217, 217, 217, 0.0);
+    border: none;
+    outline: none;
+    position: absolute;
+    font-size: 28px; /* Adjust the font size as needed */
 }
 
 #text1 { left: 440px; top: 297px; }
@@ -88,7 +109,7 @@ body {
     width: 416px;
     height: 62px;
     left: 512px;
-    top: 576px;
+    top: 616px;
     position: absolute;
     background: rgba(76, 108, 224, 0.80);
     border-radius: 30px;
@@ -96,7 +117,7 @@ body {
 
 #createAccount {
     left: 602px;
-    top: 588px;
+    top: 628px;
     position: absolute;
     color: white;
     font-size: 32px;
