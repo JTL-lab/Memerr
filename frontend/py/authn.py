@@ -12,8 +12,8 @@ JWKS_URL = 'https://cognito-idp.{REGION}.amazonaws.com/{USER_POOL_ID}/.well-know
 COGNITO_ISSUER = 'https://cognito-idp.{REGION}.amazonaws.com/{USER_POOL_ID}'
 
 client = boto3.client('cognito-idp', region_name=COGNITO_REGION)
-dynamodb = boto3.resource('dynamodb')
-table_user = dynamodb.Table('')
+# dynamodb = boto3.resource('dynamodb', region_name=COGNITO_REGION)
+# table_user = dynamodb.Table('')
 
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
