@@ -38,3 +38,45 @@ AWS App Client only allows for https and localhost in Callback URLs, so you may 
 brew install --cask ngrok
 ngrok http https://127.0.0.1:5000
 ```
+---
+#### Instructions for Updating the code manually on EC2
+Go to the parent directory of your frontend/
+Ensure that the pem file is also in this directory
+```
+zip frontend.zip frontend/
+scp -i "memerr-kp.pem" "frontend.zip" ec2-user@ec2-54-83-82-72.compute-1.amazonaws.com:/home/ec2-user
+ssh -i "memerr-kp.pem" ec2-user@ec2-54-83-82-72.compute-1.amazonaws.com
+unzip frontend.zip # replace All
+cd frontend/
+export FLASK_APP=app.py
+flask run --host=0.0.0.0 --port=5000
+```
+---
+#### Instructions for NGINX setup
+```
+sudo yum update
+sudo yum install nginx
+sudo systemctl start nginx
+sudo systemctl enable nginx
+sudo vim /etc/nginx/nginx.conf
+```
+Update this file by adding a server block
+```
+server {
+    listen 80;
+    server_name ec2-54-83-82-72.compute-1.amazonaws.com;
+
+    location / {
+        proxy_pass http://127.0.0.1:5000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+```
+Then run
+```
+sudo nginx -t
+sudo systemctl restart nginx
+```
