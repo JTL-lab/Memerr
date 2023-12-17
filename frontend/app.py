@@ -1,5 +1,6 @@
 from functools import wraps
 import urllib
+import logging
 import requests
 import boto3
 from flask import Flask, jsonify, make_response, request, render_template, redirect
@@ -13,17 +14,21 @@ from frontend.py.authn import get_jwks, validate_token, sign_in, generate_nonce
 #region Global Variables
 app = Flask(__name__)
 CORS(app)
+handler = logging.FileHandler('app.log')  # Ouput: app.log
+handler.setLevel(logging.INFO)  # Set log level (DEBUG, INFO, WARNING, ERROR, CRITICAL)
+app.logger.addHandler(handler)
 # AWS Cognito Configuration
 COGNITO_REGION = 'us-east-1'
 COGNITO_USER_POOL_ID = 'us-east-1_2xLbaGSV5'
 COGNITO_DOMAIN = 'memerr.auth.us-east-1.amazoncognito.com'
-FRONTEND_DOMAIN = 'https://ec2-54-83-82-72.compute-1.amazonaws.com'
+FRONTEND_DOMAIN = 'ec2-54-86-68-35.compute-1.amazonaws.com'
+# FRONTEND_DOMAIN = 'localhost:5001'
 COGNITO_CLIENT = boto3.client('cognito-idp', region_name=COGNITO_REGION)
 SCOPES = 'openid profile email'
 TOKEN_ENDPOINT = f"https://{COGNITO_DOMAIN}/oauth2/token"
 COGNITO_APP_CLIENT_ID = '4h26gjmvon4b6befhs9vsv83p2'
 COGNITO_APP_CLIENT_SECRET = 'oa6kd698oo3d97sj8q4rtmtskl4809l7kl9atbdjcjb2eududmb'
-REDIRECT_URI = 'https://ec2-54-83-82-72.compute-1.amazonaws.com/callback'
+REDIRECT_URI = f'http://{FRONTEND_DOMAIN}/callback'
 COGNITO_LOGIN_URL_HARDCODED = f'https://{FRONTEND_DOMAIN}/login?response_type=code&client_id={COGNITO_APP_CLIENT_ID}&redirect_uri={REDIRECT_URI}'
 #endregion
 
@@ -41,7 +46,7 @@ def token_required(f):
 
         try:
             jwks = get_jwks()
-            print(jwks)
+            app.logger.info(jwks)
             user = validate_token(access_token)
             if user is None:
                 return jsonify({'message': 'Unauthorized'}), 401
@@ -52,33 +57,32 @@ def token_required(f):
     return decorated
 
 
-# User Registration
-@app.route('/register', methods=['POST'])
-def register():
-    # Implement /register
-    return jsonify({'message': 'User created successfully'}), 201
+# User Text-Query
+@app.route('/search', methods=['GET'])
+def get_image_paths():
 
-# User Login
-@app.route('/login-with-creds', methods=['POST'])
-def login_with_creds():
-    # Implement /login
-    content = request.json
-    username = content.get('username')
-    password = content.get('password')
+    SEARCH_API_ENDPOINT = "https://1n88dyemv5.execute-api.us-east-1.amazonaws.com/memesearch/search"
+    app.logger.info(SEARCH_API_ENDPOINT)
+    try:
+        # You can customize the query parameters based on your API
+        query_parameters = {'q': request.args.get("query")}
 
-    if not username or not password:
-        return jsonify({'message': 'Username and password are required'}), 400
+        # Make a GET request to the search API endpoint
+        response = requests.get(SEARCH_API_ENDPOINT, params=query_parameters)
 
-    user_creds = UserCreds(username, password)
-    print(f'user_creds: {user_creds}')
-    id_token = sign_in(user_creds)
-    if id_token:
-        # Create a response object and set the JWT token in a cookie
-        response = make_response(jsonify({"message": "Login successful"}))
-        response.set_cookie('token', id_token, httponly=True, secure=True)
-        return jsonify({'message': 'Login successful', 'idToken': id_token})
-    else:
-        return jsonify({'message': 'Login failed'}), 401
+        # Check if the request was successful (status code 200)
+        if response.status_code == 200:
+            api_data = response.json()
+            image_paths = api_data.get('imagePaths', [])
+            user_query = api_data.get('userQuery', '')
+            image_paths = ["https://memerr-memes.s3.amazonaws.com/"+item for item in image_paths]
+            return jsonify({'image_paths': image_paths})
+        else:
+            # If the API request was not successful, handle the error
+            return jsonify({'error': f'Error from API: {response.status_code}'})
+
+    except Exception as e:
+        return jsonify({'error': f'An error occurred: {str(e)}'})
 
 # User Login
 @app.route('/login', methods=['GET'])
@@ -90,7 +94,7 @@ def login():
         # "scope": SCOPES,
     }
     cognito_login_url = f"https://{COGNITO_DOMAIN}/login?{urllib.parse.urlencode(login_query_params)}"
-    print(f'@login cognito_login_url {cognito_login_url}')
+    app.logger.info(f'@login cognito_login_url {cognito_login_url}')
     return redirect(cognito_login_url)
     # nonce = generate_nonce()
     # response = make_response(render_template(COGNITO_LOGIN_URL, nonce=nonce))
@@ -101,9 +105,9 @@ def login():
 def callback():
     # Exchange the authV code for tokens (ID, access, refresh) using the Cognito Token endpoint
     try:
-        print('@callback Start')
+        app.logger.info('@callback Start')
         code = request.args.get('code')
-        print(f'@callback code: {code}')
+        app.logger.info(f'@callback code: {code}')
 
         headers = {
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -115,14 +119,19 @@ def callback():
             'code': code,
             'redirect_uri': REDIRECT_URI
         }
-        print(f'@callback data: {data}')
+        app.logger.info(f'@callback data: {data}')
         response = requests.post(TOKEN_ENDPOINT, headers=headers, data=data, timeout=5000)
-        print(f'@callback response: {response}')
+        app.logger.info(f'@callback response: {response}')
 
         if response.status_code == 200:
             tokens = response.json()
-            print(f'@callback authV code: {tokens}')
-            return tokens
+            app.logger.info(f'@callback authV tokens: {tokens}')
+            id_token = tokens.get('id_token')
+            app.logger.info(f'@callback id_token: {id_token}')
+            print(f'id_token {id_token}')
+            validate_token(id_token)
+            return id_token
+            # return tokens
         else:
             return 'Error exchanging code for tokens', response.status_code
     except Exception as e:
@@ -172,8 +181,36 @@ def error(err):
 def index():
     nonce = generate_nonce()
     response = make_response(render_template("index.html", nonce=nonce))
-    response.headers['Content-Security-Policy'] = f"script-src 'nonce-{nonce}'"
+    # response.headers['Content-Security-Policy'] = f"script-src 'nonce-{nonce}'"
     return response
+
+# User Registration
+@app.route('/register', methods=['POST'])
+def register():
+    # Implement /register
+    return jsonify({'message': 'User created successfully'}), 201
+
+# User Login
+@app.route('/login-with-creds', methods=['POST'])
+def login_with_creds():
+    # Implement /login
+    content = request.json
+    username = content.get('username')
+    password = content.get('password')
+
+    if not username or not password:
+        return jsonify({'message': 'Username and password are required'}), 400
+
+    user_creds = UserCreds(username, password)
+    app.logger.info(f'user_creds: {user_creds}')
+    id_token = sign_in(user_creds)
+    if id_token:
+        # Create a response object and set the JWT token in a cookie
+        response = make_response(jsonify({"message": "Login successful"}))
+        response.set_cookie('token', id_token, httponly=True, secure=True)
+        return jsonify({'message': 'Login successful', 'idToken': id_token})
+    else:
+        return jsonify({'message': 'Login failed'}), 401
 
 
 @app.route("/user/create", endpoint="user_signup", methods=["GET"])

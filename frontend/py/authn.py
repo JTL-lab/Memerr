@@ -6,10 +6,11 @@ import boto3
 import jwt
 
 COGNITO_REGION = 'us-east-1'
-COGNITO_APP_CLIENT_ID = '66oaupmsid03n7ugdbseid111s'
+COGNITO_APP_CLIENT_ID = '4h26gjmvon4b6befhs9vsv83p2'
 COGNITO_USER_POOL_ID = 'us-east-1_2xLbaGSV5'
-JWKS_URL = 'https://cognito-idp.{REGION}.amazonaws.com/{USER_POOL_ID}/.well-known/jwks.json'
-COGNITO_ISSUER = 'https://cognito-idp.{REGION}.amazonaws.com/{USER_POOL_ID}'
+JWKS_URL = f'https://cognito-idp.{COGNITO_REGION}.amazonaws.com/{COGNITO_USER_POOL_ID}/.well-known/jwks.json'
+JWKS_URL_HARDCODED = 'https://cognito-idp.us-east-1.amazonaws.com/us-east-1_2xLbaGSV5/.well-known/jwks.json'
+COGNITO_ISSUER = f'https://cognito-idp.{COGNITO_REGION}.amazonaws.com/{COGNITO_USER_POOL_ID}'
 
 client = boto3.client('cognito-idp', region_name=COGNITO_REGION)
 # dynamodb = boto3.resource('dynamodb', region_name=COGNITO_REGION)
@@ -26,6 +27,7 @@ def get_jwks():
 def validate_token(token):
     try:
         # Decode the JWT header
+        print(f'@validate_token: {token}')
         headers = jwt.get_unverified_header(token)
 
         jwks = get_jwks()
@@ -36,9 +38,11 @@ def validate_token(token):
         key = next((key for key in jwks['keys'] if key['kid'] == headers['kid']), None)
         if not key:
             raise ValueError('Key not found in JWKS')
+        print(f'JWKS key {key}')
 
         # Construct the public key
         public_key = jwt.RSAAlgorithm.from_jwk(key)
+        print(f'public_key {public_key}')
 
         # Decode and validate the JWT
         payload = jwt.decode(

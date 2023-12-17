@@ -33,6 +33,8 @@ class Profile:
         self.phone = phone
         self.user_creds = UserCreds(username, password)
         self.date_of_birth = date_of_birth
+        # saved memes by meme_id
+        # memes rated from this user by meme_rating_id = email
 
     @staticmethod
     def _is_valid_email(email):
