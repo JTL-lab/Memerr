@@ -1,0 +1,40 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Memerr Frontend EC2Instance
+
+Resources:
+  MemerrEC2Instance:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      ImageId: ami-0759f51a90924c166
+      InstanceType: t2.micro
+      KeyName: memerr-kp
+      SecurityGroups:
+        - !Ref MemerrEC2SecurityGroup
+      BlockDeviceMappings:
+        - DeviceName: "/dev/sdh"
+          Ebs:
+            VolumeSize: 30
+            VolumeType: "gp2"
+            DeleteOnTermination: true
+
+  MemerrEC2SecurityGroup:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      GroupDescription: Enable HTTP and HTTPS access
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0  # Allows access from any IP for HTTP traffic
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: 0.0.0.0/0  # Allows access from any IP for HTTPS traffic
+
+Outputs:
+  MemerrInstanceId:
+    Description: Instance ID of the newly created EC2 instance
+    Value: !Ref MemerrEC2Instance
+  MemerrPublicIP:
+    Description: Public IP address of the newly created EC2 instance
+    Value: !GetAtt MemerrEC2Instance.PublicIp

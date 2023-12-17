@@ -17,13 +17,14 @@ CORS(app)
 COGNITO_REGION = 'us-east-1'
 COGNITO_USER_POOL_ID = 'us-east-1_2xLbaGSV5'
 COGNITO_DOMAIN = 'memerr.auth.us-east-1.amazoncognito.com'
+FRONTEND_DOMAIN = 'https://ec2-54-83-82-72.compute-1.amazonaws.com'
 COGNITO_CLIENT = boto3.client('cognito-idp', region_name=COGNITO_REGION)
-COGNITO_LOGIN_URL_HARDCODED = 'https://memerr.auth.us-east-1.amazoncognito.com/login?response_type=code&client_id=66oaupmsid03n7ugdbseid111s&redirect_uri=https://memerr-homepage.s3-website-us-east-1.amazonaws.com'
 SCOPES = 'openid profile email'
 TOKEN_ENDPOINT = f"https://{COGNITO_DOMAIN}/oauth2/token"
 COGNITO_APP_CLIENT_ID = '4h26gjmvon4b6befhs9vsv83p2'
 COGNITO_APP_CLIENT_SECRET = 'oa6kd698oo3d97sj8q4rtmtskl4809l7kl9atbdjcjb2eududmb'
-REDIRECT_URI = 'https://2459-207-38-235-231.ngrok-free.app/callback'
+REDIRECT_URI = 'https://ec2-54-83-82-72.compute-1.amazonaws.com/callback'
+COGNITO_LOGIN_URL_HARDCODED = f'https://{FRONTEND_DOMAIN}/login?response_type=code&client_id={COGNITO_APP_CLIENT_ID}&redirect_uri={REDIRECT_URI}'
 #endregion
 
 

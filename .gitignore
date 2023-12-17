@@ -32,3 +32,5 @@ myenv/
 
 # Custom
 scrap/
+*.pem
+*.zip
