@@ -47,9 +47,15 @@ zip frontend.zip frontend/
 scp -i "memerr-kp.pem" "frontend.zip" ec2-user@ec2-54-83-82-72.compute-1.amazonaws.com:/home/ec2-user
 ssh -i "memerr-kp.pem" ec2-user@ec2-54-83-82-72.compute-1.amazonaws.com
 unzip frontend.zip # replace All
-cd frontend/
-export FLASK_APP=app.py
-flask run --host=0.0.0.0 --port=5000
+cd /home/ec2-user/frontend
+source venv/bin/activate
+pip3 install -r requirements.txt
+FLASK_APP=app.py flask run
+```
+#### Instructions for running Gunicorn
+After running the above. Run this
+```
+gunicorn --workers 3 --bind unix:/home/ec2-user/frontend/app.sock -m 007 app:app
 ```
 ---
 #### Instructions for NGINX setup

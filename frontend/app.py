@@ -5,8 +5,8 @@ import boto3
 from flask import Flask, jsonify, make_response, request, render_template, redirect
 from flask_cors import CORS
 import jwt
-from .models.profile import UserCreds
-from .py.authn import get_jwks, validate_token, sign_in, generate_nonce
+from frontend.models.profile import UserCreds
+from frontend.py.authn import get_jwks, validate_token, sign_in, generate_nonce
 
 
 
