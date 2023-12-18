@@ -180,7 +180,6 @@ def upload_image():
         return jsonify({'error': 'Internal server error'}), 500
 
 
-# User Text-Query
 @app.route('/search', methods=['GET'])
 def get_image_paths():
     nonce = "nonce"
@@ -200,17 +199,17 @@ def get_image_paths():
             user_query = api_data.get('userQuery', '')
             img_paths = ["https://memerr-memes.s3.amazonaws.com/"+item for item in image_paths]
 
-            # memes_data = old_meme_table.retrieve_memes(image_paths, "meme_id")
+            memes_data = old_meme_table.retrieve_memes(image_paths, "meme_id")
     
-            # for data in memes_data:
-            #     # data['categories'] = json.loads(data['categories'])
-            #     categories_str = data['categories'].strip("[]")
-            #     tag_list = [tag.strip() for tag in categories_str.split(',')]
-            #     data['categories'] = tag_list
+            for data in memes_data:
+                # data['categories'] = json.loads(data['categories'])
+                categories_str = data['categories'].strip("[]")
+                tag_list = [tag.strip() for tag in categories_str.split(',')]
+                data['categories'] = tag_list
             
-            # print(memes_data)
-            # response = make_response(render_template("index.html", nonce=nonce, memes_data=memes_data))
-            # return response
+            print(memes_data)
+            response = make_response(render_template("index.html", nonce=nonce, memes_data=memes_data))
+            return response
 
             return jsonify({'image_paths': img_paths})
         else:

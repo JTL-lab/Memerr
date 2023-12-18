@@ -13,11 +13,13 @@
       <div class="Logo-Box" style="width: 100px; height: 100px; left: 75px; top: 75px; position: absolute; background: #4c6ce0"></div>
       <div class="M" style="width: 71px; height: 86px; left: 90px; top: 80px; position: absolute; color: white; font-size: 75px; font-family: Inter; font-weight: 700; word-wrap: break-word">M</div>
 
-      <!-- Search Bar -->
+    <!-- Search Form -->
+    <form action="/search" method="get">
       <div class="search-bar">
-        <input type="text" id="search-bar" name="search" placeholder="Search..." />
-        <button id="search-button"></button>
+        <input type="text" id="search-bar" name="query" placeholder="Search..." />
+        <button type="submit" id="search-button"></button>
       </div>
+    </form>
 
       <!-- Profile Pic & Upload Button -->
       <div class="profile-container">
@@ -180,28 +182,28 @@
 
 <!--------------------------------------------- SEARCH FUNCTIONALITY -------------------------------------------->
 
-const searchButton = document.getElementById('search-button');
-const searchBar = document.getElementById('search-bar');
+// const searchButton = document.getElementById('search-button');
+// const searchBar = document.getElementById('search-bar');
 const gallery = document.getElementById('gallery');
 
 
 // 
-document.getElementById("search-button").addEventListener("click", function() {
-    var searchTerm = document.getElementById("search-bar").value;
-    searchImages(searchTerm);
-});
+// document.getElementById("search-button").addEventListener("click", function() {
+//     var searchTerm = document.getElementById("search-bar").value;
+//     searchImages(searchTerm);
+// });
 
-function searchImages(searchTerm) {
-fetch(`/search?query=${encodeURIComponent(searchTerm)}`)
-    .then(response => response.json())
-    .then(data => {
-        // Update the gallery with the new image paths
-        updateGallery(data.image_paths);
-    })
-    .catch(error => {
-        console.error('Error fetching images:', error);
-    });
-}
+// function searchImages(searchTerm) {
+// fetch(`/search?query=${encodeURIComponent(searchTerm)}`)
+//     .then(response => response.json())
+//     .then(data => {
+//         // Update the gallery with the new image paths
+//         updateGallery(data.image_paths);
+//     })
+//     .catch(error => {
+//         console.error('Error fetching images:', error);
+//     });
+// }
 
 // Assuming you adjust your updateGallery function to handle image paths
 function updateGallery(imagePaths) {
