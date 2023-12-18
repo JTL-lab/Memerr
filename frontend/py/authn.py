@@ -3,7 +3,8 @@ import os
 import requests
 from botocore.exceptions import ClientError
 import boto3
-import jwt
+import jwt  # requires cryptography
+from jwt.algorithms import RSAAlgorithm
 
 COGNITO_REGION = 'us-east-1'
 COGNITO_APP_CLIENT_ID = '4h26gjmvon4b6befhs9vsv83p2'
@@ -28,20 +29,24 @@ def validate_token(token):
     try:
         # Decode the JWT header
         print(f'@validate_token: {token}')
-        headers = jwt.get_unverified_header(token)
+        if not jwt.algorithms.has_crypto:
+            print("No crypto support for JWT, please install the cryptography dependency")
+            return False
 
+        # jwks_client = jwt.PyJWKClient(JWKS_URL, cache_jwk_set=True, lifespan=360)
+        # signing_key = jwks_client.get_signing_key_from_jwt(token)
+
+        algo = RSAAlgorithm(RSAAlgorithm.SHA256)
+        headers = jwt.get_unverified_header(token)
         jwks = get_jwks()
-        print(jwks)
-        headers = jwt.get_unverified_header(token)
-
+        print(f'jwks: {jwks}')
         # Find the key from JWKS
         key = next((key for key in jwks['keys'] if key['kid'] == headers['kid']), None)
         if not key:
             raise ValueError('Key not found in JWKS')
         print(f'JWKS key {key}')
-
         # Construct the public key
-        public_key = jwt.RSAAlgorithm.from_jwk(key)
+        public_key = algo.from_jwk(key)
         print(f'public_key {public_key}')
 
         # Decode and validate the JWT
@@ -52,6 +57,7 @@ def validate_token(token):
             audience=COGNITO_APP_CLIENT_ID,
             issuer=COGNITO_ISSUER
         )
+        print(f'payload {payload}')
         return payload
     except jwt.ExpiredSignatureError as e:
         raise ValueError('Token is expired') from e
@@ -65,14 +71,11 @@ def authn_handler(user_creds):
     print(f'@authn_handler: {user_creds}')
     username = user_creds.get('username')
     password = user_creds.get('password')
-
     if not username or not password:
         print("Username or password missing")
         return None
-
     token = sign_in(user_creds)
     print(token)
-
     payload = validate_token(token)
     print(payload)
 
@@ -142,7 +145,6 @@ def get_aws_credentials(google_token, identity_pool_id, region='us-east-1'):
     )
 
     identity_id = response['IdentityId']
-
     response = client.get_credentials_for_identity(
         IdentityId=identity_id,
         Logins={
