@@ -8,6 +8,13 @@ class DynamoDB:
         self.dynamodb = boto3.resource('dynamodb', region_name=region_name)
         self.table = self.dynamodb.Table(dynamo_db_table)
 
+    def insert_data(self, memes_data):
+        if isinstance(memes_data, list):
+            for data in memes_data:
+                self.table.put_item(Item=data)
+        else:
+            self.table.put_item(Item=memes_data)
+
     def get_memes_data(self):
         response = self.table.scan()
         memes_data = response.get('Items', [])

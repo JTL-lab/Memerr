@@ -47,6 +47,7 @@ meme_table = DynamoDBHelper(REGION, "meme-data-new")
 user_table = DynamoDBHelper(REGION, "user-info")
 
 USER_EMAIL = "uttam.gurram99@gmail.com"
+#USER_PICTURE
 #endregion
 
 
@@ -290,6 +291,13 @@ def callback():
                 'email': email,
                 'picture': picture
             }
+            # TODO: USE THEM ONCE LOGIN WORKS
+            # global USER_EMAIL
+            # USER_EMAIL = user_data['email']
+
+            # global USER_PICTURE
+            # USER_PICTURE = user_data['picture'] 
+
             app.logger.info(f'@user_data: {user_data}')
             print(f'user_data: {user_data}')
             set_user_data(email, user_data)
@@ -325,7 +333,7 @@ def share_meme():
 
 # Protected Route: Rate a Meme
 @app.route('/rate-meme', methods=['POST'])
-@token_required
+# @token_required
 def rate_meme():
     # token = request.headers.get('Authorization')
     # user = validate_token(token)
@@ -333,6 +341,47 @@ def rate_meme():
     #     return jsonify({'message': 'Unauthorized'}), 401
 
     # Implement /rate-meme
+    global USER_EMAIL
+
+    try:
+        memeId = request.form.get('memeId')
+        humorRating = request.form.get('humorRating')
+        originalityRating = request.form.get('originalityRating')
+        reliabilityRating = request.form.get('reliabilityRating')
+        print(memeId, humorRating, originalityRating, reliabilityRating)
+
+        meme_ids = [str(memeId)]
+
+        # Get the item from DynamoDB
+        memes_data = meme_table.retrieve_memes(meme_ids, "meme_id")[0]
+        new_relatability_rating = float(memes_data['relatability_rating']) * float(memes_data['num_ratings']) + float(reliabilityRating)
+        new_originality_rating = float(memes_data['originality_rating']) * float(memes_data['num_ratings']) + float(originalityRating) 
+        new_humor_rating = float(memes_data['humor_rating']) * float(memes_data['num_ratings']) + float(humorRating)
+
+        new_num_ratings =  int(memes_data['num_ratings']) + 1
+
+        new_relatability_rating /= new_num_ratings
+        new_originality_rating /= new_num_ratings
+        new_humor_rating /= new_num_ratings
+
+        memes_data['relatability_rating'] = str(round(new_relatability_rating, 2))
+        memes_data['originality_rating'] = str(round(new_originality_rating,2))
+        memes_data['humor_rating'] = str(round(new_humor_rating,2))
+        memes_data['num_ratings'] = str(new_num_ratings)
+
+        meme_table.insert_data(memes_data)
+
+        email_ids = [str(USER_EMAIL)]
+        user_data = user_table.retrieve_memes(email_ids, "email")[0]
+
+        user_rated_memes = json.loads(user_data['memes_rated'].replace("'", "\""))
+        user_rated_memes[str(memeId)] = {'humor_rating': str(humorRating), 'originality_rating': str(originalityRating), 'relatability_rating': str(reliabilityRating)}
+        user_data['memes_rated'] = str(user_rated_memes)
+
+        user_table.insert_data(user_data)
+    except:
+        return jsonify({'message': '/rate-meme failure!'})
+    
     return jsonify({'message': '/rate-meme success!'})
 
 

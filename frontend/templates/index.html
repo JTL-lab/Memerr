@@ -316,6 +316,26 @@ function toggleRatingsVisibility(button) {
       console.log('Originality Rating:', originalityRating);
       console.log('Reliability Rating:', reliabilityRating);
 
+      const formData = new FormData();
+      formData.append('memeId', memeId);
+      formData.append('humorRating', humorRating);
+      formData.append('originalityRating', originalityRating);
+      formData.append('reliabilityRating', reliabilityRating);
+
+      fetch('/rate-meme', {
+        method: 'POST',
+        body: formData,
+      })
+        .then(response => response.json())
+        .then(data => {
+          // Redirect to a new page or handle the response as needed
+          console.log('Response from server:', data);
+          refreshPage();
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+
       // Clear the input values
       document.querySelector(`.ratings-container[data-meme-id="${memeId}"] .humor-rating`).value = '';
       document.querySelector(`.ratings-container[data-meme-id="${memeId}"] .originality-rating`).value = '';
@@ -323,6 +343,11 @@ function toggleRatingsVisibility(button) {
 
       // Toggle visibility after submitting
       toggleRatingsVisibility(document.querySelector(`.rate-meme-button[data-meme-id="${memeId}"]`));
+    }
+
+    function refreshPage() {
+        // Reload the current page
+        location.reload();
     }
 
     function submitSave(memeId) {
@@ -335,4 +360,5 @@ function toggleRatingsVisibility(button) {
         return Number.isInteger(Number(value)) && value >= min && value <= max;
     }
   </script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </html>
