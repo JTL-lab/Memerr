@@ -518,3 +518,108 @@ Traceback (most recent call last):
     nonce = generate_nonce()
             ^^^^^^^^^^^^^^
 NameError: name 'generate_nonce' is not defined
+Exception on /posted [GET]
+Traceback (most recent call last):
+  File "/Users/sinkinnn/Downloads/CCBD/Memerr/.venv/lib/python3.11/site-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sinkinnn/Downloads/CCBD/Memerr/.venv/lib/python3.11/site-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sinkinnn/Downloads/CCBD/Memerr/.venv/lib/python3.11/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "/Users/sinkinnn/Downloads/CCBD/Memerr/.venv/lib/python3.11/site-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sinkinnn/Downloads/CCBD/Memerr/.venv/lib/python3.11/site-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sinkinnn/Downloads/CCBD/Memerr/frontend/app.py", line 355, in get_posted_memes
+    meme_ids = user_data['posted'].split(',')
+               ~~~~~~~~~^^^^^^^^^^
+TypeError: list indices must be integers or slices, not str
+Exception on /posted [GET]
+Traceback (most recent call last):
+  File "/Users/sinkinnn/Downloads/CCBD/Memerr/.venv/lib/python3.11/site-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sinkinnn/Downloads/CCBD/Memerr/.venv/lib/python3.11/site-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sinkinnn/Downloads/CCBD/Memerr/.venv/lib/python3.11/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "/Users/sinkinnn/Downloads/CCBD/Memerr/.venv/lib/python3.11/site-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sinkinnn/Downloads/CCBD/Memerr/.venv/lib/python3.11/site-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sinkinnn/Downloads/CCBD/Memerr/frontend/app.py", line 356, in get_posted_memes
+    meme_ids = user_data['posted'].split(',')
+               ~~~~~~~~~^^^^^^^^^^
+TypeError: list indices must be integers or slices, not str
+Exception on /posted [GET]
+Traceback (most recent call last):
+  File "/Users/sinkinnn/Downloads/CCBD/Memerr/.venv/lib/python3.11/site-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sinkinnn/Downloads/CCBD/Memerr/.venv/lib/python3.11/site-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sinkinnn/Downloads/CCBD/Memerr/.venv/lib/python3.11/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "/Users/sinkinnn/Downloads/CCBD/Memerr/.venv/lib/python3.11/site-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sinkinnn/Downloads/CCBD/Memerr/.venv/lib/python3.11/site-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sinkinnn/Downloads/CCBD/Memerr/frontend/app.py", line 356, in get_posted_memes
+    meme_ids = ast.literal_eval(user_data['memes_posted'])
+                                ~~~~~~~~~^^^^^^^^^^^^^^^^
+TypeError: list indices must be integers or slices, not str
+Exception on /posted [GET]
+Traceback (most recent call last):
+  File "/Users/sinkinnn/Downloads/CCBD/Memerr/.venv/lib/python3.11/site-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sinkinnn/Downloads/CCBD/Memerr/.venv/lib/python3.11/site-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sinkinnn/Downloads/CCBD/Memerr/.venv/lib/python3.11/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "/Users/sinkinnn/Downloads/CCBD/Memerr/.venv/lib/python3.11/site-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sinkinnn/Downloads/CCBD/Memerr/.venv/lib/python3.11/site-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sinkinnn/Downloads/CCBD/Memerr/frontend/app.py", line 366, in get_posted_memes
+    response = make_response(render_template("index.html", nonce=nonce, memes_data=memes_data))
+                                                                 ^^^^^
+NameError: name 'nonce' is not defined
+Exception on /posted [GET]
+Traceback (most recent call last):
+  File "/Users/sinkinnn/Downloads/CCBD/Memerr/.venv/lib/python3.11/site-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sinkinnn/Downloads/CCBD/Memerr/.venv/lib/python3.11/site-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sinkinnn/Downloads/CCBD/Memerr/.venv/lib/python3.11/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "/Users/sinkinnn/Downloads/CCBD/Memerr/.venv/lib/python3.11/site-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sinkinnn/Downloads/CCBD/Memerr/.venv/lib/python3.11/site-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sinkinnn/Downloads/CCBD/Memerr/frontend/app.py", line 366, in get_posted_memes
+    response = make_response(render_template("index.html", nonce=nonce, memes_data=memes_data))
+                                                                 ^^^^^
+NameError: name 'nonce' is not defined

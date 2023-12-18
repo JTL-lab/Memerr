@@ -1,4 +1,6 @@
 import boto3
+from boto3.dynamodb.conditions import Key
+
 
 class DynamoDB:
     def __init__(self, region_name:str, dynamo_db_table:str):
@@ -10,3 +12,24 @@ class DynamoDB:
         response = self.table.scan()
         memes_data = response.get('Items', [])
         return memes_data
+    
+    def query_single(self, query_id, primary_key):
+        
+        response = self.table.query(
+                KeyConditionExpression=Key(primary_key).eq(query_id)
+            )
+        data = response.get('Items', [])
+        return data
+
+    def retrieve_memes(self, query_ids, primary_key):
+        
+        memes_data = []
+        for query_id in query_ids:
+            response = self.table.query(
+                KeyConditionExpression=Key(primary_key).eq(query_id)
+            )
+            items = response.get('Items', [])
+            memes_data.extend(items)
+
+        return memes_data
+

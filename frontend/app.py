@@ -9,7 +9,7 @@ from flask import Flask, jsonify, make_response, request, render_template, redir
 from flask_cors import CORS
 import jwt
 from frontend.models.profile import UserCreds
-from frontend.py.authn import get_jwks, validate_token, sign_in, generate_nonce
+# from frontend.py.authn import get_jwks, validate_token, sign_in, generate_nonce
 from frontend.models.dynamodb import DynamoDB
 import time
 import random
@@ -38,7 +38,9 @@ COGNITO_LOGIN_URL_HARDCODED = f'https://{FRONTEND_DOMAIN}/login?response_type=co
 
 # Initialize Redis
 redis_client = redis.StrictRedis(host='memerr-dqyhmc.serverless.use1.cache.amazonaws.com', port=6379, db=0)
-meme_table = DynamoDB("us-east-1","meme-data")
+meme_table = DynamoDB("us-east-1","meme-data-new")
+user_table = DynamoDB("us-east-1","user-info")
+USER_EMAIL = "uttam.gurram99@gmail.com"
 #endregion
 
 
@@ -329,7 +331,7 @@ def error(err):
 
 @app.route("/")
 def index():
-    nonce = generate_nonce()
+    nonce = "nonce"#generate_nonce()
     memes_data = meme_table.get_memes_data()[0:100]
     for data in memes_data:
         # data['categories'] = json.loads(data['categories'])
@@ -340,6 +342,56 @@ def index():
     response = make_response(render_template("index.html", nonce=nonce, memes_data=memes_data))
     # response.headers['Content-Security-Policy'] = f"script-src 'nonce-{nonce}'"
     return response
+
+@app.route('/rated', methods=['GET'])
+def get_rated_memes():
+    nonce = "nonce"#generate_nonce()
+    user_data = user_table.query_single(query_id=USER_EMAIL, primary_key="email")[0]
+    meme_ids = list(ast.literal_eval(user_data['memes_rated']).keys())
+    memes_data = meme_table.retrieve_memes(meme_ids,"meme_id")
+    
+    for data in memes_data:
+        # data['categories'] = json.loads(data['categories'])
+        categories_str = data['categories'].strip("[]")
+        tag_list = [tag.strip() for tag in categories_str.split(',')]
+        data['categories'] = tag_list
+    
+    response = make_response(render_template("index.html", nonce=nonce, memes_data=memes_data))
+    return response
+
+@app.route('/posted', methods=['GET'])
+def get_posted_memes():
+    nonce = "nonce"#generate_nonce()
+    user_data = user_table.query_single(query_id=USER_EMAIL, primary_key="email")[0]
+    meme_ids = ast.literal_eval(user_data['memes_posted'])
+    memes_data = meme_table.retrieve_memes(meme_ids,"meme_id")
+    
+    for data in memes_data:
+        # data['categories'] = json.loads(data['categories'])
+        categories_str = data['categories'].strip("[]")
+        tag_list = [tag.strip() for tag in categories_str.split(',')]
+        data['categories'] = tag_list
+    
+    response = make_response(render_template("index.html", nonce=nonce, memes_data=memes_data))
+    return response
+    
+
+@app.route('/saved', methods=['GET'])
+def get_saved_memes():
+    nonce = "nonce"#generate_nonce()
+    user_data = user_table.query_single(query_id=USER_EMAIL, primary_key="email")[0]
+    meme_ids = ast.literal_eval(user_data['memes_saved'])
+    memes_data = meme_table.retrieve_memes(meme_ids,"meme_id")
+    
+    for data in memes_data:
+        # data['categories'] = json.loads(data['categories'])
+        categories_str = data['categories'].strip("[]")
+        tag_list = [tag.strip() for tag in categories_str.split(',')]
+        data['categories'] = tag_list
+    
+    response = make_response(render_template("index.html", nonce=nonce, memes_data=memes_data))
+    return response
+
 
 # User Registration
 @app.route('/register', methods=['POST'])
