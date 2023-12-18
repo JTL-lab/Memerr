@@ -9,8 +9,8 @@ from flask import Flask, jsonify, make_response, request, render_template, redir
 from flask_cors import CORS
 import jwt
 from frontend.models.profile import UserCreds
-# from frontend.py.authn import get_jwks, validate_token, sign_in, generate_nonce
-from frontend.models.dynamodb import DynamoDB
+from frontend.py.authn import get_jwks, validate_token, sign_in, generate_nonce
+from frontend.models.dynamodb import DynamoDB as DynamoDBHelper
 import time
 import random
 import string
@@ -38,9 +38,14 @@ COGNITO_LOGIN_URL_HARDCODED = f'https://{FRONTEND_DOMAIN}/login?response_type=co
 
 # Initialize Redis
 redis_client = redis.StrictRedis(host='memerr-dqyhmc.serverless.use1.cache.amazonaws.com', port=6379, db=0)
-old_meme_table = DynamoDB("us-east-1","meme-data")
-meme_table = DynamoDB("us-east-1","meme-data-new")
-user_table = DynamoDB("us-east-1","user-info")
+REGION = 'us-east-1'
+BUCKET_DOMAIN = 'https://memerr-memes.s3.amazonaws.com/'
+dynamodb_resource = boto3.resource('dynamodb', region_name=REGION)
+
+old_meme_table = DynamoDBHelper(REGION, "meme-data")
+meme_table = DynamoDBHelper(REGION, "meme-data-new")
+user_table = DynamoDBHelper(REGION, "user-info")
+
 USER_EMAIL = "uttam.gurram99@gmail.com"
 #endregion
 
