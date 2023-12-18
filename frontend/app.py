@@ -1,9 +1,9 @@
 from functools import wraps
 import urllib
 import logging
+import ast
 import requests
 import boto3
-import ast
 import redis
 from flask import Flask, jsonify, make_response, request, render_template, redirect, current_app
 from flask_cors import CORS
@@ -32,10 +32,54 @@ COGNITO_APP_CLIENT_ID = '4h26gjmvon4b6befhs9vsv83p2'
 COGNITO_APP_CLIENT_SECRET = 'oa6kd698oo3d97sj8q4rtmtskl4809l7kl9atbdjcjb2eududmb'
 REDIRECT_URI = f'http://{FRONTEND_DOMAIN}/callback'
 COGNITO_LOGIN_URL_HARDCODED = f'https://{FRONTEND_DOMAIN}/login?response_type=code&client_id={COGNITO_APP_CLIENT_ID}&redirect_uri={REDIRECT_URI}'
+
+# Initialize Redis
+redis_client = redis.StrictRedis(host='memerr-dqyhmc.serverless.use1.cache.amazonaws.com:6379', port=6379, db=0)
+meme_table = DynamoDB("us-east-1","meme-data")
 #endregion
 
 
-meme_table = DynamoDB("us-east-1","meme-data")
+#region AWS Redis Elasticache
+"""
+Set a multi-value object on Redis cache
+user_data = {
+    'access_token': 'access_token_value',
+    'id_token': 'id_token_value',
+    'email': 'memerr6698@gmail.com',
+    'profilepicurl': 'https://lh3.googleusercontent.com/a/ACg8ocLhdNuuMKRGaK4BP2MizRLfPG-fNV7t89WH-srUYkI0Aw=s96-c'
+}
+set_user_data('memerr6698@gmail.com', user_data)
+
+Get a multi-value object, data on Redis cache
+data = get_user_data('memerr6698@gmail.com')
+if data:
+    access_token = data.get('access_token')
+    email = data.get('email')
+"""
+
+# Set multiple values in Redis using a hash
+def set_user_data(user_id, user_data, expiration=3600):
+    try:
+        pipeline = redis_client.pipeline()
+        pipeline.hmset(f"user_data:{user_id}", user_data)
+        pipeline.expire(f"user_data:{user_id}", expiration)
+        pipeline.execute()
+        return True
+    except Exception as e:
+        current_app.logger.error(f"Failed to set user data in Redis: {e}")
+        return False
+
+# Get multiple values from Redis
+def get_user_data(user_id):
+    try:
+        return redis_client.hgetall(f"user_data:{user_id}")
+    except Exception as e:
+        current_app.logger.error(f"Failed to get user data from Redis: {e}")
+        return None
+#endregion
+
+
+
 # Token Validation Decorator
 def token_required(f):
     @wraps(f)
