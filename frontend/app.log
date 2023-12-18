@@ -45,6 +45,149 @@
 @callback id_token: eyJraWQiOiJjd2hlRjBGUU80N2JDeFVNWEhRRmhwUURpY2dGQVdhNXNjUm42YVVKcWdZPSIsImFsZyI6IlJTMjU2In0.eyJhdF9oYXNoIjoieFNZNlk2VUl0Y09ubmp4blVjRUxKdyIsInN1YiI6IjI0ZTU3MGM3LWIwY2QtNDZkYy04ZTExLTMxZjVlZTJkOGJhYSIsImNvZ25pdG86Z3JvdXBzIjpbInVzLWVhc3QtMV8yeExiYUdTVjVfR29vZ2xlIl0sImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tXC91cy1lYXN0LTFfMnhMYmFHU1Y1IiwiY29nbml0bzp1c2VybmFtZSI6Imdvb2dsZV8xMDUzOTUyMDU2NDcwMDkwMTQyMTkiLCJvcmlnaW5fanRpIjoiNDc3NzM3ZTktNzBmZC00ODA3LThiZGUtMTUzM2VhMmFkNGIxIiwiYXVkIjoiNGgyNmdqbXZvbjRiNmJlZmhzOXZzdjgzcDIiLCJpZGVudGl0aWVzIjpbeyJ1c2VySWQiOiIxMDUzOTUyMDU2NDcwMDkwMTQyMTkiLCJwcm92aWRlck5hbWUiOiJHb29nbGUiLCJwcm92aWRlclR5cGUiOiJHb29nbGUiLCJpc3N1ZXIiOm51bGwsInByaW1hcnkiOiJ0cnVlIiwiZGF0ZUNyZWF0ZWQiOiIxNzAyNjc1NDM2MTE2In1dLCJ0b2tlbl91c2UiOiJpZCIsImF1dGhfdGltZSI6MTcwMjg0ODMyMiwiZXhwIjoxNzAyODU1NTIyLCJpYXQiOjE3MDI4NDgzMjIsImp0aSI6IjMzYjE2NzMyLWY0Y2MtNGMzYS1iNWU1LTE0NjliOTQxMTkwMyIsImVtYWlsIjoicmMzMzk4QGNvbHVtYmlhLmVkdSJ9.iAKWaGVMItzYDyk7Yn6qTyHH_-LrRrBEOxUCJF3VVQL7JZdQQUD4u15ezez_IiSlEIJutgDZb4IZRMLLgREhHy7JpIAKeyzxpS0ujQYXweK1vKHGwWUkCUY64j-6v5VVmBz4nXn_vaQ_XlETezPtX6UNRcr3toWR7PRUP2z4ZnbOP4wQtrdGvkx8delTRZDifVpTY7obpjRUFpWps3BI0hWyF3y_YyXawXKkFXXOX-LbmKoa6gmDXQu2rs-ifN3VCn4G6Jwz7WIV7EI1eM_ZA4IL5UTWcCY9Vpo7lUy-H_EY4L_cSx5iu9TzJXNfp5pyH5TZqVlqXLYJlNDRU13iPw
 https://1n88dyemv5.execute-api.us-east-1.amazonaws.com/memesearch/search
 https://1n88dyemv5.execute-api.us-east-1.amazonaws.com/memesearch/search
+https://1n88dyemv5.execute-api.us-east-1.amazonaws.com/memesearch/search
+Exception on / [GET]
+Traceback (most recent call last):
+  File "/Users/sinkinnn/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/sinkinnn/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/sinkinnn/Library/Python/3.9/lib/python/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/Users/sinkinnn/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/sinkinnn/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/Users/sinkinnn/Downloads/CCBD/Memerr/frontend/app.py", line 183, in index
+    memes_data = meme_table.get_memes_data()
+  File "/Users/sinkinnn/Downloads/CCBD/Memerr/frontend/models/dynamodb.py", line 10, in get_memes_data
+    response = self.table.scan()
+  File "/Users/sinkinnn/Library/Python/3.9/lib/python/site-packages/boto3/resources/factory.py", line 581, in do_action
+    response = action(self, *args, **kwargs)
+  File "/Users/sinkinnn/Library/Python/3.9/lib/python/site-packages/boto3/resources/action.py", line 88, in __call__
+    response = getattr(parent.meta.client, operation_name)(*args, **params)
+  File "/Users/sinkinnn/Library/Python/3.9/lib/python/site-packages/botocore/client.py", line 553, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+  File "/Users/sinkinnn/Library/Python/3.9/lib/python/site-packages/botocore/client.py", line 989, in _make_api_call
+    http, parsed_response = self._make_request(
+  File "/Users/sinkinnn/Library/Python/3.9/lib/python/site-packages/botocore/client.py", line 1015, in _make_request
+    return self._endpoint.make_request(operation_model, request_dict)
+  File "/Users/sinkinnn/Library/Python/3.9/lib/python/site-packages/botocore/endpoint.py", line 119, in make_request
+    return self._send_request(request_dict, operation_model)
+  File "/Users/sinkinnn/Library/Python/3.9/lib/python/site-packages/botocore/endpoint.py", line 198, in _send_request
+    request = self.create_request(request_dict, operation_model)
+  File "/Users/sinkinnn/Library/Python/3.9/lib/python/site-packages/botocore/endpoint.py", line 134, in create_request
+    self._event_emitter.emit(
+  File "/Users/sinkinnn/Library/Python/3.9/lib/python/site-packages/botocore/hooks.py", line 412, in emit
+    return self._emitter.emit(aliased_event_name, **kwargs)
+  File "/Users/sinkinnn/Library/Python/3.9/lib/python/site-packages/botocore/hooks.py", line 256, in emit
+    return self._emit(event_name, kwargs)
+  File "/Users/sinkinnn/Library/Python/3.9/lib/python/site-packages/botocore/hooks.py", line 239, in _emit
+    response = handler(**kwargs)
+  File "/Users/sinkinnn/Library/Python/3.9/lib/python/site-packages/botocore/signers.py", line 105, in handler
+    return self.sign(operation_name, request)
+  File "/Users/sinkinnn/Library/Python/3.9/lib/python/site-packages/botocore/signers.py", line 195, in sign
+    auth.add_auth(request)
+  File "/Users/sinkinnn/Library/Python/3.9/lib/python/site-packages/botocore/auth.py", line 418, in add_auth
+    raise NoCredentialsError()
+botocore.exceptions.NoCredentialsError: Unable to locate credentials
+https://1n88dyemv5.execute-api.us-east-1.amazonaws.com/memesearch/search
+https://1n88dyemv5.execute-api.us-east-1.amazonaws.com/memesearch/search
+https://1n88dyemv5.execute-api.us-east-1.amazonaws.com/memesearch/search
+https://1n88dyemv5.execute-api.us-east-1.amazonaws.com/memesearch/search
+https://1n88dyemv5.execute-api.us-east-1.amazonaws.com/memesearch/search
+https://1n88dyemv5.execute-api.us-east-1.amazonaws.com/memesearch/search
+Exception on / [GET]
+Traceback (most recent call last):
+  File "/Users/sinkinnn/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/sinkinnn/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/sinkinnn/Library/Python/3.9/lib/python/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/Users/sinkinnn/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/sinkinnn/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/Users/sinkinnn/Downloads/CCBD/Memerr/frontend/app.py", line 185, in index
+    data['categories'] = eval(data['categories'])
+  File "<string>", line 1, in <module>
+NameError: name 'very_funny' is not defined
+Exception on / [GET]
+Traceback (most recent call last):
+  File "/Users/sinkinnn/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/sinkinnn/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/sinkinnn/Library/Python/3.9/lib/python/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/Users/sinkinnn/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/sinkinnn/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/Users/sinkinnn/Downloads/CCBD/Memerr/frontend/app.py", line 186, in index
+    data['categories'] = json.loads(data['categories'])
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 2 (char 1)
+Exception on / [GET]
+Traceback (most recent call last):
+  File "/Users/sinkinnn/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/sinkinnn/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/sinkinnn/Library/Python/3.9/lib/python/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/Users/sinkinnn/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/sinkinnn/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/Users/sinkinnn/Downloads/CCBD/Memerr/frontend/app.py", line 187, in index
+    data['categories'] = ast.literal_eval(data['categories'])
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/ast.py", line 105, in literal_eval
+    return _convert(node_or_string)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/ast.py", line 85, in _convert
+    return list(map(_convert, node.elts))
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/ast.py", line 104, in _convert
+    return _convert_signed_num(node)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/ast.py", line 78, in _convert_signed_num
+    return _convert_num(node)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/ast.py", line 69, in _convert_num
+    _raise_malformed_node(node)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/ast.py", line 66, in _raise_malformed_node
+    raise ValueError(f'malformed node or string: {node!r}')
+ValueError: malformed node or string: <ast.Name object at 0x105589a00>
+Exception on / [GET]
+Traceback (most recent call last):
+  File "/Users/sinkinnn/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/sinkinnn/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/sinkinnn/Library/Python/3.9/lib/python/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/Users/sinkinnn/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/sinkinnn/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/Users/sinkinnn/Downloads/CCBD/Memerr/frontend/app.py", line 187, in index
+    data['categories'] = ast.literal_eval(str(data['categories']))
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/ast.py", line 105, in literal_eval
+    return _convert(node_or_string)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/ast.py", line 85, in _convert
+    return list(map(_convert, node.elts))
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/ast.py", line 104, in _convert
+    return _convert_signed_num(node)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/ast.py", line 78, in _convert_signed_num
+    return _convert_num(node)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/ast.py", line 69, in _convert_num
+    _raise_malformed_node(node)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/ast.py", line 66, in _raise_malformed_node
+    raise ValueError(f'malformed node or string: {node!r}')
+ValueError: malformed node or string: <ast.Name object at 0x1050c9a00>
 @login cognito_login_url https://memerr.auth.us-east-1.amazoncognito.com/login?response_type=code&client_id=4h26gjmvon4b6befhs9vsv83p2&redirect_uri=http%3A%2F%2Fec2-54-86-68-35.compute-1.amazonaws.com%2Fcallback
 @login cognito_login_url https://memerr.auth.us-east-1.amazoncognito.com/login?response_type=code&client_id=4h26gjmvon4b6befhs9vsv83p2&redirect_uri=http%3A%2F%2Fec2-54-86-68-35.compute-1.amazonaws.com%2Fcallback
 @callback Start

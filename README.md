@@ -21,7 +21,7 @@ pip3 install --upgrade pip
 ```
 To deactivate the venv: deactivate
 ---
-#### Set Environment Variables
+#### Set Environment Variables - 
 ```
 export FLASK_APP=app
 export FLASk_ENV=development
