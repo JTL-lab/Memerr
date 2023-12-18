@@ -38,6 +38,7 @@ COGNITO_LOGIN_URL_HARDCODED = f'https://{FRONTEND_DOMAIN}/login?response_type=co
 
 # Initialize Redis
 redis_client = redis.StrictRedis(host='memerr-dqyhmc.serverless.use1.cache.amazonaws.com', port=6379, db=0)
+old_meme_table = DynamoDB("us-east-1","meme-data")
 meme_table = DynamoDB("us-east-1","meme-data-new")
 user_table = DynamoDB("us-east-1","user-info")
 USER_EMAIL = "uttam.gurram99@gmail.com"
@@ -177,7 +178,7 @@ def upload_image():
 # User Text-Query
 @app.route('/search', methods=['GET'])
 def get_image_paths():
-
+    nonce = "nonce"
     SEARCH_API_ENDPOINT = "https://1n88dyemv5.execute-api.us-east-1.amazonaws.com/memesearch/search"
     app.logger.info(SEARCH_API_ENDPOINT)
     try:
@@ -192,8 +193,21 @@ def get_image_paths():
             api_data = response.json()
             image_paths = api_data.get('imagePaths', [])
             user_query = api_data.get('userQuery', '')
-            image_paths = ["https://memerr-memes.s3.amazonaws.com/"+item for item in image_paths]
-            return jsonify({'image_paths': image_paths})
+            img_paths = ["https://memerr-memes.s3.amazonaws.com/"+item for item in image_paths]
+
+            # memes_data = old_meme_table.retrieve_memes(image_paths, "meme_id")
+    
+            # for data in memes_data:
+            #     # data['categories'] = json.loads(data['categories'])
+            #     categories_str = data['categories'].strip("[]")
+            #     tag_list = [tag.strip() for tag in categories_str.split(',')]
+            #     data['categories'] = tag_list
+            
+            # print(memes_data)
+            # response = make_response(render_template("index.html", nonce=nonce, memes_data=memes_data))
+            # return response
+
+            return jsonify({'image_paths': img_paths})
         else:
             # If the API request was not successful, handle the error
             return jsonify({'error': f'Error from API: {response.status_code}'})
