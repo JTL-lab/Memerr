@@ -26,8 +26,8 @@ app.logger.addHandler(handler)
 COGNITO_REGION = 'us-east-1'
 COGNITO_USER_POOL_ID = 'us-east-1_2xLbaGSV5'
 COGNITO_DOMAIN = 'memerr.auth.us-east-1.amazoncognito.com'
-# FRONTEND_DOMAIN = 'ec2-54-86-68-35.compute-1.amazonaws.com'
-FRONTEND_DOMAIN = 'localhost:5001'
+FRONTEND_DOMAIN = 'ec2-54-86-68-35.compute-1.amazonaws.com'
+# FRONTEND_DOMAIN = 'localhost:5001'
 COGNITO_CLIENT = boto3.client('cognito-idp', region_name=COGNITO_REGION)
 SCOPES = 'openid profile email'
 TOKEN_ENDPOINT = f"https://{COGNITO_DOMAIN}/oauth2/token"
