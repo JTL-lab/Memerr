@@ -235,7 +235,23 @@
 
     function submitSave(memeId) {
         // Add logic to handle the saving of memes
-        console.log('Saving the meme...');
+        console.log('Saving the meme');
+        const formData = new FormData();
+        formData.append('memeId', memeId);
+
+        fetch('/save-meme', {
+          method: 'POST',
+          body: formData,
+        })
+          .then(response => response.json())
+          .then(data => {
+            // Redirect to a new page or handle the response as needed
+            console.log('Response from server:', data);
+            refreshPage();
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
     }
 
     // Helper function to check if a value is an integer between min and max (inclusive)

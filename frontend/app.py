@@ -26,8 +26,8 @@ app.logger.addHandler(handler)
 COGNITO_REGION = 'us-east-1'
 COGNITO_USER_POOL_ID = 'us-east-1_2xLbaGSV5'
 COGNITO_DOMAIN = 'memerr.auth.us-east-1.amazoncognito.com'
-FRONTEND_DOMAIN = 'ec2-54-86-68-35.compute-1.amazonaws.com'
-# FRONTEND_DOMAIN = 'localhost:5001'
+# FRONTEND_DOMAIN = 'ec2-54-86-68-35.compute-1.amazonaws.com'
+FRONTEND_DOMAIN = 'localhost:5001'
 COGNITO_CLIENT = boto3.client('cognito-idp', region_name=COGNITO_REGION)
 SCOPES = 'openid profile email'
 TOKEN_ENDPOINT = f"https://{COGNITO_DOMAIN}/oauth2/token"
@@ -319,17 +319,36 @@ def callback():
     except Exception as e:
         return jsonify({'message': f'Callback Failed! Error {e}, code {code}, data {data}, response {response}'}), 401
 
-# Protected Route: Share a Meme
-@app.route('/share-meme', methods=['POST'])
-@token_required
-def share_meme():
+# Protected Route: Save a meme
+@app.route('/save-meme', methods=['POST'])
+# @token_required
+def save_meme():
     # token = request.headers.get('Authorization')
     # user = validate_token(token)
     # if user is None:
     #     return jsonify({'message': 'Unauthorized'}), 401
 
     # Implement /share-meme
-    return jsonify({'message': '/share-meme success!'})
+    global USER_EMAIL
+
+    try:
+        memeId = request.form.get('memeId')
+        email_ids = [str(USER_EMAIL)]
+        user_data = user_table.retrieve_memes(email_ids, "email")[0]
+
+        user_saved_memes = ast.literal_eval(user_data['memes_saved'])
+        # save a meme if not present else remove if already present
+        if str(memeId) not in user_saved_memes:
+            user_saved_memes.append(str(memeId))
+        else:
+            user_saved_memes.remove(str(memeId))
+
+        user_data['memes_saved'] = str(user_saved_memes)
+        user_table.insert_data(user_data)
+    except:
+        jsonify({'message': '/save-meme failure!'})
+
+    return jsonify({'message': '/save-meme success!'})
 
 # Protected Route: Rate a Meme
 @app.route('/rate-meme', methods=['POST'])
