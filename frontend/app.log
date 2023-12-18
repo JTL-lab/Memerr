@@ -455,3 +455,66 @@ botocore.errorfactory.ResourceNotFoundException: An error occurred (ResourceNotF
 @callback email: memerr6698@gmail.com
 @callback picture: https://lh3.googleusercontent.com/a/ACg8ocLhdNuuMKRGaK4BP2MizRLfPG-fNV7t89WH-srUYkI0Aw=s96-c
 @user_data: {'access_token': 'eyJraWQiOiJ3U3A4MlBLZ1hGVlIyemozS0RaTFpqQmxPU1A4RStPRnJMT2pqa3U5blpBPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiI2NjI3OTQyOC03ZDlkLTQ2NjUtYTY4Yi05YmM5YTNlYzE3MTgiLCJjb2duaXRvOmdyb3VwcyI6WyJ1cy1lYXN0LTFfMnhMYmFHU1Y1X0dvb2dsZSJdLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtZWFzdC0xLmFtYXpvbmF3cy5jb21cL3VzLWVhc3QtMV8yeExiYUdTVjUiLCJ2ZXJzaW9uIjoyLCJjbGllbnRfaWQiOiI0aDI2Z2ptdm9uNGI2YmVmaHM5dnN2ODNwMiIsIm9yaWdpbl9qdGkiOiJlNDI5Nzk1YS02NGQ3LTRlOTUtYTUzMy1mZWZlYTgyM2M2Y2YiLCJ0b2tlbl91c2UiOiJhY2Nlc3MiLCJzY29wZSI6ImF3cy5jb2duaXRvLnNpZ25pbi51c2VyLmFkbWluIHBob25lIG9wZW5pZCBwcm9maWxlIGVtYWlsIiwiYXV0aF90aW1lIjoxNzAyODczMTY3LCJleHAiOjE3MDI4ODAzNjcsImlhdCI6MTcwMjg3MzE2NywianRpIjoiYzI2YTJlMTYtNzdhNS00N2Y2LThjZTEtMmFiZTk2YzdlMzVlIiwidXNlcm5hbWUiOiJnb29nbGVfMTAzMzE2MTgyNzg1MTkxMzMxMTMxIn0.J4pLC5v9VvFOtW_FOQtJHYMRQYd_DjXC3J1zllaY6jB0SnsG5ibCD2J-iaQTzYkYC4JpPUXHtYAjRduXfSHyjOmwCRo-Og349LeLrIO4joJ3gdBSLYyxJiFwkbnjQs_PvzTvQsH6aAs1x2Z9z_7-AoexLBQLUsizs8xnACvXl7T_r9fY9--LEz8LFh0ueEXIE20oCyo5_ywRSNYd-xiew24laq_LMk7tnc0xu8NfhmlFI7UwyqCisr8Pm899MlUE5cqPENnmaODoiJUkJKY2UbuiiapE0urm8RL8s2cUcrFujACRXku12hNHRe7xDczrs2QySGMow35iDZ58y-XrOw', 'id_token': 'eyJraWQiOiJjd2hlRjBGUU80N2JDeFVNWEhRRmhwUURpY2dGQVdhNXNjUm42YVVKcWdZPSIsImFsZyI6IlJTMjU2In0.eyJhdF9oYXNoIjoiQ1NGQm82WGNxZ1lqUDZmS3FVLTA3ZyIsInN1YiI6IjY2Mjc5NDI4LTdkOWQtNDY2NS1hNjhiLTliYzlhM2VjMTcxOCIsImNvZ25pdG86Z3JvdXBzIjpbInVzLWVhc3QtMV8yeExiYUdTVjVfR29vZ2xlIl0sImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tXC91cy1lYXN0LTFfMnhMYmFHU1Y1IiwicGhvbmVfbnVtYmVyX3ZlcmlmaWVkIjpmYWxzZSwiY29nbml0bzp1c2VybmFtZSI6Imdvb2dsZV8xMDMzMTYxODI3ODUxOTEzMzExMzEiLCJub25jZSI6IjlZNmJ5NjNCdk5VaDAzQnhuTDN5YldZSmNJZUR6ajNKdHBlNThyTEJ6VHl3M01iQWRDakllc0JwSzhFRFQxTWphdWYzMlNnOFBVOEFybWxvUWRQT1NRcGpPLUIzMk1WSVdjeXdoZmhMU0w5YXpTNUZ6UzE5UVlDdUk1bWNHSXVKQ1pFZkFpLVU3MGxnanZSdUxTLXJQa2pGQWFXNDd6NmFMUklqZ1o4TWREQSIsInBpY3R1cmUiOiJodHRwczpcL1wvbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbVwvYVwvQUNnOG9jTGhkTnV1TUtSR2FLNEJQMk1pelJMZlBHLWZOVjd0ODlXSC1zclVZa0kwQXc9czk2LWMiLCJvcmlnaW5fanRpIjoiZTQyOTc5NWEtNjRkNy00ZTk1LWE1MzMtZmVmZWE4MjNjNmNmIiwiYXVkIjoiNGgyNmdqbXZvbjRiNmJlZmhzOXZzdjgzcDIiLCJpZGVudGl0aWVzIjpbeyJ1c2VySWQiOiIxMDMzMTYxODI3ODUxOTEzMzExMzEiLCJwcm92aWRlck5hbWUiOiJHb29nbGUiLCJwcm92aWRlclR5cGUiOiJHb29nbGUiLCJpc3N1ZXIiOm51bGwsInByaW1hcnkiOiJ0cnVlIiwiZGF0ZUNyZWF0ZWQiOiIxNzAyODU5NTM2MjEyIn1dLCJ0b2tlbl91c2UiOiJpZCIsImF1dGhfdGltZSI6MTcwMjg3MzE2NywiZXhwIjoxNzAyODgwMzY3LCJpYXQiOjE3MDI4NzMxNjcsImp0aSI6ImE2OTU5MzRmLWQzYWItNGU5ZS05N2NmLTJjZWFjMTg1NjMyZCIsImVtYWlsIjoibWVtZXJyNjY5OEBnbWFpbC5jb20ifQ.JYtSieNLSVqRNB37IGWHIo3XxUDUC3XeFF9TdvY0euFJVyzKQUHJF748s0llFPzSzLnsg_Lrsqkrc0fw_oeSE54xW8ZE0TIdB3hge-6TZX2dlCdOoXqlfQxetb6efDFmIqXWpqn2iH6jaSNdjZSBGG8t0jjNYigdGZR9hqZIsUbEnPIAVqkSnE1yv0LESEkMHr1rOT9GKg-xpg4iULL6RHurNm0WM8FwEfkGvssid1llfqR-0zK9Nw-lzzlAEAQ8Qgn3O6j3p-vy6YDfaWGtCMHGeTf2IeOnR_gHEANk0b33xtAUZaui6F8Jgl4XomtH7gr3MWcqVDl1Xx0ejWro0g', 'email': 'memerr6698@gmail.com', 'picture': 'https://lh3.googleusercontent.com/a/ACg8ocLhdNuuMKRGaK4BP2MizRLfPG-fNV7t89WH-srUYkI0Aw=s96-c'}
+Exception on / [GET]
+Traceback (most recent call last):
+  File "/opt/homebrew/lib/python3.11/site-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/lib/python3.11/site-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/lib/python3.11/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/lib/python3.11/site-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/lib/python3.11/site-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sinkinnn/Downloads/CCBD/Memerr/frontend/app.py", line 322, in index
+    nonce = generate_nonce()
+            ^^^^^^^^^^^^^^
+NameError: name 'generate_nonce' is not defined
+Exception on / [GET]
+Traceback (most recent call last):
+  File "/Users/sinkinnn/Downloads/CCBD/Memerr/.venv/lib/python3.11/site-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sinkinnn/Downloads/CCBD/Memerr/.venv/lib/python3.11/site-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sinkinnn/Downloads/CCBD/Memerr/.venv/lib/python3.11/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "/Users/sinkinnn/Downloads/CCBD/Memerr/.venv/lib/python3.11/site-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sinkinnn/Downloads/CCBD/Memerr/.venv/lib/python3.11/site-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sinkinnn/Downloads/CCBD/Memerr/frontend/app.py", line 322, in index
+    nonce = generate_nonce()
+            ^^^^^^^^^^^^^^
+NameError: name 'generate_nonce' is not defined
+Exception on / [GET]
+Traceback (most recent call last):
+  File "/Users/sinkinnn/Downloads/CCBD/Memerr/.venv/lib/python3.11/site-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sinkinnn/Downloads/CCBD/Memerr/.venv/lib/python3.11/site-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sinkinnn/Downloads/CCBD/Memerr/.venv/lib/python3.11/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "/Users/sinkinnn/Downloads/CCBD/Memerr/.venv/lib/python3.11/site-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sinkinnn/Downloads/CCBD/Memerr/.venv/lib/python3.11/site-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sinkinnn/Downloads/CCBD/Memerr/frontend/app.py", line 322, in index
+    nonce = generate_nonce()
+            ^^^^^^^^^^^^^^
+NameError: name 'generate_nonce' is not defined

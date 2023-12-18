@@ -241,30 +241,30 @@
     //    }
     //});
 
-    // var modal = document.getElementById('upload-modal');
-    // var btn = document.getElementById('post-button');
-    // var span = document.getElementsByClassName('close')[0];
-    // var form = document.getElementById('postForm');
-    // var uploadBtn = document.getElementById('uploadBtn');
+    var modal = document.getElementById('upload-modal');
+    var btn = document.getElementById('post-button');
+    var span = document.getElementsByClassName('close')[0];
+    var form = document.getElementById('postForm');
+    var uploadBtn = document.getElementById('uploadBtn');
 
-    // // When the user clicks on the button, open the modal
-    // btn.onclick = function () {
-    //   modal.style.display = 'block';
-    // };
+    // When the user clicks on the button, open the modal
+    btn.onclick = function () {
+      modal.style.display = 'block';
+    };
 
-    // // When the user clicks on <span> (x), close the modal
-    // span.onclick = function () {
-    //   modal.style.display = 'none';
-    //   form.reset(); // Clear the form
-    // };
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+      modal.style.display = 'none';
+      form.reset(); // Clear the form
+    };
 
-    // // When the user clicks anywhere outside of the modal, close it
-    // window.onclick = function (event) {
-    //   if (event.target == modal) {
-    //     modal.style.display = 'none';
-    //     form.reset(); // Clear the form
-    //   }
-    // };
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+      if (event.target == modal) {
+        modal.style.display = 'none';
+        form.reset(); // Clear the form
+      }
+    };
 
     // // When the user clicks the upload button, clear the fields and close the modal
     // document.getElementById('uploadButton').addEventListener('click', function () {
@@ -276,22 +276,22 @@
     //   }
     // });
 
-    // function generateUniqueKey(fileName) {
-    //   // Generate a timestamp string
-    //   var date = new Date();
-    //   var timeStamp = date.getTime();
+    function generateUniqueKey(fileName) {
+      // Generate a timestamp string
+      var date = new Date();
+      var timeStamp = date.getTime();
 
-    //   // Generate a random number and convert it to a string
-    //   var randomString = Math.random().toString(36).substring(2, 15);
+      // Generate a random number and convert it to a string
+      var randomString = Math.random().toString(36).substring(2, 15);
 
-    //   // Combine both with an underscore separator
-    //   var uniqueKey = timeStamp + '_' + randomString + '_';
+      // Combine both with an underscore separator
+      var uniqueKey = timeStamp + '_' + randomString + '_';
 
-    //   // Append the original filename
-    //   uniqueKey += fileName;
+      // Append the original filename
+      uniqueKey += fileName;
 
-    //   return uniqueKey;
-    // }
+      return uniqueKey;
+    }
 
     // function uploadToS3(file) {
     //   // Assume AWS SDK has been configured with Cognito credentials
@@ -317,7 +317,40 @@
     //   });
     // }
 
-    <!--------------------------------------------- SEARCH FUNCTIONALITY -------------------------------------------->
+  // const uploadBtn = document.getElementById('uploadBtn');
+  uploadBtn.addEventListener('click', handleUpload);
+
+  function handleUpload(){
+    const title = document.getElementById('title').value;
+    const description = document.getElementById('description').value;
+    const tags = document.getElementById('tags').value;
+    const image = document.getElementById('image').files[0];
+
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('description', description);
+    formData.append('tags', tags);
+    formData.append('image', image);
+
+    fetch('/upload', {
+      method: 'POST',
+      body: formData,
+    })
+      .then(response => response.json())
+      .then(data => {
+        // Redirect to a new page or handle the response as needed
+        console.log('Response from server:', data);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  }
+
+    
+
+
+
+<!--------------------------------------------- SEARCH FUNCTIONALITY -------------------------------------------->
 
 const searchButton = document.getElementById('search-button');
 const searchBar = document.getElementById('search-bar');

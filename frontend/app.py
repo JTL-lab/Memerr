@@ -9,9 +9,12 @@ from flask import Flask, jsonify, make_response, request, render_template, redir
 from flask_cors import CORS
 import jwt
 from frontend.models.profile import UserCreds
-from frontend.py.authn import get_jwks, validate_token, sign_in, generate_nonce
+# from frontend.py.authn import get_jwks, validate_token, sign_in, generate_nonce
 from frontend.models.dynamodb import DynamoDB
-
+import time
+import random
+import string
+import json
 
 #region Global Variables
 app = Flask(__name__)
@@ -57,6 +60,23 @@ if data:
     email = data.get('email')
 """
 
+
+def generate_unique_key(file_name):
+    # Generate a timestamp string
+    timestamp = int(time.time())
+
+    # Generate a random string
+    random_string = ''.join(random.choices(string.ascii_lowercase + string.digits, k=13))
+
+    # Combine both with an underscore separator
+    unique_key = f"{timestamp}_{random_string}_"
+
+    # Append the original filename
+    unique_key += file_name
+
+    return unique_key
+
+
 # Set multiple values in Redis using a hash
 def set_user_data(user_id, user_data, expiration=3600):
     try:
@@ -101,6 +121,55 @@ def token_required(f):
 
         return f(*args, **kwargs)
     return decorated
+
+
+# User Upload
+@app.route('/upload', methods=['POST'])
+def upload_image():
+
+    UPLOAD_API_ENDPOINT = "https://1n88dyemv5.execute-api.us-east-1.amazonaws.com/memesearch/upload/memerr-memes"
+    try:
+        title = request.form.get('title')
+        description = request.form.get('description')
+        tags = request.form.get('tags')
+        image = request.files['image']
+        tags = [tag for tag in tags.split(',')]
+
+
+        # Ensure the file is present
+        if not image:
+            return jsonify({'error': 'No file provided'}), 400
+
+        # Construct the file path
+        file_ext = ".png"
+        file_name = generate_unique_key(file_ext)
+        print(file_name)
+        # Prepare headers for the S3 upload
+        headers = {
+            "x-amz-meta-customLabels": json.dumps({
+                
+                "description" : description,
+                "tags" : tags,
+
+                }),
+            'content-type': "image/png"
+        }
+
+        # Make an HTTP PUT request to the upload endpoint with the file and custom labels as parameters
+        response = requests.put(
+            f"{UPLOAD_API_ENDPOINT}/{file_name}",
+            headers=headers,
+            data = image.read()
+        )
+        
+        if response.status_code == 200:
+            return jsonify({'message': 'File uploaded successfully'})
+        else:
+            return jsonify({'error': 'Failed to upload file to S3'}), 500
+
+    except Exception as e:
+        print("Error handling upload:", str(e))
+        return jsonify({'error': 'Internal server error'}), 500
 
 
 # User Text-Query
@@ -260,15 +329,15 @@ def error(err):
 
 @app.route("/")
 def index():
-    nonce = generate_nonce()
-    memes_data = meme_table.get_memes_data()[0:10]
+    # nonce = generate_nonce()
+    memes_data = meme_table.get_memes_data()[0:100]
     for data in memes_data:
         # data['categories'] = json.loads(data['categories'])
         categories_str = data['categories'].strip("[]")
         tag_list = [tag.strip() for tag in categories_str.split(',')]
         data['categories'] = tag_list
 
-    response = make_response(render_template("index.html", nonce=nonce, memes_data=memes_data))
+    response = make_response(render_template("index.html", nonce="nonce", memes_data=memes_data))
     # response.headers['Content-Security-Policy'] = f"script-src 'nonce-{nonce}'"
     return response
 
