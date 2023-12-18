@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Webpage Title</title>
-    <link rel="stylesheet" href="../static/user-styles.css" />
+    <link rel="stylesheet" href="static/user-styles.css" />
 </head>
 <body>
     <div class="container">
@@ -14,6 +14,7 @@
         <div class="M" style="width: 71px; height: 86px; left: 90px; top: 80px; position: absolute; color: white; font-size: 75px; font-family: Inter; font-weight: 700; word-wrap: break-word">M</div>
         
         <!-- User profile picture-->
+        # TODO: Use cached profile picture information
         <img style="width: 106px; height: 109px; left: 310px; top: 71px; position: absolute" src="https://memerr-profile-pictures.s3.amazonaws.com/memerr-default-pfp.png" />
         
         <div style="width: 167px; height: 43px; left: 310px; top: 239px; position: absolute; background: rgba(76, 108, 224, 0.50); border: 1px black solid"></div>
@@ -21,41 +22,116 @@
         <div style="width: 167px; height: 43px; left: 644px; top: 239px; position: absolute; background: rgba(217, 217, 217, 0.50); border: 1px black solid"></div>
         
         <div style="left: 324px; top: 243px; position: absolute; color: black; font-size: 28px; font-family: Inter; font-weight: 700; word-wrap: break-word">Ratings</div>
-        <div style="left: 490px; top: 243px; position: absolute; color: black; font-size: 28px; font-family: Inter; font-weight: 700; word-wrap: break-word">Posts</div>
-        <div style="left: 660px; top: 243px; position: absolute; color: black; font-size: 28px; font-family: Inter; font-weight: 700; word-wrap: break-word">Saved</div>
+        <!-- <div style="left: 490px; top: 243px; position: absolute; color: black; font-size: 28px; font-family: Inter; font-weight: 700; word-wrap: break-word">Posts</div> -->
+        <button style="left: 490px; top: 243px; position: absolute; color: black; font-size: 28px; font-family: Inter; font-weight: 700; word-wrap: break-word; border: None; padding: 0; background: none; cursor: pointer;" onclick="redirectToPostedPage()">Posts</button>
+        <button style="left: 660px; top: 243px; position: absolute; color: black; font-size: 28px; font-family: Inter; font-weight: 700; word-wrap: break-word; border: None; padding: 0; background: none; cursor: pointer;" onclick="redirectToSavedPage()">Saved</button>
         
         <!-- Side Menu -->
         <div class="side-legend">
-          <button class="side-legend-button-1"><img src="static/assets/home-icon.png" alt="Home Icon" /> Home</button>
+          <button class="side-legend-button-1" style="cursor: pointer;" onclick="redirectToHomePage()"><img src="static/assets/home-icon.png" alt="Home Icon" /> Home</button>
           <button class="side-legend-button-2"><img src="static/assets/trending-icon.png" alt="Trending Icon" /> Trending</button>
           <button class="side-legend-button-3"><img src="static/assets/down-triangle-icon.png" alt="Following Icon" /> Following</button>
         </div>
 
-        <div style="width: 48px; height: 17px; left: 318px; top: 612px; position: absolute; color: black; font-size: 14px; font-family: Inter; font-weight: 600; word-wrap: break-word">Humor</div>
-        <div style="width: 73px; height: 17px; left: 395px; top: 612px; position: absolute; color: black; font-size: 14px; font-family: Inter; font-weight: 600; word-wrap: break-word">Originality</div>
-        <div style="width: 70px; height: 17px; left: 497px; top: 612px; position: absolute; color: black; font-size: 14px; font-family: Inter; font-weight: 600; word-wrap: break-word">Reliability</div>
-        <div style="width: 269px; height: 21px; left: 310px; top: 557px; position: absolute; color: black; font-size: 16px; font-family: Inter; font-weight: 600; word-wrap: break-word">Tags: </div>
-        <div style="width: 269px; height: 21px; left: 310px; top: 588px; position: absolute; color: black; font-size: 16px; font-family: Inter; font-weight: 600; word-wrap: break-word">Ratings: </div>
-        <div style="width: 269px; height: 45px; left: 310px; top: 506px; position: absolute"><span style="color: black; font-size: 16px; font-family: Inter; font-weight: 600; word-wrap: break-word">Description: </span><span style="color: black; font-size: 16px; font-family: Inter; font-weight: 400; word-wrap: break-word">Do video gamers ever cry? OH, YES WE DO!!!</span><span style="color: black; font-size: 22px; font-family: Inter; font-weight: 400; word-wrap: break-word"> </span></div>
-        <div style="width: 207px; height: 28px; left: 310px; top: 310px; position: absolute; color: black; font-size: 22px; font-family: Inter; font-weight: 600; word-wrap: break-word">Gaming Humanly??</div>
-        <div style="width: 91px; height: 19px; left: 359px; top: 557px; position: absolute; background: rgba(76, 108, 224, 0.50); border-radius: 20px"></div>
-        <div style="width: 85px; height: 17px; left: 363px; top: 557px; position: absolute; color: black; font-size: 14px; font-family: Inter; font-weight: 600; word-wrap: break-word">videogames</div>
-        <div style="width: 63px; height: 19px; left: 454px; top: 557px; position: absolute; background: rgba(76, 108, 224, 0.50); border-radius: 20px"></div>
-        <div style="width: 57px; height: 17px; left: 460px; top: 557px; position: absolute; color: black; font-size: 14px; font-family: Inter; font-weight: 600; word-wrap: break-word">gaming</div>
-        <div style="width: 43px; height: 19px; left: 320px; top: 632px; position: absolute; background: rgba(76, 108, 224, 0.80); border-radius: 20px"></div>
-        <div style="width: 43px; height: 19px; left: 409px; top: 632px; position: absolute; background: rgba(76, 108, 224, 0.80); border-radius: 20px"></div>
-        <div style="left: 379px; top: 672px; position: absolute; color: white; font-size: 14px; font-family: Inter; font-weight: 800; word-wrap: break-word">Rate this meme</div>
-        <div style="width: 39px; height: 19px; left: 512px; top: 631px; position: absolute; background: rgba(76, 108, 224, 0.80); border-radius: 20px"></div>
-        <div style="width: 34px; height: 17px; left: 325px; top: 632px; position: absolute; color: white; font-size: 14px; font-family: Inter; font-style: italic; font-weight: 800; word-wrap: break-word">4.00</div>
-        <div style="width: 34px; height: 18px; left: 414px; top: 632px; position: absolute; color: white; font-size: 14px; font-family: Inter; font-style: italic; font-weight: 800; word-wrap: break-word">4.00</div>
-        <div style="width: 35px; height: 17px; left: 514px; top: 632px; position: absolute; color: white; font-size: 14px; font-family: Inter; font-style: italic; font-weight: 800; word-wrap: break-word">4.00</div>
-        <img style="width: 244px; height: 161px; left: 310px; top: 341px; position: absolute" src="https://via.placeholder.com/244x161" />
-        <img style="width: 46px; height: 44px; left: 461px; top: 131px; position: absolute" src="https://via.placeholder.com/46x44" />
-        
-        
-    
+        <img style="width: 35px; height: 35px; left: 461px; top: 131px; position: absolute" src="static/assets/notif.jpg" />
+
+        <!-- Legendary Meme Gallery -->
+      <div class="gallery">
+        {% for meme in memes_data %}
+        <div class="meme-item">
+          <!-- <h2 class="meme-title">{{ meme.caption }}</h2> -->
+          <img class="photo" src="{{ meme.bucket_image_source }}" />
+          <div class="gallery-item-description"><strong>Description:</strong> <span>{{ meme.description }}</span></div>
+          <div class="gallery-item-tags">
+            <strong>Tags:</strong>
+            {% for tag in meme.categories %}
+            <span class="tag">{{ tag }}</span>
+            {% endfor %}
+          </div>
+
+          <p class="label">Ratings:</p>
+          <div class="ratings-container">
+            <div class="rating-category">
+              <span class="rating-label">Humor</span>
+              <div class="rating-value humor">{{ meme.humor_rating }}</div>
+            </div>
+            <div class="rating-category">
+              <span class="rating-label">Originality</span>
+              <div class="rating-value originality">{{ meme.originality_rating }}</div>
+            </div>
+            <div class="rating-category">
+              <span class="rating-label">Relatability</span>
+              <div class="rating-value reliability">{{ meme.relatability_rating }}</div>
+            </div>
+          </div>
+          <button class="rate-meme-button">Rate this meme</button>
+        </div>
+        {% endfor %}
+      </div>    
       </div>
         
     </div>
+
+    <script>
+    function redirectToHomePage() {
+      // Make an HTTP request to the Flask backend
+      fetch('/')
+          .then(response => {
+            
+            if (response.ok) {
+                return window.location.href = '/';
+              }
+            
+            response.json()
+          }) // Parse the JSON response
+          .then(data => {
+              // Check if the request was successful
+              console.log(data);
+          })
+          .catch(error => {
+              console.error('Error:', error);
+          });
+    }
+
+    function redirectToPostedPage() {
+      // Make an HTTP request to the Flask backend
+      fetch('/user/posted')
+          .then(response => {
+            
+            if (response.ok) {
+                return window.location.href = '/user/posted';
+              }
+            
+            response.json()
+          }) // Parse the JSON response
+          .then(data => {
+              // Check if the request was successful
+              console.log(data);
+          })
+          .catch(error => {
+              console.error('Error:', error);
+          });
+    }
+
+    function redirectToSavedPage() {
+      // Make an HTTP request to the Flask backend
+      fetch('/user/saved')
+          .then(response => {
+            
+            if (response.ok) {
+                return window.location.href = '/user/saved';
+              }
+            
+            response.json()
+          }) // Parse the JSON response
+          .then(data => {
+              // Check if the request was successful
+              console.log(data);
+          })
+          .catch(error => {
+              console.error('Error:', error);
+          });
+    }
+    </script>
 </body>
 </html>

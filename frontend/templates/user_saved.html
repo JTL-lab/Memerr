@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Webpage Title</title>
+    <link rel="stylesheet" href="../static/user-styles.css" />
+</head>
+<body>
+    <div class="container">
+      <div style="width: 100%; height: 100%; position: relative; background: white">
+        <!-- Memerr Logo -->
+        <div class="Logo-Box" style="width: 100px; height: 100px; left: 75px; top: 75px; position: absolute; background: #4c6ce0"></div>
+        <div class="M" style="width: 71px; height: 86px; left: 90px; top: 80px; position: absolute; color: white; font-size: 75px; font-family: Inter; font-weight: 700; word-wrap: break-word">M</div>
+        
+        <!-- User profile picture-->
+        <img style="width: 106px; height: 109px; left: 310px; top: 71px; position: absolute" src="https://memerr-profile-pictures.s3.amazonaws.com/memerr-default-pfp.png" />
+        
+        <div style="width: 167px; height: 43px; left: 310px; top: 239px; position: absolute; background: rgba(217, 217, 217, 0.50); border: 1px black solid"></div>
+        <div style="width: 167px; height: 43px; left: 477px; top: 239px; position: absolute; background: rgba(217, 217, 217, 0.50); border: 1px black solid"></div>
+        <div style="width: 167px; height: 43px; left: 644px; top: 239px; position: absolute; background: rgba(76, 108, 224, 0.50); border: 1px black solid"></div>
+        
+        <button style="left: 324px; top: 243px; position: absolute; color: black; font-size: 28px; font-family: Inter; font-weight: 700; word-wrap: break-word; border: None; padding: 0; background: none; cursor: pointer;" onclick="redirectToRatingsPage()">Ratings</button>
+        <button style="left: 490px; top: 243px; position: absolute; color: black; font-size: 28px; font-family: Inter; font-weight: 700; word-wrap: break-word; border: None; padding: 0; background: none; cursor: pointer;" onclick="redirectToPostedPage()">Posts</button>
+        <div style="left: 660px; top: 243px; position: absolute; color: black; font-size: 28px; font-family: Inter; font-weight: 700; word-wrap: break-word">Saved</div>
+        
+        <!-- Side Menu -->
+        <div class="side-legend">
+          <button class="side-legend-button-1" style="cursor: pointer;" onclick="redirectToHomePage()"><img src="../static/assets/home-icon.png" alt="Home Icon" /> Home</button>
+          <button class="side-legend-button-2"><img src="../static/assets/trending-icon.png" alt="Trending Icon" /> Trending</button>
+          <button class="side-legend-button-3"><img src="../static/assets/down-triangle-icon.png" alt="Following Icon" /> Following</button>
+        </div>
+
+        <!-- Legendary Meme Gallery -->
+      <div class="gallery">
+        {% for meme in memes_data %}
+        <div class="meme-item">
+          <!-- <h2 class="meme-title">{{ meme.caption }}</h2> -->
+          <img class="photo" src="{{ meme.bucket_image_source }}" />
+          <div class="gallery-item-description"><strong>Description:</strong> <span>{{ meme.description }}</span></div>
+          <div class="gallery-item-tags">
+            <strong>Tags:</strong>
+            {% for tag in meme.categories %}
+            <span class="tag">{{ tag }}</span>
+            {% endfor %}
+          </div>
+
+          <p class="label">Ratings:</p>
+          <div class="ratings-container">
+            <div class="rating-category">
+              <span class="rating-label">Humor</span>
+              <div class="rating-value humor">{{ meme.humor_rating }}</div>
+            </div>
+            <div class="rating-category">
+              <span class="rating-label">Originality</span>
+              <div class="rating-value originality">{{ meme.originality_rating }}</div>
+            </div>
+            <div class="rating-category">
+              <span class="rating-label">Relatability</span>
+              <div class="rating-value reliability">{{ meme.relatability_rating }}</div>
+            </div>
+          </div>
+          <button class="rate-meme-button">Rate this meme</button>
+        </div>
+        {% endfor %}
+      </div>    
+      </div>
+        
+    </div>
+    <script>
+        function redirectToHomePage() {
+        // Make an HTTP request to the Flask backend
+        fetch('/')
+            .then(response => {
+                
+                if (response.ok) {
+                    return window.location.href = '/';
+                }
+                
+                response.json()
+            }) // Parse the JSON response
+            .then(data => {
+                // Check if the request was successful
+                console.log(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+        function redirectToRatingsPage() {
+          // Make an HTTP request to the Flask backend
+          fetch('/user')
+              .then(response => {
+                
+                if (response.ok) {
+                    return window.location.href = '/user';
+                  }
+                
+                response.json()
+              }) // Parse the JSON response
+              .then(data => {
+                  // Check if the request was successful
+                  console.log(data);
+              })
+              .catch(error => {
+                  console.error('Error:', error);
+              });
+        }
+    
+        function redirectToPostedPage() {
+          // Make an HTTP request to the Flask backend
+          fetch('/user/posted')
+              .then(response => {
+                
+                if (response.ok) {
+                    return window.location.href = '/user/posted';
+                  }
+                
+                response.json()
+              }) // Parse the JSON response
+              .then(data => {
+                  // Check if the request was successful
+                  console.log(data);
+              })
+              .catch(error => {
+                  console.error('Error:', error);
+              });
+        }
+        </script>
+</body>
+</html>

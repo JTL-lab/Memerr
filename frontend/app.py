@@ -1,7 +1,7 @@
 from functools import wraps
 import urllib
 import logging
-# import ast
+import ast
 import requests
 import boto3
 import redis
@@ -357,56 +357,6 @@ def index():
     # response.headers['Content-Security-Policy'] = f"script-src 'nonce-{nonce}'"
     return response
 
-@app.route('/rated', methods=['GET'])
-def get_rated_memes():
-    nonce = "nonce"#generate_nonce()
-    user_data = user_table.query_single(query_id=USER_EMAIL, primary_key="email")[0]
-    meme_ids = list(ast.literal_eval(user_data['memes_rated']).keys())
-    memes_data = meme_table.retrieve_memes(meme_ids,"meme_id")
-    
-    for data in memes_data:
-        # data['categories'] = json.loads(data['categories'])
-        categories_str = data['categories'].strip("[]")
-        tag_list = [tag.strip() for tag in categories_str.split(',')]
-        data['categories'] = tag_list
-    
-    response = make_response(render_template("index.html", nonce=nonce, memes_data=memes_data))
-    return response
-
-@app.route('/posted', methods=['GET'])
-def get_posted_memes():
-    nonce = "nonce"#generate_nonce()
-    user_data = user_table.query_single(query_id=USER_EMAIL, primary_key="email")[0]
-    meme_ids = ast.literal_eval(user_data['memes_posted'])
-    memes_data = meme_table.retrieve_memes(meme_ids,"meme_id")
-    
-    for data in memes_data:
-        # data['categories'] = json.loads(data['categories'])
-        categories_str = data['categories'].strip("[]")
-        tag_list = [tag.strip() for tag in categories_str.split(',')]
-        data['categories'] = tag_list
-    
-    response = make_response(render_template("index.html", nonce=nonce, memes_data=memes_data))
-    return response
-    
-
-@app.route('/saved', methods=['GET'])
-def get_saved_memes():
-    nonce = "nonce"#generate_nonce()
-    user_data = user_table.query_single(query_id=USER_EMAIL, primary_key="email")[0]
-    meme_ids = ast.literal_eval(user_data['memes_saved'])
-    memes_data = meme_table.retrieve_memes(meme_ids,"meme_id")
-    
-    for data in memes_data:
-        # data['categories'] = json.loads(data['categories'])
-        categories_str = data['categories'].strip("[]")
-        tag_list = [tag.strip() for tag in categories_str.split(',')]
-        data['categories'] = tag_list
-    
-    response = make_response(render_template("index.html", nonce=nonce, memes_data=memes_data))
-    return response
-
-
 # User Registration
 @app.route('/register', methods=['POST'])
 def register():
@@ -445,23 +395,68 @@ def user_signup_page():
 @app.route("/user", endpoint="user_profile", methods=["GET"])
 def user_profile_page():
     if request.endpoint == "user_profile":
-        return render_template("user.html")  
+        nonce = "nonce"#generate_nonce()
+        user_data = user_table.query_single(query_id=USER_EMAIL, primary_key="email")[0]
+        meme_ids = list(ast.literal_eval(user_data['memes_rated']).keys())
+        memes_data = meme_table.retrieve_memes(meme_ids, "meme_id")
+        
+        for data in memes_data:
+            # data['categories'] = json.loads(data['categories'])
+            categories_str = data['categories'].replace("[", "")
+            categories_str = categories_str.replace("]", "")
+            categories_str = categories_str.replace('"', "")
+            tag_list = [tag.strip() for tag in categories_str.split(',')]
+            data['categories'] = tag_list
+            data['description'] = data['caption']
+            data['caption'] = data['ml_caption']
+        
+        return render_template("user.html", nonce=nonce, memes_data=memes_data) 
     else:
         return jsonify({'ok': False, 'message': 'Profile not available'})
 
 # fetch the user posted memes from the user-info Dynamo DB table
 @app.route("/user/posted", endpoint="user_posted", methods=["GET"])
-def user_profile_page():
-    if request.endpoint == "user_profile":
-        return render_template("user_profile.html")  
+def user_posted_page():
+    if request.endpoint == "user_posted":
+        nonce = "nonce"#generate_nonce()
+        user_data = user_table.query_single(query_id=USER_EMAIL, primary_key="email")[0]
+        meme_ids = list(ast.literal_eval(user_data['memes_posted']))
+        memes_data = meme_table.retrieve_memes(meme_ids, "meme_id")
+        
+        for data in memes_data:
+            # data['categories'] = json.loads(data['categories'])
+            categories_str = data['categories'].replace("[", "")
+            categories_str = categories_str.replace("]", "")
+            categories_str = categories_str.replace('"', "")
+            tag_list = [tag.strip() for tag in categories_str.split(',')]
+            data['categories'] = tag_list
+            data['description'] = data['caption']
+            data['caption'] = data['ml_caption']
+
+        return render_template("user_posted.html", nonce=nonce, memes_data=memes_data) 
     else:
         return jsonify({'ok': False, 'message': 'Profile not available'})
 
 # fetch the user saved memes from the user-info Dynamo DB table
 @app.route("/user/saved", endpoint="user_saved", methods=["GET"])
-def user_profile_page():
-    if request.endpoint == "user_profile":
-        return render_template("user_saved.html")  
+def user_saved_page():
+    if request.endpoint == "user_saved":
+        nonce = "nonce"#generate_nonce()
+        user_data = user_table.query_single(query_id=USER_EMAIL, primary_key="email")[0]
+        meme_ids = list(ast.literal_eval(user_data['memes_saved']))
+        memes_data = meme_table.retrieve_memes(meme_ids, "meme_id")
+        
+        for data in memes_data:
+            # data['categories'] = json.loads(data['categories'])
+            categories_str = data['categories'].replace("[", "")
+            categories_str = categories_str.replace("]", "")
+            categories_str = categories_str.replace('"', "")
+            tag_list = [tag.strip() for tag in categories_str.split(',')]
+            data['categories'] = tag_list
+            data['description'] = data['caption']
+            data['caption'] = data['ml_caption']
+        
+        return render_template("user_saved.html", nonce=nonce, memes_data=memes_data)  
     else:
         return jsonify({'ok': False, 'message': 'Profile not available'})
 
