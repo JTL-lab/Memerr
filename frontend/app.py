@@ -9,7 +9,7 @@ from flask import Flask, jsonify, make_response, request, render_template, redir
 from flask_cors import CORS
 import jwt
 from frontend.models.profile import UserCreds
-# from frontend.py.authn import get_jwks, validate_token, sign_in, generate_nonce
+from frontend.py.authn import get_jwks, validate_token, sign_in, generate_nonce
 from frontend.models.dynamodb import DynamoDB
 import time
 import random
@@ -26,8 +26,8 @@ app.logger.addHandler(handler)
 COGNITO_REGION = 'us-east-1'
 COGNITO_USER_POOL_ID = 'us-east-1_2xLbaGSV5'
 COGNITO_DOMAIN = 'memerr.auth.us-east-1.amazoncognito.com'
-FRONTEND_DOMAIN = 'ec2-54-86-68-35.compute-1.amazonaws.com'
-# FRONTEND_DOMAIN = 'localhost:5001'
+# FRONTEND_DOMAIN = 'ec2-54-86-68-35.compute-1.amazonaws.com'
+FRONTEND_DOMAIN = 'localhost:5001'
 COGNITO_CLIENT = boto3.client('cognito-idp', region_name=COGNITO_REGION)
 SCOPES = 'openid profile email'
 TOKEN_ENDPOINT = f"https://{COGNITO_DOMAIN}/oauth2/token"
@@ -329,7 +329,7 @@ def error(err):
 
 @app.route("/")
 def index():
-    # nonce = generate_nonce()
+    nonce = generate_nonce()
     memes_data = meme_table.get_memes_data()[0:100]
     for data in memes_data:
         # data['categories'] = json.loads(data['categories'])
@@ -337,7 +337,7 @@ def index():
         tag_list = [tag.strip() for tag in categories_str.split(',')]
         data['categories'] = tag_list
 
-    response = make_response(render_template("index.html", nonce="nonce", memes_data=memes_data))
+    response = make_response(render_template("index.html", nonce=nonce, memes_data=memes_data))
     # response.headers['Content-Security-Policy'] = f"script-src 'nonce-{nonce}'"
     return response
 
