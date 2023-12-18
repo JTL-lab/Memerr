@@ -101,147 +101,9 @@
         </div>
         {% endfor %}
       </div>
+  </body> 
 
-
-
-
-      <!-- Legendary Meme Gallery
-      <div class="gallery">
-        <div class="meme-item">
-          <h2 class="meme-title">Success Kid</h2>
-          <img class="photo" src="https://memerr-memes.s3.amazonaws.com/success-kid.jpg" />
-          <div class="gallery-item-description"><strong>Description:</strong> <span>Viral image of a kid clenching fist with joy</span></div>
-          <div class="gallery-item-tags">
-            <strong>Tags:</strong>
-            <span class="tag">viral</span>
-            <span class="tag">famous</span>
-            <span class="tag">joy</span>
-          </div>
-
-          <p class="label">Ratings:</p>
-          <div class="ratings-container">
-            <div class="rating-category">
-              <span class="rating-label">Humor</span>
-              <div class="rating-value humor">4.25</div>
-            </div>
-            <div class="rating-category">
-              <span class="rating-label">Originality</span>
-              <div class="rating-value originality">4.85</div>
-            </div>
-            <div class="rating-category">
-              <span class="rating-label">Relatability</span>
-              <div class="rating-value reliability">4.26</div>
-            </div>
-          </div>
-          <button class="rate-meme-button">Rate this meme</button>
-        </div>
-
-        <div class="meme-item">
-          <h2 class="meme-title">Gaming Humanly??</h2>
-          <img class="photo" src="https://memerr-memes.s3.amazonaws.com/video-games-character-dialog-meme.jpeg" />
-          <div class="gallery-item-description"><strong>Description:</strong> <span>Do video games ever cry? OH, YES WE DO!!!</span></div>
-          <div class="gallery-item-tags">
-            <strong>Tags:</strong>
-            <span class="tag">videogames</span>
-            <span class="tag">gaming</span>
-          </div>
-
-          <p class="label">Ratings:</p>
-          <div class="ratings-container">
-            <div class="rating-category">
-              <span class="rating-label">Humor</span>
-              <div class="rating-value humor">3.95</div>
-            </div>
-            <div class="rating-category">
-              <span class="rating-label">Originality</span>
-              <div class="rating-value originality">4.25</div>
-            </div>
-            <div class="rating-category">
-              <span class="rating-label">Relatability</span>
-              <div class="rating-value reliability">4.66</div>
-            </div>
-          </div>
-          <button class="rate-meme-button">Rate this meme</button>
-        </div>
-
-        <div class="meme-item">
-          <h2 class="meme-title">Poor Dad, Poor Son</h2>
-          <img class="photo" src="https://memerr-memes.s3.amazonaws.com/safe-think-about-it.jpg" />
-          <div class="gallery-item-description"><strong>Description:</strong> <span>Life of an average student after joining Columbia xD</span></div>
-          <div class="gallery-item-tags">
-            <strong>Tags:</strong>
-            <span class="tag">broke</span>
-            <span class="tag">sad</span>
-            <span class="tag">gradlife</span>
-          </div>
-
-          <p class="label">Ratings:</p>
-          <div class="ratings-container">
-            <div class="rating-category">
-              <span class="rating-label">Humor</span>
-              <div class="rating-value humor">4.89</div>
-            </div>
-            <div class="rating-category">
-              <span class="rating-label">Originality</span>
-              <div class="rating-value originality">4.12</div>
-            </div>
-            <div class="rating-category">
-              <span class="rating-label">Relatability</span>
-              <div class="rating-value reliability">3.86</div>
-            </div>
-          </div>
-          <button class="rate-meme-button">Rate this meme</button>
-        </div>
-
-        <div class="meme-item">
-          <h2 class="meme-title">DiCaprioVERSE</h2>
-          <img class="photo" src="https://memerr-memes.s3.amazonaws.com/leonardo_dicaprio_pointing_meme_waldo.jpg" />
-          <div class="gallery-item-description"><strong>Description:</strong> <span>Memeified shot of DiCaprio finding Waldo.</span></div>
-          <div class="gallery-item-tags">
-            <strong>Tags:</strong>
-            <span class="tag">viral</span>
-            <span class="tag">famous</span>
-            <span class="tag">joy</span>
-          </div>
-
-          <p class="label">Ratings:</p>
-          <div class="ratings-container">
-            <div class="rating-category">
-              <span class="rating-label">Humor</span>
-              <div class="rating-value humor">4.25</div>
-            </div>
-            <div class="rating-category">
-              <span class="rating-label">Originality</span>
-              <div class="rating-value originality">4.85</div>
-            </div>
-            <div class="rating-category">
-              <span class="rating-label">Reliability</span>
-              <div class="rating-value reliability">4.26</div>
-            </div>
-          </div>
-          <button class="rate-meme-button">Rate this meme</button>
-        </div>
-      </div>
-    </div>
-  </body> -->
   <script>
-    //AWS.config.region = 'us-east-1'; // e.g., us-west-2
-    //AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-    //    IdentityPoolId: 'IDENTITY_POOL_ID',
-    //    Logins: {
-    // Get the user tokens from Cognito sign-in
-    //        'cognito-idp.REGION.amazonaws.com/USER_POOL_ID': session.getIdToken().getJwtToken()
-    //    }
-    //});
-
-    // Refreshes credentials using AWS.CognitoIdentity.getCredentialsForIdentity()
-    //AWS.config.credentials.refresh((error) => {
-    //    if (error) {
-    //        console.error(error);
-    //    } else {
-    //        console.log('Successfully logged!');
-    //    }
-    //});
 
     var modal = document.getElementById('upload-modal');
     var btn = document.getElementById('post-button');
@@ -268,17 +130,8 @@
     }
     };
 
-    // // When the user clicks the upload button, clear the fields and close the modal
-    // document.getElementById('uploadButton').addEventListener('click', function () {
-    //   var files = document.getElementById('fileInput').files;
-    //   if (files.length > 0) {
-    //     // Get the first file from the input element
-    //     var file = files[0];
-    //     uploadToS3(file);
-    //   }
-    // });
-
-    function generateUniqueKey(fileName) {
+    function generateUniqueKey(fileName) 
+    {
     // Generate a timestamp string
     var date = new Date();
     var timeStamp = date.getTime();
@@ -294,30 +147,6 @@
 
     return uniqueKey;
     }
-
-    // function uploadToS3(file) {
-    //   // Assume AWS SDK has been configured with Cognito credentials
-    //   //var s3 = new AWS.S3();
-    //   var uniqueFileName = generateUniqueKey(file.name);
-
-    //   var params = {
-    //     Bucket: 'memerr-memes',
-    //     Key: uniqueFileName,
-    //     Body: file,
-    //     ContentType: file.type,
-    //     ACL: 'public-read',
-    //   };
-
-    //   s3.putObject(params, function (err, data) {
-    //     if (err) {
-    //       console.error('There was an error uploading your file: ', err);
-    //       return false;
-    //     }
-    //     console.log('Successfully uploaded file.', data);
-    //     document.getElementById('upload-modal').style.display = 'none';
-    //     document.getElementById('fileInput').value = '';
-    //   });
-    // }
 
 // const uploadBtn = document.getElementById('uploadBtn');
   uploadBtn.addEventListener('click', handleUpload);
@@ -348,11 +177,7 @@
       });
   }
 
-    
-
-
-
-    <!--------------------------------------------- SEARCH FUNCTIONALITY -------------------------------------------->
+<!--------------------------------------------- SEARCH FUNCTIONALITY -------------------------------------------->
 
 const searchButton = document.getElementById('search-button');
 const searchBar = document.getElementById('search-bar');
