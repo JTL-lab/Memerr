@@ -21,7 +21,9 @@
 
       <!-- Profile Pic & Upload Button -->
       <div class="profile-container">
-        <img class="ProfilePic" src="https://memerr-profile-pictures.s3.amazonaws.com/memerr-default-pfp.png" />
+        <button onclick="redirectToUserPage()" style="border: None; padding: 0; background: none; cursor: pointer;">
+          <img class="ProfilePic" src="https://memerr-profile-pictures.s3.amazonaws.com/memerr-default-pfp.png" />
+        </button>
         <button id="post-button" class="post-button">Post</button>
       </div>
 
@@ -249,21 +251,21 @@
 
     // When the user clicks on the button, open the modal
     btn.onclick = function () {
-      modal.style.display = 'block';
+    modal.style.display = 'block';
     };
 
     // When the user clicks on <span> (x), close the modal
     span.onclick = function () {
-      modal.style.display = 'none';
-      form.reset(); // Clear the form
+    modal.style.display = 'none';
+    form.reset(); // Clear the form
     };
 
     // When the user clicks anywhere outside of the modal, close it
     window.onclick = function (event) {
-      if (event.target == modal) {
-        modal.style.display = 'none';
-        form.reset(); // Clear the form
-      }
+    if (event.target == modal) {
+    modal.style.display = 'none';
+    form.reset(); // Clear the form
+    }
     };
 
     // // When the user clicks the upload button, clear the fields and close the modal
@@ -277,20 +279,20 @@
     // });
 
     function generateUniqueKey(fileName) {
-      // Generate a timestamp string
-      var date = new Date();
-      var timeStamp = date.getTime();
+    // Generate a timestamp string
+    var date = new Date();
+    var timeStamp = date.getTime();
 
-      // Generate a random number and convert it to a string
-      var randomString = Math.random().toString(36).substring(2, 15);
+    // Generate a random number and convert it to a string
+    var randomString = Math.random().toString(36).substring(2, 15);
 
-      // Combine both with an underscore separator
-      var uniqueKey = timeStamp + '_' + randomString + '_';
+    // Combine both with an underscore separator
+    var uniqueKey = timeStamp + '_' + randomString + '_';
 
-      // Append the original filename
-      uniqueKey += fileName;
+    // Append the original filename
+    uniqueKey += fileName;
 
-      return uniqueKey;
+    return uniqueKey;
     }
 
     // function uploadToS3(file) {
@@ -317,7 +319,7 @@
     //   });
     // }
 
-  // const uploadBtn = document.getElementById('uploadBtn');
+// const uploadBtn = document.getElementById('uploadBtn');
   uploadBtn.addEventListener('click', handleUpload);
 
   function handleUpload(){
@@ -350,7 +352,7 @@
 
 
 
-<!--------------------------------------------- SEARCH FUNCTIONALITY -------------------------------------------->
+    <!--------------------------------------------- SEARCH FUNCTIONALITY -------------------------------------------->
 
 const searchButton = document.getElementById('search-button');
 const searchBar = document.getElementById('search-bar');
@@ -391,6 +393,26 @@ imagePaths.forEach(function(imagePath) {
     memeItem.appendChild(img);
     gallery.appendChild(memeItem);
 });
+}
+
+function redirectToUserPage() {
+  // Make an HTTP request to the Flask backend
+  fetch('/user')
+      .then(response => {
+        
+        if (response.ok) {
+            return window.location.href = '/user';
+          }
+        
+        response.json()
+      }) // Parse the JSON response
+      .then(data => {
+          // Check if the request was successful
+          console.log(data);
+      })
+      .catch(error => {
+          console.error('Error:', error);
+      });
 }
   </script>
 </html>

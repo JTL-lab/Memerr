@@ -375,6 +375,29 @@ def user_signup_page():
     if request.endpoint == "user_signup":
         return render_template("user_signup.html")
 
+# redirect from home to user profile and show the user-rated memes from the user-info Dynamo DB table
+@app.route("/user", endpoint="user_profile", methods=["GET"])
+def user_profile_page():
+    if request.endpoint == "user_profile":
+        return render_template("user.html")  
+    else:
+        return jsonify({'ok': False, 'message': 'Profile not available'})
+
+# fetch the user posted memes from the user-info Dynamo DB table
+@app.route("/user/posted", endpoint="user_posted", methods=["GET"])
+def user_profile_page():
+    if request.endpoint == "user_profile":
+        return render_template("user_profile.html")  
+    else:
+        return jsonify({'ok': False, 'message': 'Profile not available'})
+
+# fetch the user saved memes from the user-info Dynamo DB table
+@app.route("/user/saved", endpoint="user_saved", methods=["GET"])
+def user_profile_page():
+    if request.endpoint == "user_profile":
+        return render_template("user_saved.html")  
+    else:
+        return jsonify({'ok': False, 'message': 'Profile not available'})
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, threaded=True, debug=True, ssl_context='adhoc')
