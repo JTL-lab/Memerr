@@ -369,6 +369,53 @@ def index():
     # response.headers['Content-Security-Policy'] = f"script-src 'nonce-{nonce}'"
     return response
 
+@app.route("/recommend")
+def get_relevant_memes():
+    nonce = "nonce"#generate_nonce()
+    user_data = user_table.query_single(query_id=USER_EMAIL, primary_key="email")[0]
+    meme_ids = list(ast.literal_eval(user_data['memes_saved']))
+    RECOMMEND_API_ENDPOINT = "https://1n88dyemv5.execute-api.us-east-1.amazonaws.com/memesearch/recommend"
+    app.logger.info(RECOMMEND_API_ENDPOINT)
+    try:
+        # You can customize the query parameters based on your API
+        query_parameters = {'q': ",".join(item for item in meme_ids)}
+
+        # Make a GET request to the search API endpoint
+        response = requests.get(RECOMMEND_API_ENDPOINT, params=query_parameters)
+
+        # Check if the request was successful (status code 200)
+        if response.status_code == 200:
+            api_data = response.json()
+            image_paths = api_data.get('imagePaths', [])
+            img_paths = ["https://memerr-memes.s3.amazonaws.com/"+item for item in image_paths]
+            print(img_paths)
+            memes_data = old_meme_table.retrieve_memes(image_paths, "meme_id")
+            
+            for data in memes_data:
+                # data['categories'] = json.loads(data['categories'])
+                categories_str = data['categories'].replace("[", "")
+                categories_str = categories_str.replace("]", "")
+                categories_str = categories_str.replace('"', "")
+                tag_list = [tag.strip() for tag in categories_str.split(',')]
+                data['categories'] = tag_list
+                data['description'] = data['caption']
+                data['caption'] = "ml_caption"
+        
+            return render_template("user_saved.html", nonce=nonce, memes_data=memes_data) 
+            # response = make_response(render_template("index.html", nonce=nonce, memes_data=memes_data))
+            # return response
+
+            # return jsonify({'image_paths': img_paths})
+        else:
+            # If the API request was not successful, handle the error
+            return jsonify({'error': f'Error from API: {response.status_code}'})
+
+    except Exception as e:
+        return jsonify({'error': f'An error occurred: {str(e)}'})
+
+
+
+
 # User Registration
 @app.route('/register', methods=['POST'])
 def register():
@@ -448,6 +495,8 @@ def user_posted_page():
         return render_template("user_posted.html", nonce=nonce, memes_data=memes_data) 
     else:
         return jsonify({'ok': False, 'message': 'Profile not available'})
+    
+
 
 # fetch the user saved memes from the user-info Dynamo DB table
 @app.route("/user/saved", endpoint="user_saved", methods=["GET"])
