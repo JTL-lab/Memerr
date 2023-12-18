@@ -26,8 +26,8 @@ app.logger.addHandler(handler)
 COGNITO_REGION = 'us-east-1'
 COGNITO_USER_POOL_ID = 'us-east-1_2xLbaGSV5'
 COGNITO_DOMAIN = 'memerr.auth.us-east-1.amazoncognito.com'
-# FRONTEND_DOMAIN = 'ec2-54-86-68-35.compute-1.amazonaws.com'
-FRONTEND_DOMAIN = 'localhost:5001'
+FRONTEND_DOMAIN = 'ec2-54-86-68-35.compute-1.amazonaws.com'
+# FRONTEND_DOMAIN = 'localhost:5001'
 COGNITO_CLIENT = boto3.client('cognito-idp', region_name=COGNITO_REGION)
 SCOPES = 'openid profile email'
 TOKEN_ENDPOINT = f"https://{COGNITO_DOMAIN}/oauth2/token"
@@ -427,6 +427,29 @@ def user_signup_page():
     if request.endpoint == "user_signup":
         return render_template("user_signup.html")
 
+# redirect from home to user profile and show the user-rated memes from the user-info Dynamo DB table
+@app.route("/user", endpoint="user_profile", methods=["GET"])
+def user_profile_page():
+    if request.endpoint == "user_profile":
+        return render_template("user.html")  
+    else:
+        return jsonify({'ok': False, 'message': 'Profile not available'})
+
+# fetch the user posted memes from the user-info Dynamo DB table
+@app.route("/user/posted", endpoint="user_posted", methods=["GET"])
+def user_profile_page():
+    if request.endpoint == "user_profile":
+        return render_template("user_profile.html")  
+    else:
+        return jsonify({'ok': False, 'message': 'Profile not available'})
+
+# fetch the user saved memes from the user-info Dynamo DB table
+@app.route("/user/saved", endpoint="user_saved", methods=["GET"])
+def user_profile_page():
+    if request.endpoint == "user_profile":
+        return render_template("user_saved.html")  
+    else:
+        return jsonify({'ok': False, 'message': 'Profile not available'})
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, threaded=True, debug=True, ssl_context='adhoc')

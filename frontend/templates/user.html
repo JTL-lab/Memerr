@@ -1,270 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Memerr</title>
-    <link rel="stylesheet" href="static/styles.css" />
-  </head>
-
-  <body>
-    <div class="HomePage">
-      <!-- Memerr Logo -->
-      <div class="Logo-Box" style="width: 100px; height: 100px; left: 75px; top: 75px; position: absolute; background: #4c6ce0"></div>
-      <div class="M" style="width: 71px; height: 86px; left: 90px; top: 80px; position: absolute; color: white; font-size: 75px; font-family: Inter; font-weight: 700; word-wrap: break-word">M</div>
-
-      <!-- Search Bar -->
-      <div class="search-bar">
-        <input type="text" id="search-bar" name="search" placeholder="Search..." />
-        <button id="search-button"></button>
-      </div>
-
-      <!-- Profile Pic & Upload Button -->
-      <div class="profile-container">
-        <img class="ProfilePic" src="https://memerr-profile-pictures.s3.amazonaws.com/memerr-default-pfp.png" />
-        <button id="post-button" class="post-button">Post</button>
-      </div>
-
-      <!-- Post Modal -->
-      <div id="upload-modal" class="modal">
-        <div class="modal-content">
-          <span class="close">&times;</span>
-          <form id="postForm">
-            <h2>Please provide the following information</h2>
-            <input type="text" id="title" name="title" placeholder="Title" />
-            <input type="text" id="description" name="description" placeholder="Description" />
-            <input type="text" id="tags" name="tags" placeholder="Tags (Optional)" />
-            <input type="file" id="image" name="image" placeholder="Attach Image" />
-            <input type="button" id="uploadBtn" value="Upload" />
-          </form>
-        </div>
-      </div>
-
-      <!-- SFW Toggle Button -->
-      <div class="toggle-button">
-        <input type="checkbox" id="toggle" name="toggle" />
-        <label for="toggle"></label>
-      </div>
-      <div class="SfwOn" style="left: 895px; top: 176px; position: absolute; color: black; font-size: 20px; font-family: Inter; font-weight: 600; word-wrap: break-word">SFW Toggle</div>
-
-      <!-- Categories Dropdown -->
-      <div class="dropdown">
-        <select id="dropdown-menu" name="dropdown-menu">
-          <option value="All">All</option>
-          <option value="Dank-Memes">Dank Memes</option>
-          <option value="Wholesome-Memes">Wholesome Memes</option>
-          <option value="Silly-Memes">Silly Memes</option>
-          <option value="Surreal-Memes">Surreal Memes</option>
-        </select>
-      </div>
-
-      <!-- Categories Dropdown -->
-      <div class="dropdown">
-        <select id="dropdown-menu" name="dropdown-menu">
-          <option value="ratings">Ratings</option>
-          <option value="posts">Posts</option>
-          <option value="saved">Saved</option>
-        </select>
-      </div>
-
-      <!-- Legendary Meme Gallery -->
-      <div class="gallery">
-        <div class="meme-item">
-          <h2 class="meme-title">Success Kid</h2>
-          <img class="photo" src="https://memerr-memes.s3.amazonaws.com/success-kid.jpg" />
-          <div class="gallery-item-description"><strong>Description:</strong> <span>Viral image of a kid clenching fist with joy</span></div>
-          <div class="gallery-item-tags">
-            <strong>Tags:</strong>
-            <span class="tag">viral</span>
-            <span class="tag">famous</span>
-            <span class="tag">joy</span>
-          </div>
-
-          <p class="label">Ratings:</p>
-          <div class="ratings-container">
-            <div class="rating-category">
-              <span class="rating-label">Humor</span>
-              <div class="rating-value humor">4.25</div>
-            </div>
-            <div class="rating-category">
-              <span class="rating-label">Originality</span>
-              <div class="rating-value originality">4.85</div>
-            </div>
-            <div class="rating-category">
-              <span class="rating-label">Relatability</span>
-              <div class="rating-value reliability">4.26</div>
-            </div>
-          </div>
-          <button class="rate-meme-button">Rate this meme</button>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Webpage Title</title>
+    <link rel="stylesheet" href="../static/user-styles.css" />
+</head>
+<body>
+    <div class="container">
+      <div style="width: 100%; height: 100%; position: relative; background: white">
+        <!-- Memerr Logo -->
+        <div class="Logo-Box" style="width: 100px; height: 100px; left: 75px; top: 75px; position: absolute; background: #4c6ce0"></div>
+        <div class="M" style="width: 71px; height: 86px; left: 90px; top: 80px; position: absolute; color: white; font-size: 75px; font-family: Inter; font-weight: 700; word-wrap: break-word">M</div>
+        
+        <!-- User profile picture-->
+        <img style="width: 106px; height: 109px; left: 310px; top: 71px; position: absolute" src="https://memerr-profile-pictures.s3.amazonaws.com/memerr-default-pfp.png" />
+        
+        <div style="width: 167px; height: 43px; left: 310px; top: 239px; position: absolute; background: rgba(76, 108, 224, 0.50); border: 1px black solid"></div>
+        <div style="width: 167px; height: 43px; left: 477px; top: 239px; position: absolute; background: rgba(217, 217, 217, 0.50); border: 1px black solid"></div>
+        <div style="width: 167px; height: 43px; left: 644px; top: 239px; position: absolute; background: rgba(217, 217, 217, 0.50); border: 1px black solid"></div>
+        
+        <div style="left: 324px; top: 243px; position: absolute; color: black; font-size: 28px; font-family: Inter; font-weight: 700; word-wrap: break-word">Ratings</div>
+        <div style="left: 490px; top: 243px; position: absolute; color: black; font-size: 28px; font-family: Inter; font-weight: 700; word-wrap: break-word">Posts</div>
+        <div style="left: 660px; top: 243px; position: absolute; color: black; font-size: 28px; font-family: Inter; font-weight: 700; word-wrap: break-word">Saved</div>
+        
+        <!-- Side Menu -->
+        <div class="side-legend">
+          <button class="side-legend-button-1"><img src="static/assets/home-icon.png" alt="Home Icon" /> Home</button>
+          <button class="side-legend-button-2"><img src="static/assets/trending-icon.png" alt="Trending Icon" /> Trending</button>
+          <button class="side-legend-button-3"><img src="static/assets/down-triangle-icon.png" alt="Following Icon" /> Following</button>
         </div>
 
-        <div class="meme-item">
-          <h2 class="meme-title">Gaming Humanly??</h2>
-          <img class="photo" src="https://memerr-memes.s3.amazonaws.com/video-games-character-dialog-meme.jpeg" />
-          <div class="gallery-item-description"><strong>Description:</strong> <span>Do video games ever cry? OH, YES WE DO!!!</span></div>
-          <div class="gallery-item-tags">
-            <strong>Tags:</strong>
-            <span class="tag">videogames</span>
-            <span class="tag">gaming</span>
-          </div>
-
-          <p class="label">Ratings:</p>
-          <div class="ratings-container">
-            <div class="rating-category">
-              <span class="rating-label">Humor</span>
-              <div class="rating-value humor">3.95</div>
-            </div>
-            <div class="rating-category">
-              <span class="rating-label">Originality</span>
-              <div class="rating-value originality">4.25</div>
-            </div>
-            <div class="rating-category">
-              <span class="rating-label">Relatability</span>
-              <div class="rating-value reliability">4.66</div>
-            </div>
-          </div>
-          <button class="rate-meme-button">Rate this meme</button>
-        </div>
+        <div style="width: 48px; height: 17px; left: 318px; top: 612px; position: absolute; color: black; font-size: 14px; font-family: Inter; font-weight: 600; word-wrap: break-word">Humor</div>
+        <div style="width: 73px; height: 17px; left: 395px; top: 612px; position: absolute; color: black; font-size: 14px; font-family: Inter; font-weight: 600; word-wrap: break-word">Originality</div>
+        <div style="width: 70px; height: 17px; left: 497px; top: 612px; position: absolute; color: black; font-size: 14px; font-family: Inter; font-weight: 600; word-wrap: break-word">Reliability</div>
+        <div style="width: 269px; height: 21px; left: 310px; top: 557px; position: absolute; color: black; font-size: 16px; font-family: Inter; font-weight: 600; word-wrap: break-word">Tags: </div>
+        <div style="width: 269px; height: 21px; left: 310px; top: 588px; position: absolute; color: black; font-size: 16px; font-family: Inter; font-weight: 600; word-wrap: break-word">Ratings: </div>
+        <div style="width: 269px; height: 45px; left: 310px; top: 506px; position: absolute"><span style="color: black; font-size: 16px; font-family: Inter; font-weight: 600; word-wrap: break-word">Description: </span><span style="color: black; font-size: 16px; font-family: Inter; font-weight: 400; word-wrap: break-word">Do video gamers ever cry? OH, YES WE DO!!!</span><span style="color: black; font-size: 22px; font-family: Inter; font-weight: 400; word-wrap: break-word"> </span></div>
+        <div style="width: 207px; height: 28px; left: 310px; top: 310px; position: absolute; color: black; font-size: 22px; font-family: Inter; font-weight: 600; word-wrap: break-word">Gaming Humanly??</div>
+        <div style="width: 91px; height: 19px; left: 359px; top: 557px; position: absolute; background: rgba(76, 108, 224, 0.50); border-radius: 20px"></div>
+        <div style="width: 85px; height: 17px; left: 363px; top: 557px; position: absolute; color: black; font-size: 14px; font-family: Inter; font-weight: 600; word-wrap: break-word">videogames</div>
+        <div style="width: 63px; height: 19px; left: 454px; top: 557px; position: absolute; background: rgba(76, 108, 224, 0.50); border-radius: 20px"></div>
+        <div style="width: 57px; height: 17px; left: 460px; top: 557px; position: absolute; color: black; font-size: 14px; font-family: Inter; font-weight: 600; word-wrap: break-word">gaming</div>
+        <div style="width: 43px; height: 19px; left: 320px; top: 632px; position: absolute; background: rgba(76, 108, 224, 0.80); border-radius: 20px"></div>
+        <div style="width: 43px; height: 19px; left: 409px; top: 632px; position: absolute; background: rgba(76, 108, 224, 0.80); border-radius: 20px"></div>
+        <div style="left: 379px; top: 672px; position: absolute; color: white; font-size: 14px; font-family: Inter; font-weight: 800; word-wrap: break-word">Rate this meme</div>
+        <div style="width: 39px; height: 19px; left: 512px; top: 631px; position: absolute; background: rgba(76, 108, 224, 0.80); border-radius: 20px"></div>
+        <div style="width: 34px; height: 17px; left: 325px; top: 632px; position: absolute; color: white; font-size: 14px; font-family: Inter; font-style: italic; font-weight: 800; word-wrap: break-word">4.00</div>
+        <div style="width: 34px; height: 18px; left: 414px; top: 632px; position: absolute; color: white; font-size: 14px; font-family: Inter; font-style: italic; font-weight: 800; word-wrap: break-word">4.00</div>
+        <div style="width: 35px; height: 17px; left: 514px; top: 632px; position: absolute; color: white; font-size: 14px; font-family: Inter; font-style: italic; font-weight: 800; word-wrap: break-word">4.00</div>
+        <img style="width: 244px; height: 161px; left: 310px; top: 341px; position: absolute" src="https://via.placeholder.com/244x161" />
+        <img style="width: 46px; height: 44px; left: 461px; top: 131px; position: absolute" src="https://via.placeholder.com/46x44" />
+        
+        
+    
       </div>
+        
     </div>
-  </body>
-  <script>
-    //AWS.config.region = 'us-east-1'; // e.g., us-west-2
-    //AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-    //    IdentityPoolId: 'IDENTITY_POOL_ID',
-    //    Logins: {
-    // Get the user tokens from Cognito sign-in
-    //        'cognito-idp.REGION.amazonaws.com/USER_POOL_ID': session.getIdToken().getJwtToken()
-    //    }
-    //});
-
-    // Refreshes credentials using AWS.CognitoIdentity.getCredentialsForIdentity()
-    //AWS.config.credentials.refresh((error) => {
-    //    if (error) {
-    //        console.error(error);
-    //    } else {
-    //        console.log('Successfully logged!');
-    //    }
-    //});
-
-    var modal = document.getElementById('upload-modal');
-    var btn = document.getElementById('post-button');
-    var span = document.getElementsByClassName('close')[0];
-    var form = document.getElementById('postForm');
-    var uploadBtn = document.getElementById('uploadBtn');
-
-    // When the user clicks on the button, open the modal
-    btn.onclick = function () {
-      modal.style.display = 'block';
-    };
-
-    // When the user clicks on <span> (x), close the modal
-    span.onclick = function () {
-      modal.style.display = 'none';
-      form.reset(); // Clear the form
-    };
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function (event) {
-      if (event.target == modal) {
-        modal.style.display = 'none';
-        form.reset(); // Clear the form
-      }
-    };
-
-    // When the user clicks the upload button, clear the fields and close the modal
-    document.getElementById('uploadButton').addEventListener('click', function () {
-      var files = document.getElementById('fileInput').files;
-      if (files.length > 0) {
-        // Get the first file from the input element
-        var file = files[0];
-        uploadToS3(file);
-      }
-    });
-
-    function generateUniqueKey(fileName) {
-      // Generate a timestamp string
-      var date = new Date();
-      var timeStamp = date.getTime();
-
-      // Generate a random number and convert it to a string
-      var randomString = Math.random().toString(36).substring(2, 15);
-
-      // Combine both with an underscore separator
-      var uniqueKey = timeStamp + '_' + randomString + '_';
-
-      // Append the original filename
-      uniqueKey += fileName;
-
-      return uniqueKey;
-    }
-
-    function uploadToS3(file) {
-      // Assume AWS SDK has been configured with Cognito credentials
-      //var s3 = new AWS.S3();
-      var uniqueFileName = generateUniqueKey(file.name);
-
-      var params = {
-        Bucket: 'memerr-memes',
-        Key: uniqueFileName,
-        Body: file,
-        ContentType: file.type,
-        ACL: 'public-read',
-      };
-
-      s3.putObject(params, function (err, data) {
-        if (err) {
-          console.error('There was an error uploading your file: ', err);
-          return false;
-        }
-        console.log('Successfully uploaded file.', data);
-        document.getElementById('upload-modal').style.display = 'none';
-        document.getElementById('fileInput').value = '';
-      });
-    }
-
-    <!--------------------------------------------- SEARCH FUNCTIONALITY -------------------------------------------->
-
-    const searchButton = document.getElementById('search-button');
-    const searchBar = document.getElementById('search-bar');
-    const gallery = document.getElementById('gallery');
-
-    searchButton.addEventListener('click', function () {
-      const searchText = searchBar.value;
-
-      if (!searchText.trim()) {
-        alert('Please enter a search query.');
-        return;
-      }
-
-      // API Gateway endpoint for search: REPLACE WITH COGNITO
-      const searchUrl = `https://api-gateway-url/v1/search?q=${encodeURIComponent(searchText)}`;
-
-      // Make the GET request
-      fetch(searchUrl)
-        .then((response) => response.json())
-        .then((data) => {
-          console.log('Search results:', data);
-          updateGallery(data.results); // Function to update the gallery with search results
-        })
-        .catch((error) => {
-          console.error('Search error:', error);
-        });
-
-      // Clear the search bar text
-      searchBar.value = '';
-    });
-
-    // Function to update the gallery with search results
-    function updateGallery(results) {
-      // Clear current gallery images
-      gallery.innerHTML = '';
-      results.forEach((photo) => {
-        const photoElement = document.createElement('div');
-        photoElement.className = 'photo';
-        photoElement.innerHTML = `<img class="photo" src="${photo.url}" alt="Photo">`;
-        gallery.appendChild(photoElement);
-      });
-    }
-  </script>
+</body>
 </html>
