@@ -5,7 +5,7 @@ import requests
 import boto3
 import ast
 import redis
-from flask import Flask, jsonify, make_response, request, render_template, redirect
+from flask import Flask, jsonify, make_response, request, render_template, redirect, current_app
 from flask_cors import CORS
 import jwt
 from frontend.models.profile import UserCreds
