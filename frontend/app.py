@@ -34,14 +34,14 @@ REDIRECT_URI = f'http://{FRONTEND_DOMAIN}/callback'
 COGNITO_LOGIN_URL_HARDCODED = f'https://{FRONTEND_DOMAIN}/login?response_type=code&client_id={COGNITO_APP_CLIENT_ID}&redirect_uri={REDIRECT_URI}'
 
 # Initialize Redis
-redis_client = redis.StrictRedis(host='memerr-dqyhmc.serverless.use1.cache.amazonaws.com:6379', port=6379, db=0)
+redis_client = redis.StrictRedis(host='memerr-dqyhmc.serverless.use1.cache.amazonaws.com', port=6379, db=0)
 meme_table = DynamoDB("us-east-1","meme-data")
 #endregion
 
 
 #region AWS Redis Elasticache
 """
-Set a multi-value object on Redis cache
+# Set a multi-value object on Redis cache
 user_data = {
     'access_token': 'access_token_value',
     'id_token': 'id_token_value',
@@ -50,7 +50,7 @@ user_data = {
 }
 set_user_data('memerr6698@gmail.com', user_data)
 
-Get a multi-value object, data on Redis cache
+# Get a multi-value object, data on Redis cache
 data = get_user_data('memerr6698@gmail.com')
 if data:
     access_token = data.get('access_token')
@@ -172,12 +172,47 @@ def callback():
         if response.status_code == 200:
             tokens = response.json()
             app.logger.info(f'@callback authV tokens: {tokens}')
+
+            # access_token
+            access_token = tokens.get('access_token')
+            app.logger.info(f'@callback access_token: {access_token}')
+            print(f'access_token {access_token}')
+
+            # id_token
             id_token = tokens.get('id_token')
             app.logger.info(f'@callback id_token: {id_token}')
             print(f'id_token {id_token}')
-            validate_token(id_token)
-            return id_token
-            # return tokens
+            payload = validate_token(id_token)
+
+            # email
+            email = payload.get('email')
+            app.logger.info(f'@callback email: {email}')
+            print(f'email {email}')
+            
+            # profile picture url
+            picture = payload.get('picture')
+            app.logger.info(f'@callback picture: {picture}')
+            print(f'profile_picture_url {picture}')
+
+            # Set a multi-value object on Redis cache
+            user_data = {
+                'access_token': access_token,
+                'id_token': id_token,
+                'email': email,
+                'picture': picture
+            }
+            app.logger.info(f'@user_data: {user_data}')
+            print(f'user_data: {user_data}')
+            set_user_data(email, user_data)
+
+            # Get a multi-value object, data on Redis cache
+            data = get_user_data(email)
+            app.logger.info(f'@data: {data}')
+            print(f'data: {data}')
+            if data:
+                access_token = data.get('access_token')
+                email = data.get('email')
+            return data
         else:
             return 'Error exchanging code for tokens', response.status_code
     except Exception as e:
