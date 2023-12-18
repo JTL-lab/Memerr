@@ -431,6 +431,7 @@
 }
 
 .rate-meme-button {
+    display: inline-block;
     padding: 10px 20px;
     background-color: #4C6CE0;
     border: none;
@@ -438,6 +439,7 @@
     color: white;
     cursor: pointer;
     margin-top: 10px;
+    margin-right: 10px;
 }
 
 
@@ -501,3 +503,24 @@ input[type=button] {
 input[type=button]:hover {
     opacity: 0.8;
 }
+
+.rating-section {
+    margin-top: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.toggle-ratings-button {
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: #4c6ce0;
+    text-decoration: underline;
+}
+
+/* .ratings-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+} */

@@ -302,6 +302,10 @@ def callback():
             if data:
                 access_token = data.get('access_token')
                 email = data.get('email')
+            
+            index_url = f"https://{COGNITO_DOMAIN}/"
+            app.logger.info(f'@login cognito_login_url {index_url}')
+            return redirect(index_url)
             return data
         else:
             return 'Error exchanging code for tokens', response.status_code
