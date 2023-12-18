@@ -357,9 +357,13 @@ def index():
     memes_data = meme_table.get_memes_data()[0:100]
     for data in memes_data:
         # data['categories'] = json.loads(data['categories'])
-        categories_str = data['categories'].strip("[]")
+        categories_str = data['categories'].replace("[", "")
+        categories_str = categories_str.replace("]", "")
+        categories_str = categories_str.replace('"', "")
         tag_list = [tag.strip() for tag in categories_str.split(',')]
         data['categories'] = tag_list
+        data['description'] = data['caption']
+        data['caption'] = data['ml_caption']
 
     response = make_response(render_template("index.html", nonce=nonce, memes_data=memes_data))
     # response.headers['Content-Security-Policy'] = f"script-src 'nonce-{nonce}'"

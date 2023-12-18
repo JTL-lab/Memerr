@@ -74,7 +74,7 @@
       <div class="gallery">
         {% for meme in memes_data %}
         <div class="meme-item">
-          <h2 class="meme-title">{{ meme.caption }}</h2>
+          <!-- <h2 class="meme-title">{{ meme.caption }}</h2> -->
           <img class="photo" src="{{ meme.bucket_image_source }}" />
           <div class="gallery-item-description"><strong>Description:</strong> <span>{{ meme.description }}</span></div>
           <div class="gallery-item-tags">
@@ -99,8 +99,25 @@
               <div class="rating-value reliability">{{ meme.relatability_rating }}</div>
             </div>
           </div>
-          <button class="rate-meme-button">Rate this meme</button>
+          <!-- <button class="rate-meme-button">Rate this meme</button> -->
+          
+          <div class="rating-section">
+            <button name='savememe' class="rate-meme-button" data-meme-id="{{ meme.meme_id }}" onclick="submitSave('{{ meme.meme_id }}')">Save this meme</button>
+            <button name='ratememe' class="rate-meme-button" data-meme-id="{{ meme.meme_id }}" onclick="toggleRatingsVisibility(this)">Rate this meme</button>
+            <div class="ratings-container" style="display: none;" data-meme-id="{{ meme.meme_id }}">
+                <label for="humor-rating">Humor:</label>
+                <input type="number" class="humor-rating" name="humor-rating" min="1" max="5">
+    
+                <label for="originality-rating">Originality:</label>
+                <input type="number" class="originality-rating" name="originality-rating" min="1" max="5">
+    
+                <label for="reliability-rating">Reliability:</label>
+                <input type="number" class="reliability-rating" name="reliability-rating" min="1" max="5">
+    
+                <button class="rate-meme-button" onclick="submitRating('{{ meme.meme_id }}')">Submit</button>
+          </div>
         </div>
+      </div> 
         {% endfor %}
       </div>
   </body> 
@@ -242,5 +259,80 @@ function redirectToUserPage() {
           console.error('Error:', error);
       });
 }
+function toggleRatingsVisibility(button) {
+      const memeId = button.getAttribute('data-meme-id');
+      // Iterate over each input and clear its value
+      ['humor-rating', 'originality-rating', 'reliability-rating'].forEach(ratingType => {
+        const ratingInput = document.querySelector(`.ratings-container[data-meme-id="${memeId}"] .${ratingType}`);
+        
+        if (ratingInput !== null) {
+          ratingInput.value = '';
+        } else {
+        console.error(`Rating input not found for ${ratingType}`);
+    }
+      });
+
+      const ratingsContainer = document.querySelector(`.ratings-container[data-meme-id="${memeId}"]`);
+      ratingsContainer.style.display = ratingsContainer.style.display === 'none' ? 'block' : 'none';
+      return;
+    }
+
+    function submitRating(memeId) {
+      const humorRatingInput = document.querySelector(`.ratings-container[data-meme-id="${memeId}"] .humor-rating`);
+      humorRating = '';
+      if (humorRatingInput !== null){
+        humorRating = document.querySelector(`.ratings-container[data-meme-id="${memeId}"] .humor-rating`).value;
+      }
+
+      const originalityRatingInput = document.querySelector(`.ratings-container[data-meme-id="${memeId}"] .originality-rating`);
+      originalityRating = '';
+      if (originalityRatingInput !== null){
+        originalityRating = document.querySelector(`.ratings-container[data-meme-id="${memeId}"] .originality-rating`).value;
+      }
+
+      const reliabilityRatingInput = document.querySelector(`.ratings-container[data-meme-id="${memeId}"] .reliability-rating`);
+      reliabilityRating = '';
+      if (reliabilityRatingInput !== null){
+        reliabilityRating = document.querySelector(`.ratings-container[data-meme-id="${memeId}"] .reliability-rating`).value;
+      }
+
+      // Check if all values are entered
+      if(humorRating === '' || originalityRating === '' || reliabilityRating === ''){
+        toggleRatingsVisibility(document.querySelector(`.rate-meme-button[data-meme-id="${memeId}"]`));
+        alert("Please enter all the rating field values");
+        return
+      }
+
+      // Check if values are integers between 1 and 5
+      if (!isIntegerBetween(humorRating, 1, 5) || !isIntegerBetween(originalityRating, 1, 5) || !isIntegerBetween(reliabilityRating, 1, 5)) {
+        toggleRatingsVisibility(document.querySelector(`.rate-meme-button[data-meme-id="${memeId}"]`));  
+        alert("Ratings must be integers between 1 and 5");
+          return;
+      }
+
+      // You can send these ratings to the server or perform any other actions
+      console.log(`Meme ID: ${memeId}`);
+      console.log('Humor Rating:', humorRating);
+      console.log('Originality Rating:', originalityRating);
+      console.log('Reliability Rating:', reliabilityRating);
+
+      // Clear the input values
+      document.querySelector(`.ratings-container[data-meme-id="${memeId}"] .humor-rating`).value = '';
+      document.querySelector(`.ratings-container[data-meme-id="${memeId}"] .originality-rating`).value = '';
+      document.querySelector(`.ratings-container[data-meme-id="${memeId}"] .reliability-rating`).value = '';
+
+      // Toggle visibility after submitting
+      toggleRatingsVisibility(document.querySelector(`.rate-meme-button[data-meme-id="${memeId}"]`));
+    }
+
+    function submitSave(memeId) {
+        // Add logic to handle the saving of memes
+        console.log('Saving the meme...');
+    }
+
+    // Helper function to check if a value is an integer between min and max (inclusive)
+    function isIntegerBetween(value, min, max) {
+        return Number.isInteger(Number(value)) && value >= min && value <= max;
+    }
   </script>
 </html>
