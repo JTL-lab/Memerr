@@ -65,7 +65,45 @@
         <button class="side-legend-button-3"><img src="static/assets/down-triangle-icon.png" alt="Following Icon" /> Following</button>
       </div>
 
+
       <!-- Legendary Meme Gallery -->
+      <div class="gallery">
+        {% for meme in memes_data %}
+        <div class="meme-item">
+          <h2 class="meme-title">{{ meme.caption }}</h2>
+          <img class="photo" src="{{ meme.bucket_image_source }}" />
+          <div class="gallery-item-description"><strong>Description:</strong> <span>{{ meme.description }}</span></div>
+          <div class="gallery-item-tags">
+            <strong>Tags:</strong>
+            {% for tag in meme.categories %}
+            <span class="tag">{{ tag }}</span>
+            {% endfor %}
+          </div>
+
+          <p class="label">Ratings:</p>
+          <div class="ratings-container">
+            <div class="rating-category">
+              <span class="rating-label">Humor</span>
+              <div class="rating-value humor">{{ meme.humor_rating }}</div>
+            </div>
+            <div class="rating-category">
+              <span class="rating-label">Originality</span>
+              <div class="rating-value originality">{{ meme.originality_rating }}</div>
+            </div>
+            <div class="rating-category">
+              <span class="rating-label">Relatability</span>
+              <div class="rating-value reliability">{{ meme.relatability_rating }}</div>
+            </div>
+          </div>
+          <button class="rate-meme-button">Rate this meme</button>
+        </div>
+        {% endfor %}
+      </div>
+
+
+
+
+      <!-- Legendary Meme Gallery
       <div class="gallery">
         <div class="meme-item">
           <h2 class="meme-title">Success Kid</h2>
@@ -183,7 +221,7 @@
         </div>
       </div>
     </div>
-  </body>
+  </body> -->
   <script>
     //AWS.config.region = 'us-east-1'; // e.g., us-west-2
     //AWS.config.credentials = new AWS.CognitoIdentityCredentials({
@@ -203,124 +241,123 @@
     //    }
     //});
 
-    var modal = document.getElementById('upload-modal');
-    var btn = document.getElementById('post-button');
-    var span = document.getElementsByClassName('close')[0];
-    var form = document.getElementById('postForm');
-    var uploadBtn = document.getElementById('uploadBtn');
+    // var modal = document.getElementById('upload-modal');
+    // var btn = document.getElementById('post-button');
+    // var span = document.getElementsByClassName('close')[0];
+    // var form = document.getElementById('postForm');
+    // var uploadBtn = document.getElementById('uploadBtn');
 
-    // When the user clicks on the button, open the modal
-    btn.onclick = function () {
-      modal.style.display = 'block';
-    };
+    // // When the user clicks on the button, open the modal
+    // btn.onclick = function () {
+    //   modal.style.display = 'block';
+    // };
 
-    // When the user clicks on <span> (x), close the modal
-    span.onclick = function () {
-      modal.style.display = 'none';
-      form.reset(); // Clear the form
-    };
+    // // When the user clicks on <span> (x), close the modal
+    // span.onclick = function () {
+    //   modal.style.display = 'none';
+    //   form.reset(); // Clear the form
+    // };
 
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function (event) {
-      if (event.target == modal) {
-        modal.style.display = 'none';
-        form.reset(); // Clear the form
-      }
-    };
+    // // When the user clicks anywhere outside of the modal, close it
+    // window.onclick = function (event) {
+    //   if (event.target == modal) {
+    //     modal.style.display = 'none';
+    //     form.reset(); // Clear the form
+    //   }
+    // };
 
-    // When the user clicks the upload button, clear the fields and close the modal
-    document.getElementById('uploadButton').addEventListener('click', function () {
-      var files = document.getElementById('fileInput').files;
-      if (files.length > 0) {
-        // Get the first file from the input element
-        var file = files[0];
-        uploadToS3(file);
-      }
-    });
+    // // When the user clicks the upload button, clear the fields and close the modal
+    // document.getElementById('uploadButton').addEventListener('click', function () {
+    //   var files = document.getElementById('fileInput').files;
+    //   if (files.length > 0) {
+    //     // Get the first file from the input element
+    //     var file = files[0];
+    //     uploadToS3(file);
+    //   }
+    // });
 
-    function generateUniqueKey(fileName) {
-      // Generate a timestamp string
-      var date = new Date();
-      var timeStamp = date.getTime();
+    // function generateUniqueKey(fileName) {
+    //   // Generate a timestamp string
+    //   var date = new Date();
+    //   var timeStamp = date.getTime();
 
-      // Generate a random number and convert it to a string
-      var randomString = Math.random().toString(36).substring(2, 15);
+    //   // Generate a random number and convert it to a string
+    //   var randomString = Math.random().toString(36).substring(2, 15);
 
-      // Combine both with an underscore separator
-      var uniqueKey = timeStamp + '_' + randomString + '_';
+    //   // Combine both with an underscore separator
+    //   var uniqueKey = timeStamp + '_' + randomString + '_';
 
-      // Append the original filename
-      uniqueKey += fileName;
+    //   // Append the original filename
+    //   uniqueKey += fileName;
 
-      return uniqueKey;
-    }
+    //   return uniqueKey;
+    // }
 
-    function uploadToS3(file) {
-      // Assume AWS SDK has been configured with Cognito credentials
-      //var s3 = new AWS.S3();
-      var uniqueFileName = generateUniqueKey(file.name);
+    // function uploadToS3(file) {
+    //   // Assume AWS SDK has been configured with Cognito credentials
+    //   //var s3 = new AWS.S3();
+    //   var uniqueFileName = generateUniqueKey(file.name);
 
-      var params = {
-        Bucket: 'memerr-memes',
-        Key: uniqueFileName,
-        Body: file,
-        ContentType: file.type,
-        ACL: 'public-read',
-      };
+    //   var params = {
+    //     Bucket: 'memerr-memes',
+    //     Key: uniqueFileName,
+    //     Body: file,
+    //     ContentType: file.type,
+    //     ACL: 'public-read',
+    //   };
 
-      s3.putObject(params, function (err, data) {
-        if (err) {
-          console.error('There was an error uploading your file: ', err);
-          return false;
-        }
-        console.log('Successfully uploaded file.', data);
-        document.getElementById('upload-modal').style.display = 'none';
-        document.getElementById('fileInput').value = '';
-      });
-    }
+    //   s3.putObject(params, function (err, data) {
+    //     if (err) {
+    //       console.error('There was an error uploading your file: ', err);
+    //       return false;
+    //     }
+    //     console.log('Successfully uploaded file.', data);
+    //     document.getElementById('upload-modal').style.display = 'none';
+    //     document.getElementById('fileInput').value = '';
+    //   });
+    // }
 
     <!--------------------------------------------- SEARCH FUNCTIONALITY -------------------------------------------->
 
-    const searchButton = document.getElementById('search-button');
-    const searchBar = document.getElementById('search-bar');
-    const gallery = document.getElementById('gallery');
+const searchButton = document.getElementById('search-button');
+const searchBar = document.getElementById('search-bar');
+const gallery = document.getElementById('gallery');
 
-    searchButton.addEventListener('click', function () {
-      const searchText = searchBar.value;
 
-      if (!searchText.trim()) {
-        alert('Please enter a search query.');
-        return;
-      }
+// 
+document.getElementById("search-button").addEventListener("click", function() {
+    var searchTerm = document.getElementById("search-bar").value;
+    searchImages(searchTerm);
+});
 
-      // API Gateway endpoint for search: REPLACE WITH COGNITO
-      const searchUrl = `https://api-gateway-url/v1/search?q=${encodeURIComponent(searchText)}`;
-
-      // Make the GET request
-      fetch(searchUrl)
-        .then((response) => response.json())
-        .then((data) => {
-          console.log('Search results:', data);
-          updateGallery(data.results); // Function to update the gallery with search results
-        })
-        .catch((error) => {
-          console.error('Search error:', error);
-        });
-
-      // Clear the search bar text
-      searchBar.value = '';
+function searchImages(searchTerm) {
+fetch(`/search?query=${encodeURIComponent(searchTerm)}`)
+    .then(response => response.json())
+    .then(data => {
+        // Update the gallery with the new image paths
+        updateGallery(data.image_paths);
+    })
+    .catch(error => {
+        console.error('Error fetching images:', error);
     });
+}
 
-    // Function to update the gallery with search results
-    function updateGallery(results) {
-      // Clear current gallery images
-      gallery.innerHTML = '';
-      results.forEach((photo) => {
-        const photoElement = document.createElement('div');
-        photoElement.className = 'photo';
-        photoElement.innerHTML = `<img class="photo" src="${photo.url}" alt="Photo">`;
-        gallery.appendChild(photoElement);
-      });
-    }
+// Assuming you adjust your updateGallery function to handle image paths
+function updateGallery(imagePaths) {
+var gallery = document.querySelector(".gallery");
+gallery.innerHTML = ""; // Clear existing content
+
+imagePaths.forEach(function(imagePath) {
+    var memeItem = document.createElement("div");
+    memeItem.className = "meme-item";
+
+    var img = document.createElement("img");
+    img.className = "photo";
+    img.src = imagePath;
+
+    memeItem.appendChild(img);
+    gallery.appendChild(memeItem);
+});
+}
   </script>
 </html>

@@ -3,12 +3,13 @@ import urllib
 import logging
 import requests
 import boto3
+import ast
 from flask import Flask, jsonify, make_response, request, render_template, redirect
 from flask_cors import CORS
 import jwt
 from frontend.models.profile import UserCreds
 from frontend.py.authn import get_jwks, validate_token, sign_in, generate_nonce
-
+from frontend.models.dynamodb import DynamoDB
 
 
 #region Global Variables
@@ -33,7 +34,7 @@ COGNITO_LOGIN_URL_HARDCODED = f'https://{FRONTEND_DOMAIN}/login?response_type=co
 #endregion
 
 
-
+meme_table = DynamoDB("us-east-1","meme-data")
 # Token Validation Decorator
 def token_required(f):
     @wraps(f)
@@ -180,7 +181,14 @@ def error(err):
 @app.route("/")
 def index():
     nonce = generate_nonce()
-    response = make_response(render_template("index.html", nonce=nonce))
+    memes_data = meme_table.get_memes_data()[0:10]
+    for data in memes_data:
+        # data['categories'] = json.loads(data['categories'])
+        categories_str = data['categories'].strip("[]")
+        tag_list = [tag.strip() for tag in categories_str.split(',')]
+        data['categories'] = tag_list
+
+    response = make_response(render_template("index.html", nonce=nonce, memes_data=memes_data))
     # response.headers['Content-Security-Policy'] = f"script-src 'nonce-{nonce}'"
     return response
 
