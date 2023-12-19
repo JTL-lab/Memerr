@@ -63,11 +63,18 @@
       </div>
 
       <!-- Side Menu -->
+      <!-- Side Menu -->
       <div class="side-legend">
         <button class="side-legend-button-1"><img src="static/assets/home-icon.png" alt="Home Icon" /> Home</button>
-        <button class="side-legend-button-2"><img src="static/assets/trending-icon.png" alt="Trending Icon" /> Trending</button>
+        <!-- <button class="side-legend-button-2"><img src="static/assets/trending-icon.png" alt="Trending Icon" /> Trending</button> -->
         <button class="side-legend-button-3"><img src="static/assets/down-triangle-icon.png" alt="Following Icon" /> Following</button>
       </div>
+
+      <form action="/recommend" method="get">
+        <button type="submit" class="side-legend-button-2">
+          <img src="static/assets/trending-icon.png" alt="Trending Icon" /> Trending
+        </button>
+      </form>
 
 
       <!-- Legendary Meme Gallery -->
@@ -375,6 +382,6 @@ function toggleRatingsVisibility(button) {
     function isIntegerBetween(value, min, max) {
         return Number.isInteger(Number(value)) && value >= min && value <= max;
     }
-  </script>
+      </script>
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </html>
