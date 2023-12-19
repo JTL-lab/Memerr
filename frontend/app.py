@@ -5,13 +5,13 @@ import ast
 import requests
 import boto3
 import redis
+import time
 from flask import Flask, jsonify, make_response, request, render_template, redirect, current_app
 from flask_cors import CORS
 import jwt
 from frontend.models.profile import UserCreds
-from frontend.py.authn import get_jwks, validate_token, sign_in, generate_nonce
+from frontend.py.authn import get_jwks, validate_token, create_redis_client
 from frontend.models.dynamodb import DynamoDB as DynamoDBHelper
-import time
 import random
 import string
 import json
@@ -26,8 +26,8 @@ app.logger.addHandler(handler)
 COGNITO_REGION = 'us-east-1'
 COGNITO_USER_POOL_ID = 'us-east-1_2xLbaGSV5'
 COGNITO_DOMAIN = 'memerr.auth.us-east-1.amazoncognito.com'
-# FRONTEND_DOMAIN = 'ec2-54-86-68-35.compute-1.amazonaws.com'
-FRONTEND_DOMAIN = 'localhost:5001'
+FRONTEND_DOMAIN = 'ec2-54-86-68-35.compute-1.amazonaws.com'
+# FRONTEND_DOMAIN = 'localhost:5001'
 COGNITO_CLIENT = boto3.client('cognito-idp', region_name=COGNITO_REGION)
 SCOPES = 'openid profile email'
 TOKEN_ENDPOINT = f"https://{COGNITO_DOMAIN}/oauth2/token"
@@ -37,7 +37,11 @@ REDIRECT_URI = f'http://{FRONTEND_DOMAIN}/callback'
 COGNITO_LOGIN_URL_HARDCODED = f'https://{FRONTEND_DOMAIN}/login?response_type=code&client_id={COGNITO_APP_CLIENT_ID}&redirect_uri={REDIRECT_URI}'
 
 # Initialize Redis
-redis_client = redis.StrictRedis(host='memerr-dqyhmc.serverless.use1.cache.amazonaws.com', port=6379, db=0)
+# Configure Redis connection
+redis_host = "memerr-dqyhmc.serverless.use1.cache.amazonaws.com"
+redis_port = 6379
+redis_client = redis.StrictRedis(host=redis_host, port=redis_port, decode_responses=True)
+
 REGION = 'us-east-1'
 BUCKET_DOMAIN = 'https://memerr-memes.s3.amazonaws.com/'
 dynamodb_resource = boto3.resource('dynamodb', region_name=REGION)
@@ -47,7 +51,8 @@ meme_table = DynamoDBHelper(REGION, "meme-data-new")
 user_table = DynamoDBHelper(REGION, "user-info")
 
 USER_EMAIL = "uttam.gurram99@gmail.com"
-#USER_PICTURE
+csp_policy = "script-src https://d3oia8etllorh5.cloudfront.net https://memerr.auth.us-east-1.amazoncognito.com 'unsafe-inline';"
+
 #endregion
 
 
@@ -69,6 +74,12 @@ if data:
     email = data.get('email')
 """
 
+# redis_client = create_redis_client('memerr-dqyhmc.serverless.use1.cache.amazonaws.com', 6379)
+@app.after_request
+def add_csp_header(response):
+    response.headers['Content-Security-Policy'] = csp_policy
+    return response
+
 
 def generate_unique_key(file_name):
     # Generate a timestamp string
@@ -89,21 +100,29 @@ def generate_unique_key(file_name):
 # Set multiple values in Redis using a hash
 def set_user_data(user_id, user_data, expiration=3600):
     try:
-        pipeline = redis_client.pipeline()
-        pipeline.hmset(f"user_data:{user_id}", user_data)
-        pipeline.expire(f"user_data:{user_id}", expiration)
-        pipeline.execute()
+        # Serialize the user data as JSON
+        user_data_json = json.dumps(user_data)
+        
+        # Set the serialized JSON in Redis with an expiration time
+        redis_client.setex(f"user_data:{user_id}", expiration, user_data_json)
         return True
     except Exception as e:
-        current_app.logger.error(f"Failed to set user data in Redis: {e}")
+        app.logger.error(f"Failed to set user data in Redis: {e}")
         return False
 
 # Get multiple values from Redis
 def get_user_data(user_id):
     try:
-        return redis_client.hgetall(f"user_data:{user_id}")
+        # Get the serialized JSON from Redis
+        user_data_json = redis_client.get(f"user_data:{user_id}")
+        
+        if user_data_json is not None:
+            # Deserialize the JSON and return the user data as a dictionary
+            return json.loads(user_data_json)
+        else:
+            return None
     except Exception as e:
-        current_app.logger.error(f"Failed to get user data from Redis: {e}")
+        app.logger.error(f"Failed to get user data from Redis: {e}")
         return None
 #endregion
 
@@ -278,7 +297,7 @@ def callback():
             email = payload.get('email')
             app.logger.info(f'@callback email: {email}')
             print(f'email {email}')
-            
+
             # profile picture url
             picture = payload.get('picture')
             app.logger.info(f'@callback picture: {picture}')
@@ -298,22 +317,22 @@ def callback():
             # global USER_PICTURE
             # USER_PICTURE = user_data['picture'] 
 
-            app.logger.info(f'@user_data: {user_data}')
-            print(f'user_data: {user_data}')
-            set_user_data(email, user_data)
+            # set_user_data(email, user_data)
+            print(f'set_user_data: {user_data}')
+            app.logger.info(f'@set_user_data: {user_data}')
 
             # Get a multi-value object, data on Redis cache
-            data = get_user_data(email)
-            app.logger.info(f'@data: {data}')
-            print(f'data: {data}')
-            if data:
-                access_token = data.get('access_token')
-                email = data.get('email')
-            
-            index_url = f"https://{COGNITO_DOMAIN}/"
-            app.logger.info(f'@login cognito_login_url {index_url}')
+            # data = get_user_data(email)
+            app.logger.info(f'@get_user_data: {data}')
+            print(f'get_user_data: {data}')
+            # if data:
+            #     access_token = data.get('access_token')
+            #     email = data.get('email')
+
+            index_url = f"http://{FRONTEND_DOMAIN}/"
+            app.logger.info(f'@login FRONTEND_DOMAIN {index_url}')
             return redirect(index_url)
-            return data
+            # return data
         else:
             return 'Error exchanging code for tokens', response.status_code
     except Exception as e:
@@ -421,7 +440,8 @@ def error(err):
 
 @app.route("/")
 def index():
-    nonce = "nonce"#generate_nonce()
+    # nonce = generate_nonce()
+    nonce = "nonce"
     memes_data = meme_table.get_memes_data()[0:100]
     for data in memes_data:
         # data['categories'] = json.loads(data['categories'])
@@ -522,7 +542,7 @@ def user_signup_page():
 @app.route("/user", endpoint="user_profile", methods=["GET"])
 def user_profile_page():
     if request.endpoint == "user_profile":
-        nonce = "nonce"#generate_nonce()
+        nonce = "nonce"
         user_data = user_table.query_single(query_id=USER_EMAIL, primary_key="email")[0]
         meme_ids = list(ast.literal_eval(user_data['memes_rated']).keys())
         memes_data = meme_table.retrieve_memes(meme_ids, "meme_id")
@@ -545,7 +565,7 @@ def user_profile_page():
 @app.route("/user/posted", endpoint="user_posted", methods=["GET"])
 def user_posted_page():
     if request.endpoint == "user_posted":
-        nonce = "nonce"#generate_nonce()
+        nonce = "nonce"
         user_data = user_table.query_single(query_id=USER_EMAIL, primary_key="email")[0]
         meme_ids = list(ast.literal_eval(user_data['memes_posted']))
         memes_data = meme_table.retrieve_memes(meme_ids, "meme_id")
@@ -570,7 +590,7 @@ def user_posted_page():
 @app.route("/user/saved", endpoint="user_saved", methods=["GET"])
 def user_saved_page():
     if request.endpoint == "user_saved":
-        nonce = "nonce"#generate_nonce()
+        nonce = "nonce"
         user_data = user_table.query_single(query_id=USER_EMAIL, primary_key="email")[0]
         meme_ids = list(ast.literal_eval(user_data['memes_saved']))
         memes_data = meme_table.retrieve_memes(meme_ids, "meme_id")

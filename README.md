@@ -46,9 +46,9 @@ Ensure that the pem file is also in this directory
 zip frontend.zip frontend/
 scp -i "memerr-kp.pem" "frontend.zip" ec2-user@ec2-54-86-68-35.compute-1.amazonaws.com:/home/ec2-user
 ssh -i "memerr-kp.pem" ec2-user@ec2-54-86-68-35.compute-1.amazonaws.com
-unzip frontend.zip # replace All
+unzip frontend.zip -d tmp/ # replace All
 cd /home/ec2-user/frontend
-source venv/bin/activate
+source .venv/bin/activate
 pip3 install -r requirements.txt
 export FLASK_APP=app
 export FLASk_ENV=development
@@ -81,3 +81,4 @@ sudo systemctl restart nginx
 sudo mkdir -p /etc/nginx/ssl/
 sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/nginx.key -out /etc/nginx/ssl/nginx.crt
 ```
+unzip frontend.zip -d tmp/

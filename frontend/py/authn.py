@@ -1,6 +1,9 @@
 import logging
 import os
+import redis
+from redis.exceptions import ConnectionError
 import requests
+import time
 from botocore.exceptions import ClientError
 import boto3
 import jwt  # requires cryptography
@@ -20,6 +23,20 @@ client = boto3.client('cognito-idp', region_name=COGNITO_REGION)
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 
+# Function to create a Redis connection
+def create_redis_client(redis_host, redis_port, max_retries=5):
+    retry_delay = 1  # start with 1 second
+    for i in range(max_retries):
+        try:
+            redis_client = redis.StrictRedis(host=redis_host, port=redis_port, db=0)
+            # Test connection
+            redis_client.ping()
+            return redis_client
+        except ConnectionError as e:
+            print(f"Attempt {i+1}/{max_retries} failed: {e}. Retrying in {retry_delay} seconds...")
+            time.sleep(retry_delay)
+            retry_delay *= 2
+    raise ConnectionError(f"Could not connect to Redis at {redis_host}:{redis_port} after {max_retries} attempts.")
 
 def get_jwks():
     response = requests.get(JWKS_URL, timeout=20)
