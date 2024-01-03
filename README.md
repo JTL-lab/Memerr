@@ -8,7 +8,7 @@ A cloud-based social media application that allows users to effectively view, po
 - Kanishk Singh (ks4038)
 
 ### Architecture Diagram 
-![alt text](https://github.com/JTL-lab/Memerr/blob/main/Memerr-Architecture.png?raw=true)
+![alt text](reference/Memerr-Architecture.png)
 
 ---
 ### Python venv Instructions
